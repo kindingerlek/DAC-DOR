@@ -6,37 +6,45 @@
 package models.entities;
 
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import models.DAOs.AdminDAO;
 
 /**
  *
  * @author Alisson
  */
+@Entity
 public class Admin {
+
+    @Id
+    @GeneratedValue
     private int id;
+
     private String name;
     private String password;
     private String email;
-    
-    public Admin(){
-    }
-    
-    public void add(){
-    }
-    
-    public void update(){
-    }
-    
-    public void delete(){
-    }
-    
-    public static List<Admin> getAll(String type, String param){
-        
-        return AdminDAO.readAll(type,param);
+
+    public Admin() {
     }
 
-    public Admin auth(){
-        return this;
+    public void add() {
+    }
+
+    public void update() {
+    }
+
+    public void delete() {
+    }
+
+    public static List<Admin> getAll(String type, String param) {
+
+        return AdminDAO.readAll(type, param);
+    }
+
+    public Admin auth() {
+        return AdminDAO.auth(this.getEmail(),this.getPassword());
     }
 
     public int getId() {
@@ -70,5 +78,5 @@ public class Admin {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
 }

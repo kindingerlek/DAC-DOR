@@ -13,14 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.entities.Admin;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "LoginProcess", urlPatterns = {"/LoginProcess"})
-public class LoginProcess extends HttpServlet {
+@WebServlet(name = "LogoutProcess", urlPatterns = {"/LogoutProcess"})
+public class LogoutProcess extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +33,12 @@ public class LoginProcess extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println((String)request.getParameter("email"));
-            out.println((String)request.getParameter("password"));
-            
-            //Get the request data
-            String password = (String)request.getParameter("password");
-            String email = (String)request.getParameter("email");
-            //Validate request data
-            if(!password.isEmpty()&& !email.isEmpty()){
-            
-            }
-            //Try found the user
-            Admin admin = new Admin();
-            admin.setEmail(email);
-            admin.setPassword(password);
-            admin = admin.auth();
-            
-            //Do something
-            if(admin != null && admin.getId()>0){
-                //Salvar user na sessão;
-                HttpSession session = request.getSession();
-                session.setAttribute("admin", admin);
-                
-                //Redirect to home
-                response.sendRedirect("home.jsp");
-            }else{
-                //Redirect to login
-                response.sendRedirect("index.jsp");
-            }
-        }
+         //Clean Session
+        HttpSession session = request.getSession();
+        session.invalidate();
+        //Redirect to Login
+        response.sendRedirect("index.jsp");
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

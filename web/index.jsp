@@ -3,7 +3,8 @@
     Created on : 05/05/2016, 15:31:01
     Author     : Alisson
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
