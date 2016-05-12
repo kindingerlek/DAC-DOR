@@ -40,22 +40,28 @@ public class Admin {
     }
 
     public void add() {
-        if ((AdminDAO.getUser(this.getEmail()).getId()) > 0) {
-            
+        if (!(AdminDAO.getUser(this.getEmail())==null)) {
+            AdminDAO.update(this);
         } else {
             AdminDAO.add(this);
         }
     }
 
     public void update() {
+        AdminDAO.update(this);
     }
 
     public void delete() {
+         AdminDAO.delete(this);
     }
 
     public static List<Admin> getAll(String type, String param) {
 
         return AdminDAO.readAll(type, param);
+    }
+    
+    public static List<Admin> getAll() {
+        return AdminDAO.getAll();
     }
 
     public Admin auth() {

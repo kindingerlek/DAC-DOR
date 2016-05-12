@@ -16,10 +16,10 @@ import models.entities.Admin;
 
 /**
  *
- * @author Bruno
+ * @author Alisson
  */
-@WebServlet(name = "AddAdmin", urlPatterns = {"/AddAdmin"})
-public class AddAdmin extends HttpServlet {
+@WebServlet(name = "DeleteAdmin",urlPatterns = {"/DeleteAdmin"})
+public class DeleteAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +32,13 @@ public class AddAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            String email = request.getParameter("email");
-            String password =request.getParameter("password");
-            String name =request.getParameter("name");
+        response.setContentType("text/html;charset=UTF-8");
+            int adminId = Integer.parseInt((String)request.getParameter("idAdmin"));
             
-            Admin adminToAdd = new Admin();
+            Admin adminToRemove = new Admin();
             
-            adminToAdd.setEmail(email);
-            adminToAdd.setPassword(password);
-            adminToAdd.setName(name);    
-            adminToAdd.add();
+            adminToRemove.setId(adminId);
+            adminToRemove.delete();
             
             response.sendRedirect("crudAdmin.jsp");
     }

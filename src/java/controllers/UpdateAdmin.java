@@ -16,10 +16,10 @@ import models.entities.Admin;
 
 /**
  *
- * @author Bruno
+ * @author Alisson
  */
-@WebServlet(name = "AddAdmin", urlPatterns = {"/AddAdmin"})
-public class AddAdmin extends HttpServlet {
+@WebServlet(name = "UpdateAdmin", urlPatterns = {"/UpdateAdmin"})
+public class UpdateAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,19 +32,21 @@ public class AddAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            String email = request.getParameter("email");
-            String password =request.getParameter("password");
-            String name =request.getParameter("name");
-            
-            Admin adminToAdd = new Admin();
-            
-            adminToAdd.setEmail(email);
-            adminToAdd.setPassword(password);
-            adminToAdd.setName(name);    
-            adminToAdd.add();
-            
-            response.sendRedirect("crudAdmin.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+        int adminId = Integer.parseInt((String) request.getParameter("idAdmin"));
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String name = request.getParameter("name");
+
+        Admin adminToUpdate = new Admin();
+
+        adminToUpdate.setId(adminId);
+        adminToUpdate.setEmail(email);
+        adminToUpdate.setPassword(password);
+        adminToUpdate.setName(name);
+        adminToUpdate.update();
+
+        response.sendRedirect("crudAdmin.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

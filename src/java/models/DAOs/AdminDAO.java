@@ -46,10 +46,38 @@ public class AdminDAO {
         return admin;
 
     }
-
+    
+    public static void update(Admin admin){
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(admin);
+        session.getTransaction().commit();
+        session.close();
+    }
     public static void add(Admin admin) {
         Session session = getSessionFactory().openSession();
+        session.beginTransaction();
         session.save(admin);
+        session.getTransaction().commit();
         session.close();
+    }
+    
+    public static List<Admin> getAll(){
+        Session session = getSessionFactory().openSession();
+        List<Admin> list = session.createCriteria(Admin.class).list();
+        session.close();
+        return list;
+    }
+    
+    public static void delete(Admin admin){
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        session.delete(admin);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public static void save(Admin aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
