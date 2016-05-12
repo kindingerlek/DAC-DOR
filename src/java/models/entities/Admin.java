@@ -6,9 +6,12 @@
 package models.entities;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import models.DAOs.AdminDAO;
 
 /**
@@ -16,35 +19,53 @@ import models.DAOs.AdminDAO;
  * @author Alisson
  */
 @Entity
+@Table(name = "admin")
 public class Admin {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email", unique = true)
     private String email;
 
     public Admin() {
     }
 
     public void add() {
+        if (!(AdminDAO.getUser(this.getEmail())==null)) {
+            AdminDAO.update(this);
+        } else {
+            AdminDAO.add(this);
+        }
     }
 
     public void update() {
+        AdminDAO.update(this);
     }
 
     public void delete() {
+         AdminDAO.delete(this);
     }
 
     public static List<Admin> getAll(String type, String param) {
 
         return AdminDAO.readAll(type, param);
     }
+    
+    public static List<Admin> getAll() {
+        return AdminDAO.getAll();
+    }
 
     public Admin auth() {
-        return AdminDAO.auth(this.getEmail(),this.getPassword());
+        return AdminDAO.auth(this.getEmail(), this.getPassword());
     }
 
     public int getId() {
