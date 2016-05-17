@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controllers.company;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,14 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Admin;
+import models.entities.Company;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "DeleteAdmin",urlPatterns = {"/DeleteAdmin"})
-public class DeleteAdmin extends HttpServlet {
+@WebServlet(name = "UpdateCompany", urlPatterns = {"/UpdateCompany"})
+public class UpdateCompany extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,15 +32,18 @@ public class DeleteAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-            int adminId = Integer.parseInt((String)request.getParameter("idAdmin"));
-            
-            Admin adminToRemove = new Admin();
-            
-            adminToRemove.setId(adminId);
-            adminToRemove.delete();
-            
-            response.sendRedirect("crudAdmin.jsp");
+        Company companyToUpdate = new Company();
+        int companyId = Integer.parseInt((String) request.getParameter("idCompany"));
+        String email = request.getParameter("email");
+        String token = request.getParameter("token");
+        String name = request.getParameter("name");
+
+        companyToUpdate.setId(companyId);
+        companyToUpdate.setToken(token);
+        companyToUpdate.setName(name);
+        companyToUpdate.update();
+
+        response.sendRedirect("crudCompany.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
