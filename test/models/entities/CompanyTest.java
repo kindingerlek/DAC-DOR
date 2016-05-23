@@ -6,6 +6,7 @@
 package models.entities;
 
 import java.util.List;
+import models.DAOs.CompanyDAO;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -25,34 +26,15 @@ public class CompanyTest {
     public void testAdd() {
         System.out.println("add");
         Company instance = new Company();
+        instance.setName("testCompanyNotUseThisName");
+        instance.setToken("testTokenNotUseThisName");
         instance.add();
+        instance = CompanyDAO.readAll("name", "testCompanyNotUseThisName").get(0);
+        assertNotNull("Should return a company", instance);
+
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of update method, of class Company.
-     */
-    @Test
-    public void testUpdate() {
-        System.out.println("update");
-        Company instance = new Company();
-        instance.update();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of delete method, of class Company.
-     */
-    @Test
-    public void testDelete() {
-        System.out.println("delete");
-        Company instance = new Company();
-        instance.delete();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getAll method, of class Company.
@@ -72,11 +54,8 @@ public class CompanyTest {
     public void testGetAll_0args() {
         System.out.println("getAll");
         Company instance = new Company();
-        List<Company> expResult = null;
-        List<Company> result = instance.getAll();
-        assertEquals(expResult, result);
+        assertTrue("Expect result to be equal a List of Company", Company.getAll() instanceof List);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -86,11 +65,41 @@ public class CompanyTest {
     public void testValidateToken() {
         System.out.println("validateToken");
         Company instance = new Company();
-        boolean expResult = false;
+        instance.setToken("testTokenNotUseThisName");
+        boolean expResult = true;
         boolean result = instance.validateToken();
-        assertEquals(expResult, result);
+        assertEquals("Should return true if exist a company with the token 'testTokenNotUseThisName' in DB", expResult, result);
+
+    }
+
+    
+    /**
+     * Test of update method, of class Company.
+     */
+    @Test
+    public void testUpdate() {
+        System.out.println("update");
+        Company instance = new Company();
+        String newToken = "TokenChangedToTestUpdateMethod";
+        instance = CompanyDAO.readAll("name", "testCompanyUpdateNotUseThisName").get(0);
+        instance.setToken(newToken);
+        instance.update();
+        Company companyUpdated = CompanyDAO.readAll("name", "testCompanyUpdateNotUseThisName").get(0);
+        assertEquals("token should be changed to 'TokenChangedToTestUpdateMethod'",companyUpdated.getToken(),newToken);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    /**
+     * Test of delete method, of class Company.
+     */
+    @Test
+    public void testDelete() {
+        System.out.println("delete");
+        Company instance = new Company();
+        instance = CompanyDAO.readAll("name", "testCompanyNotUseThisName").get(0);
+        instance.delete();
+         
+        assertTrue("Should not return any company", CompanyDAO.readAll("name", "testCompanyNotUseThisName").isEmpty());
     }
 
     /**
@@ -101,10 +110,10 @@ public class CompanyTest {
         System.out.println("getId");
         Company instance = new Company();
         int expResult = 0;
+        instance.setId(expResult);
         int result = instance.getId();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -116,8 +125,8 @@ public class CompanyTest {
         int id = 0;
         Company instance = new Company();
         instance.setId(id);
+        assertEquals(instance.getId(),id);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -128,10 +137,10 @@ public class CompanyTest {
         System.out.println("getName");
         Company instance = new Company();
         String expResult = "";
+        instance.setName(expResult);
         String result = instance.getName();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -140,11 +149,11 @@ public class CompanyTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String name = "";
+        String name = "testNameToCompany";
         Company instance = new Company();
         instance.setName(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getName(),name);
+        
     }
 
     /**
@@ -154,11 +163,11 @@ public class CompanyTest {
     public void testGetToken() {
         System.out.println("getToken");
         Company instance = new Company();
-        String expResult = "";
+        String expResult = "testTokenToValidateThisCompanyMethod";
+        instance.setToken(expResult);
         String result = instance.getToken();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -167,11 +176,11 @@ public class CompanyTest {
     @Test
     public void testSetToken() {
         System.out.println("setToken");
-        String token = "";
+        String token = "testTokenToValidadeThisMetohd";
         Company instance = new Company();
         instance.setToken(token);
+        assertEquals(instance.getToken(),token);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

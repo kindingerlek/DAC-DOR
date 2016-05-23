@@ -17,6 +17,18 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class CompanyDAO {
    
+      public static boolean validateToken(Company company) {
+        Session session = getSessionFactory().openSession();
+        String token = company.getToken();
+        company.setToken(token);
+        Query query = session.createQuery("from Company where token = :token");
+        query.setParameter("token", company.getToken());
+        Company companyReturned;
+        companyReturned = (Company) query.uniqueResult();
+        session.close();
+        return (companyReturned!=null);
+    }
+      
     public static void update(Company company){
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
@@ -47,7 +59,8 @@ public class CompanyDAO {
         return list;
     }
     
-    
+    public static void readCompany(){
+    }
     public static void delete(Company company){
         Session session = getSessionFactory().openSession();
         session.beginTransaction();

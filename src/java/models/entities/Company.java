@@ -57,7 +57,8 @@ public class Company {
     }
 
     public boolean validateToken() {
-        return false;
+        
+        return CompanyDAO.validateToken(this);
     }
 
     public int getId() {
