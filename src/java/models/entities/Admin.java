@@ -40,10 +40,10 @@ public class Admin {
     }
 
     public void add() {
-        if (!(AdminDAO.getUser(this.getEmail())==null)) {
+        if (!(AdminDAO.read(this.getEmail()) == null)) {
             AdminDAO.update(this);
         } else {
-            AdminDAO.add(this);
+            AdminDAO.create(this);
         }
     }
 
@@ -52,20 +52,24 @@ public class Admin {
     }
 
     public void delete() {
-         AdminDAO.delete(this);
+        AdminDAO.delete(this);
     }
 
     public static List<Admin> getAll(String type, String param) {
-
         return AdminDAO.readAll(type, param);
     }
-    
+
     public static List<Admin> getAll() {
-        return AdminDAO.getAll();
+        return AdminDAO.readAll();
     }
 
     public Admin auth() {
-        return AdminDAO.auth(this.getEmail(), this.getPassword());
+        Admin admin = AdminDAO.read(this.getEmail());
+        if ( admin!=null && admin.getPassword().equals(this.getPassword())) {
+            return admin;
+        } else {
+            return null;
+        }
     }
 
     public int getId() {

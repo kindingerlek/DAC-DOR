@@ -5,9 +5,8 @@
  */
 package models.DAOs;
 
-import java.util.ArrayList;
 import java.util.List;
-import models.entities.Admin;
+import models.entities.Company;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import static utils.HibernateUtils.getSessionFactory;
@@ -16,57 +15,57 @@ import static utils.HibernateUtils.getSessionFactory;
  *
  * @author Alisson
  */
-public class AdminDAO {
-
-
-    public static Admin read(String email) {
+public class CompanyDAO {
+   
+      public static boolean validateToken(Company company) {
         Session session = getSessionFactory().openSession();
-        Admin admin = new Admin();
-        admin.setEmail(email);
-        Query query = session.createQuery("from Admin where email = :email");
-        query.setParameter("email", admin.getEmail());
-        admin = (Admin) query.uniqueResult();
+        String token = company.getToken();
+        company.setToken(token);
+        Query query = session.createQuery("from Company where token = :token");
+        query.setParameter("token", company.getToken());
+        Company companyReturned;
+        companyReturned = (Company) query.uniqueResult();
         session.close();
-        return admin;
+        return (companyReturned!=null);
     }
-    
-    public static void update(Admin admin){
+      
+    public static void update(Company company){
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(admin);
+        session.update(company);
+        session.getTransaction().commit();
+        session.close();
+    }
+    public static void create(Company company) {
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(company);
         session.getTransaction().commit();
         session.close();
     }
     
-    public static void create(Admin admin) {
+    public static List<Company> readAll(){
         Session session = getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(admin);
-        session.getTransaction().commit();
-        session.close();
-    }
-    
-    public static List<Admin> readAll(){
-        Session session = getSessionFactory().openSession();
-        List<Admin> list = session.createCriteria(Admin.class).list();
+        List<Company> list = session.createCriteria(Company.class).list();
         session.close();
         return list;
     }
-    
-    public static List<Admin> readAll(String type, String param) {
+     public static List<Company> readAll(String type, String param) {
         Session session = getSessionFactory().openSession();
-        Query query = session.createQuery("from Admin where "+type+" like :param");
+        Query query = session.createQuery("from Company where "+type+" like :param");
         query.setParameter("param", "%"+param+"%");
-        List<Admin> list = query.list();
+        List<Company> list = query.list();
         session.close();
         return list;
     }
     
-    public static void delete(Admin admin){
+    public static void readCompany(){
+    }
+    public static void delete(Company company){
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
-        session.delete(admin);
+        session.delete(company);
         session.getTransaction().commit();
         session.close();
-    }
+    } 
 }
