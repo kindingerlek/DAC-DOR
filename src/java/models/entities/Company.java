@@ -6,10 +6,12 @@
 package models.entities;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import models.DAOs.CompanyDAO;
 
@@ -32,6 +34,17 @@ public class Company {
 
     @Column(name = "token")
     private String token;
+    
+    @OneToMany(mappedBy = "company", targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
+    private List<PersonCompanySituation> PersonsSituation;
+
+    public List<PersonCompanySituation> getPersonsSituation() {
+        return PersonsSituation;
+    }
+
+    public void setPersonsSituation(List<PersonCompanySituation> PersonsSituation) {
+        this.PersonsSituation = PersonsSituation;
+    }
 
     public Company() {
     }
