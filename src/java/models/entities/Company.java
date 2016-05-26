@@ -38,7 +38,7 @@ public class Company {
     @Column(name = "TOKEN")
     private String token;
     
-    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
     private Collection<PersonCompanySituation> PersonsSituation;
 
     public Collection<PersonCompanySituation> getPersonsSituation() {

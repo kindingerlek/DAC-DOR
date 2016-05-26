@@ -26,7 +26,7 @@ import models.DAOs.PersonDAO;
 public class Person implements Serializable {
     
     @Id
-    @GeneratedValue 
+    @GeneratedValue                                                                                                                                                                                                                                                                            
     @Column(name = "PERSON_ID")
     private int id;
     
@@ -36,7 +36,7 @@ public class Person implements Serializable {
     @Column(name = "CPF")
     private String cpf;
     
-    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person",fetch = FetchType.LAZY, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
     private Collection<PersonCompanySituation> situationCompanies = new LinkedHashSet<PersonCompanySituation>();
     
     //Getters and Setters
