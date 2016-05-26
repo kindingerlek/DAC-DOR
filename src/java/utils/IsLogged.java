@@ -27,7 +27,7 @@ import models.entities.Admin;
  *
  * @author Alisson
  */
-@WebFilter(filterName = "IsLogged", urlPatterns = {"/home.jsp"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+@WebFilter(filterName = "IsLogged", urlPatterns = {"crud*.jsp","/addAdmin.jsp","/Delete*","/Add*","/Update*","/Show*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class IsLogged implements Filter {
 
     private static final boolean debug = true;

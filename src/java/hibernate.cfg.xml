@@ -8,8 +8,12 @@
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">admin</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5434/dor</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5434/DOR2</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="models.entities.Admin"/>
+    <mapping class="models.entities.Company"/>
+    <mapping class="models.entities.Person"/>
+    <mapping class="models.entities.PersonCompanySituation"/>
+    <mapping class="models.entities.PersonCompanySituationId"/>
   </session-factory>
 </hibernate-configuration>
