@@ -7,7 +7,7 @@ package models.DAOs;
 
 import java.util.ArrayList;
 import java.util.List;
-import models.entities.Company;
+import models.entities.PersonCompanySituation;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,38 +17,17 @@ import static utils.HibernateUtils.getSessionFactory;
  *
  * @author Alisson
  */
-public class CompanyDAO {
+public class PersonCompanySituationDAO {
 
-    public static boolean validateToken(Company company) {
-        Transaction transaction = null;
-        Session session = null;
-        Company companyReturned = null;
-        try {
-            session = getSessionFactory().openSession();
-            String token = company.getToken();
-            company.setToken(token);
-            Query query = session.createQuery("from Company where token = :token");
-            query.setParameter("token", company.getToken());
-            
-            companyReturned = (Company) query.uniqueResult();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
-        } finally {
-            session.close();
-        }
-        return (companyReturned != null);
-    }
+   
 
-    public static void update(Company company) {
+    public static void update(PersonCompanySituation personCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(company);
+            session.update(personCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -61,13 +40,13 @@ public class CompanyDAO {
         }
     }
 
-    public static void create(Company company) {
+    public static void create(PersonCompanySituation personCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(company);
+            session.save(personCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -80,14 +59,14 @@ public class CompanyDAO {
         }
     }
 
-    public static List<Company> readAll() {
+    public static List<PersonCompanySituation> readAll() {
         Session session = null;
-        List<Company> list = new ArrayList();
+        List<PersonCompanySituation> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            list = session.createCriteria(Company.class).list();
+            list = session.createCriteria(PersonCompanySituation.class).list();
         } catch (Exception e) {
-            System.out.println("readAll Company");
+            System.out.println("readAll PersonCompanySituation");
             System.out.println(e.getMessage());
         } finally {
             session.close();
@@ -95,13 +74,13 @@ public class CompanyDAO {
         return list;
     }
 
-    public static List<Company> readAll(String type, String param) {
+    public static List<PersonCompanySituation> readAll(String type, String param) {
         Transaction transaction = null;
         Session session = null;
-        List<Company> list = new ArrayList();
+        List<PersonCompanySituation> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from Company where " + type + " like :param");
+            Query query = session.createQuery("from PersonCompanySituation where " + type + " like :param");
             query.setParameter("param", "%" + param + "%");
             list = query.list();
         } catch (Exception e) {
@@ -114,14 +93,17 @@ public class CompanyDAO {
         }
         return list;
     }
-        
-    public static void delete(Company company) {
+
+    public static void readPersonCompanySituation() {
+    }
+
+    public static void delete(PersonCompanySituation personCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(company);
+            session.delete(personCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {

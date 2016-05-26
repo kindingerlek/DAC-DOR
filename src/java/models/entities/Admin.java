@@ -24,16 +24,16 @@ public class Admin {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "ADMIN_ID")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     public Admin() {

@@ -5,11 +5,16 @@
  */
 package models.entities;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import models.DAOs.CompanyDAO;
 
@@ -19,19 +24,30 @@ import models.DAOs.CompanyDAO;
  * @author Alisson
  */
 @Entity
-@Table(name = "company")
+@Table(name = "COMPANY")
 public class Company {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "COMPANY_ID")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "token")
+    @Column(name = "TOKEN")
     private String token;
+    
+    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
+    private Collection<PersonCompanySituation> PersonsSituation;
+
+    public Collection<PersonCompanySituation> getPersonsSituation() {
+        return PersonsSituation;
+    }
+
+    public void setPersonsSituation(Collection<PersonCompanySituation> PersonsSituation) {
+        this.PersonsSituation = PersonsSituation;
+    }
 
     public Company() {
     }

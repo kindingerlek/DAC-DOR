@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.company;
+package controllers.person;
 
+import controllers.person.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,14 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Company;
+import models.entities.Person;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "UpdateCompany", urlPatterns = {"/UpdateCompany"})
-public class UpdateCompany extends HttpServlet {
+@WebServlet(name = "UpdatePerson", urlPatterns = {"/UpdatePerson"})
+public class UpdatePerson extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +33,17 @@ public class UpdateCompany extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Company companyToUpdate = new Company();
-        int companyId = Integer.parseInt((String) request.getParameter("idCompany"));
-        String token = request.getParameter("token");
+        Person personToUpdate = new Person();
+        int personId = Integer.parseInt((String) request.getParameter("idPerson"));
+        String cpf = request.getParameter("cpf");
         String name = request.getParameter("name");
 
-        companyToUpdate.setId(companyId);
-        companyToUpdate.setToken(token);
-        companyToUpdate.setName(name);
-        companyToUpdate.update();
+        personToUpdate.setId(personId);
+        personToUpdate.setCpf(cpf);
+        personToUpdate.setName(name);
+        personToUpdate.update();
 
-        response.sendRedirect("crudCompany.jsp");
+        response.sendRedirect("crudPerson.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
