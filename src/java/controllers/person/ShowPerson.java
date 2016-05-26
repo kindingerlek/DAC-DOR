@@ -3,23 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.company;
+package controllers.person;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Company;
+import models.DAOs.PersonDAO;
+import models.entities.Person;
+import models.entities.PersonCompanySituation;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "UpdateCompany", urlPatterns = {"/UpdateCompany"})
-public class UpdateCompany extends HttpServlet {
+@WebServlet(name = "ShowPerson", urlPatterns = {"/ShowPerson"})
+public class ShowPerson extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +36,17 @@ public class UpdateCompany extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Company companyToUpdate = new Company();
-        int companyId = Integer.parseInt((String) request.getParameter("idCompany"));
-        String token = request.getParameter("token");
-        String name = request.getParameter("name");
-
-        companyToUpdate.setId(companyId);
-        companyToUpdate.setToken(token);
-        companyToUpdate.setName(name);
-        companyToUpdate.update();
-
-        response.sendRedirect("crudCompany.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+           Person person = new Person();
+           person.setCpf("09487904905");
+           person = PersonDAO.readPerson(person);
+           Collection<PersonCompanySituation> xx = person.getSituationCompanies();
+           for(PersonCompanySituation x :xx){
+                out.println(x.getCompany().getName());
+           }
+           out.println("lol");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

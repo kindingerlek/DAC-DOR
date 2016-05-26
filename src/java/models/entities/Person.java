@@ -6,12 +6,17 @@
 package models.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import models.DAOs.PersonDAO;
 
 /**
  *
@@ -19,19 +24,48 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Person implements Serializable {
+    
     @Id
+    @GeneratedValue 
     @Column(name = "PERSON_ID")
     private int id;
+    
     @Column(name = "NAME")
     private String name;
+    
     @Column(name = "CPF")
     private String cpf;
     
-    @OneToMany(mappedBy = "person", targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
-    private List<PersonCompanySituation> situationCompanies;
+    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
+    private Collection<PersonCompanySituation> situationCompanies = new LinkedHashSet<PersonCompanySituation>();
     
     //Getters and Setters
-
+    public void add(){
+        PersonDAO.create(this);
+    }
+    
+    public void update(){
+        PersonDAO.update(this);
+    }
+    
+    public static Collection<Person> getAll(String type, String pattern){
+        return PersonDAO.readAll(type, pattern);
+    }
+   
+    public void createOrReplace(){
+        if(PersonDAO.readPerson(this)!=null){
+            PersonDAO.create(this);
+        }else{
+            PersonDAO.update(this);
+        }
+    }
+    
+    
+    //TODO THIOS METHOD HUEHUEHUEHUEHUE
+    public boolean isIndebted(){
+        return false;
+    }
+    
     public int getId() {
         return id;
     }
@@ -56,7 +90,7 @@ public class Person implements Serializable {
         this.cpf = cpf;
     }
 
-    public List<PersonCompanySituation> getSituationCompanies() {
+    public Collection<PersonCompanySituation> getSituationCompanies() {
         return situationCompanies;
     }
 

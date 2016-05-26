@@ -23,11 +23,11 @@ public class PersonCompanySituation {
     private PersonCompanySituationId personCompanySituationId;
     
     @ManyToOne
-    @JoinColumn(name="COMPANY_ID")
+    @JoinColumn(name="COMPANY_ID",insertable=false, updatable=false)
     private Company company;
     
     @ManyToOne
-    @JoinColumn(name="PERSON_ID")
+    @JoinColumn(name="PERSON_ID",insertable=false, updatable=false)
     private Person person;
    
     @Column(name = "STATUS")

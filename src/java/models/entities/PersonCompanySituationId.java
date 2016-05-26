@@ -6,6 +6,7 @@
 package models.entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -14,8 +15,9 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class PersonCompanySituationId implements Serializable{
-    
+    @Column(name = "COMPANY_ID")
     protected Integer companyId;
+    @Column(name = "PERSON_ID")
     protected Integer personId;
 
     public PersonCompanySituationId() {}
