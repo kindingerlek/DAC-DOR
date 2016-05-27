@@ -15,5 +15,6 @@
     <mapping class="models.entities.Person"/>
     <mapping class="models.entities.PersonCompanySituation"/>
     <mapping class="models.entities.PersonCompanySituationId"/>
+    <mapping class="models.entities.PersonCompanySituationLog"/>
   </session-factory>
 </hibernate-configuration>
