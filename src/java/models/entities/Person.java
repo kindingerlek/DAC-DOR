@@ -97,6 +97,9 @@ public class Person implements Serializable {
     public void setSituationCompanies(List<PersonCompanySituation> situationCompanies) {
         this.situationCompanies = situationCompanies;
     }
-    
-    
+
+    public static List<Person> getAll() {
+        return PersonDAO.readAll();
+    }
+
 }
