@@ -59,7 +59,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Inserir Administrador</a>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Editar Administrador</a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
@@ -75,15 +75,19 @@
                     <input type="email" class="form-control" placeholder="Email" name="email"/>
                 </div>
                 <div class="form-group">
-                    <label>Senha:</label>
-                    <input type="password" class="form-control" placeholder="Senha" name="password"/>
+                    <label>Senha Antiga:</label>
+                    <input type="password" class="form-control" placeholder="Senha" name="oldPassword"/>
+                </div>
+                <div class="form-group">
+                    <label>Nova Senha:</label>
+                    <input type="password" class="form-control" placeholder="Senha" name="newPassword"/>
                 </div>
                 <div class="form-group">
                     <label>Confirmar Senha:</label>
                     <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-info">Adicionar</button>
+                    <button type="submit" class="btn btn-info">Salvar</button>
                     <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
             </form>
