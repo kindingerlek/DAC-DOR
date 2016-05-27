@@ -72,7 +72,9 @@
                 </div>
                 <div class="form-group">
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" name="name" value="${test.name}"/>
+                    <c:set var="test" scope="session" value="${debtors[param.index]}"/>
+                    <c:out value="${test.name}"/>
                 </div>
                 <div class="form-group">
                     <label>Identificador:</label>

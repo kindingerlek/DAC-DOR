@@ -5,7 +5,6 @@
  */
 package controllers.person;
 
-import controllers.person.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +18,8 @@ import models.entities.Person;
  *
  * @author Alisson
  */
-@WebServlet(name = "AddPerson", urlPatterns = {"/AddPerson"})
-public class AddPerson extends HttpServlet {
+@WebServlet(name = "ListPersons", urlPatterns = {"/ListPersons"})
+public class ListPersons extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,16 +32,15 @@ public class AddPerson extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String cpf =request.getParameter("identifier");
-            String name =request.getParameter("name");
-            
-            Person personToAdd = new Person();
-            
-            personToAdd.setName(name);
-            personToAdd.setCpf(cpf);
-            personToAdd.add();
-            
-            response.sendRedirect("ListPersons");
+        response.setContentType("text/html;charset=UTF-8");
+        String pattern = request.getParameter("pattern");
+        String type = request.getParameter("type");
+        if (pattern == null) {
+            request.setAttribute("debtorsList", Person.getAll());
+        } else {
+            request.setAttribute("debtorsList", Person.getAll(type, pattern));
+        }
+        request.getRequestDispatcher("debtors.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

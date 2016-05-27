@@ -65,7 +65,7 @@
         </nav>
         <!-- Form -->
         <div class="form">
-            <form action="LoginProcess" method="POST" role="form">
+            <form action="AddPerson" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
                     <input type="text" class="form-control" placeholder="Nome" name="name"/>
@@ -75,13 +75,13 @@
                     <div class="form-inline radio-button">
                         <div class="radio radio-button">
                             <label>
-                                <input type="radio" name="identifier" value="cpf">
+                                <input type="radio" name="identifierType" value="cpf">
                                 CPF
                             </label>
                         </div>
                         <div class="radio radio-button">
                             <label>
-                                <input type="radio" name="identifier" value="cnpj">
+                                <input type="radio" name="identifierType" value="cnpj">
                                 CNPJ
                             </label>
                         </div>
