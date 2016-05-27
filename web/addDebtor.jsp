@@ -59,7 +59,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Inserir Administrador</a>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Inserir Devedor</a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
@@ -71,20 +71,26 @@
                     <input type="text" class="form-control" placeholder="Nome" name="name"/>
                 </div>
                 <div class="form-group">
-                    <label>Email:</label>
-                    <input type="email" class="form-control" placeholder="Email" name="email"/>
-                </div>
-                <div class="form-group">
-                    <label>Senha:</label>
-                    <input type="password" class="form-control" placeholder="Senha" name="password"/>
-                </div>
-                <div class="form-group">
-                    <label>Confirmar Senha:</label>
-                    <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <label>Identificador:</label>
+                    <div class="form-inline radio-button">
+                        <div class="radio radio-button">
+                            <label>
+                                <input type="radio" name="identifier" value="cpf">
+                                CPF
+                            </label>
+                        </div>
+                        <div class="radio radio-button">
+                            <label>
+                                <input type="radio" name="identifier" value="cnpj">
+                                CNPJ
+                            </label>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Identificador" name="identifier"/>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-info">Adicionar</button>
-                    <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <a href="debtors.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
             </form>
         </div>

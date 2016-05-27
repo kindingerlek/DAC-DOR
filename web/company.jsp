@@ -41,9 +41,9 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="debtors.jsp">Devedores</a></li>
-                        <li><a href="companies.jsp">Instituições</a></li>
-                        <li><a href="admins.jsp">Administradores</span></a></li>
+                        <li><a href="admin.jsp">Administradores</span></a></li>
+                        <li><a href="dev.jsp">Devedores</a></li>
+                        <li><a href="institution.jsp">Instituições</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -59,7 +59,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Inserir Administrador</a>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Instituição</a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
@@ -71,20 +71,17 @@
                     <input type="text" class="form-control" placeholder="Nome" name="name"/>
                 </div>
                 <div class="form-group">
-                    <label>Email:</label>
-                    <input type="email" class="form-control" placeholder="Email" name="email"/>
-                </div>
-                <div class="form-group">
-                    <label>Senha:</label>
-                    <input type="password" class="form-control" placeholder="Senha" name="password"/>
-                </div>
-                <div class="form-group">
-                    <label>Confirmar Senha:</label>
-                    <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <label>Token:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Token." name="token" aria-describedby="basic-addon1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning" type="button">Gerar Token</button>
+                        </span>
+                    </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-info">Adicionar</button>
-                    <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <button type="submit" class="btn btn-info">Salvar</button>
+                    <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
             </form>
         </div>

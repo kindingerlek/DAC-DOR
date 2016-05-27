@@ -1,0 +1,129 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26/05/2016, 13:55:30
+    Author     : Carlos
+*/
+
+.login-title {
+    text-align: center;
+    margin-top: 150pt;
+    margin-bottom: 20pt
+}
+
+.login-form{
+    width: 30%;
+    margin:auto;
+}
+
+.login-span {
+    width: 20%;
+}
+
+.login-input {
+    margin: auto;
+    padding-bottom: 5pt;
+    width: 100%;
+}
+
+.login-button{
+    width: 30%;
+    float:right;
+}
+
+.login-link{
+    margin-left: 0;
+}
+
+.header{
+    width: 100%;
+    background-color: #5bc0de;
+    height: 50px;
+}
+
+.welcome{
+    float:right;
+    padding: 10pt;
+    position: relative;
+    color: white;
+}
+
+.log-out a{
+    float:right;
+    padding: 10pt;
+    position: relative;
+    color: white;
+}
+
+.title{
+    font-size: large;
+    float:left;
+    padding-top: 10pt;
+    padding-left: 10pt; 
+    position: relative;
+    color: white;
+}
+
+.menu{
+    margin-bottom: 5pt;
+    margin-top: 5pt;
+}
+
+.my-table{
+    margin:auto;
+    width: 96%;
+    border:2pt;
+    border-color: #5bc0de;
+}
+
+.form{
+    width: 70%;
+    margin: auto;
+}
+
+.form div button{
+    float: right;
+    position: relative;
+}
+.form div a{
+    float: right;
+    position: relative;
+    margin-right: 10pt;
+}
+
+.radio-button{
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+}
+
+.intitution-debtor{
+    padding: 5pt;
+    background-color:#eee;
+    border-radius: 5pt;
+    margin-bottom: 10pt;
+    margin-top: 5pt;
+}
+.debtor-table{
+    overflow-y: scroll;
+    height: 150pt;
+}
+
+.btn-debtor{
+    margin-left: 5pt;
+}
+
+.add-company-combo{
+    text-align: right;
+    margin-bottom: 10pt;
+}
+
+body{
+    padding-bottom: 20pt;
+}
+
+#botao-do-capeta{
+    margin-bottom: 20pt;
+}
