@@ -11,6 +11,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import models.DAOs.PersonCompanySituationDAO;
 
 /**
  *
@@ -67,6 +68,14 @@ public class PersonCompanySituation {
 
     public void setIndebt(boolean indebt) {
         this.indebt = indebt;
+    }
+    
+    public static List<PersonCompanySituation> getAll(Person person) {
+        return PersonCompanySituationDAO.readAll(person);
+    }
+
+    public static List<PersonCompanySituation> getAll() {
+        return PersonCompanySituationDAO.readAll();
     }
     
 }

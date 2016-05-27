@@ -7,6 +7,7 @@ package models.DAOs;
 
 import java.util.ArrayList;
 import java.util.List;
+import models.entities.Person;
 import models.entities.PersonCompanySituation;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -74,14 +75,14 @@ public class PersonCompanySituationDAO {
         return list;
     }
 
-    public static List<PersonCompanySituation> readAll(String type, String param) {
+    public static List<PersonCompanySituation> readAll(Person person) {
         Transaction transaction = null;
         Session session = null;
         List<PersonCompanySituation> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from PersonCompanySituation where " + type + " like :param");
-            query.setParameter("param", "%" + param + "%");
+            Query query = session.createQuery("from PersonCompanySituation where person_id = :param");
+            query.setParameter("param", person.getId());
             list = query.list();
         } catch (Exception e) {
             if (transaction != null) {
@@ -93,6 +94,7 @@ public class PersonCompanySituationDAO {
         }
         return list;
     }
+    
 
     public static void readPersonCompanySituation() {
     }
