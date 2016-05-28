@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.person;
+package controllers.debtor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,14 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Person;
+import models.entities.Debtor;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "ListPersons", urlPatterns = {"/ListPersons"})
-public class ListPersons extends HttpServlet {
+@WebServlet(name = "ListDebtors", urlPatterns = {"/ListDebtors"})
+public class ListDebtors extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,9 +36,9 @@ public class ListPersons extends HttpServlet {
         String pattern = request.getParameter("pattern");
         String type = request.getParameter("type");
         if (pattern == null) {
-            request.setAttribute("debtorsList", Person.getAll());
+            request.setAttribute("debtorsList", Debtor.getAll());
         } else {
-            request.setAttribute("debtorsList", Person.getAll(type, pattern));
+            request.setAttribute("debtorsList", Debtor.getAll(type, pattern));
         }
         request.getRequestDispatcher("debtors.jsp").forward(request, response);
     }

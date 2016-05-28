@@ -14,13 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.PersonCompanySituation;
-import models.entities.PersonCompanySituationLog;
+import models.entities.DebtorCompanySituation;
+import models.entities.DebtorCompanySituationLog;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import static utils.HibernateUtils.getSessionFactory;
-import utils.report.PersonCompanySituationLogREL;
+import utils.report.DebtorCompanySituationLogREL;
 
 /**
  *
@@ -41,11 +41,11 @@ public class GetReport extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List listToMakeReport = (List) request.getAttribute("PersonCompanySituationList");
+        List listToMakeReport = (List) request.getAttribute("DebtorCompanySituationList");
         if (!listToMakeReport.isEmpty()) {
-            if (listToMakeReport.get(0).getClass() == PersonCompanySituationLog.class) {
+            if (listToMakeReport.get(0).getClass() == DebtorCompanySituationLog.class) {
                 try {
-                    PersonCompanySituationLogREL relatorio = new PersonCompanySituationLogREL();
+                    DebtorCompanySituationLogREL relatorio = new DebtorCompanySituationLogREL();
                     JasperPrint pdfToPrint = relatorio.getHistoryReport(listToMakeReport);
                     response.setContentType("application/pdf");
                     OutputStream outputStream = null;
@@ -56,9 +56,9 @@ public class GetReport extends HttpServlet {
                     request.getRequestDispatcher("error.jsp").forward(request, response);
 
                 }
-            } else if (listToMakeReport.get(0).getClass() == PersonCompanySituation.class) {
+            } else if (listToMakeReport.get(0).getClass() == DebtorCompanySituation.class) {
                 try {
-                    PersonCompanySituationLogREL relatorio = new PersonCompanySituationLogREL();
+                    DebtorCompanySituationLogREL relatorio = new DebtorCompanySituationLogREL();
                     JasperPrint pdfToPrint = relatorio.getSituationReport(listToMakeReport);
                     response.setContentType("application/pdf");
                     OutputStream outputStream = null;

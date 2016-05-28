@@ -13,10 +13,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.PersonCompanySituationLog;
+import models.entities.DebtorCompanySituationLog;
 import org.hibernate.Session;
 import static utils.HibernateUtils.getSessionFactory;
-import utils.report.PersonCompanySituationLogREL;
+import utils.report.DebtorCompanySituationLogREL;
 
 /**
  *
@@ -37,13 +37,13 @@ public class ShowReport extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List<PersonCompanySituationLog> log = null;
+        List<DebtorCompanySituationLog> log = null;
         Session session = null;
 
         try {
             session = getSessionFactory().openSession();
-            log = session.createCriteria(PersonCompanySituationLog.class).list();      
-            request.setAttribute("PersonCompanySituationList", log); 
+            log = session.createCriteria(DebtorCompanySituationLog.class).list();      
+            request.setAttribute("DebtorCompanySituationList", log); 
             request.getRequestDispatcher("GetReport").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("message", "Erro ao consultar o banco: " + e.getMessage());

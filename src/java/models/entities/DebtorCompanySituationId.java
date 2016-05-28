@@ -14,26 +14,26 @@ import javax.persistence.Embeddable;
  * @author Alisson
  */
 @Embeddable
-public class PersonCompanySituationId implements Serializable{
+public class DebtorCompanySituationId implements Serializable{
     @Column(name = "COMPANY_ID")
     protected Integer companyId;
-    @Column(name = "PERSON_ID")
-    protected Integer personId;
+    @Column(name = "DEBTOR_ID")
+    protected Integer debtorId;
 
-    public PersonCompanySituationId() {}
+    public DebtorCompanySituationId() {}
 
-    public PersonCompanySituationId(Integer companyId, Integer personId) {
+    public DebtorCompanySituationId(Integer companyId, Integer debtorId) {
         this.companyId = companyId;
-        this.personId = personId;
+        this.debtorId = debtorId;
     }
    
 
     @Override
     public boolean equals(Object obj) {
-        if(obj.getClass()== PersonCompanySituationId.class){
-            PersonCompanySituationId objToCompare;
-            objToCompare = (PersonCompanySituationId)obj;
-            if(objToCompare.getCompanyId().equals(this.companyId) && objToCompare.getPersonId().equals(this.personId)){
+        if(obj.getClass()== DebtorCompanySituationId.class){
+            DebtorCompanySituationId objToCompare;
+            objToCompare = (DebtorCompanySituationId)obj;
+            if(objToCompare.getCompanyId().equals(this.companyId) && objToCompare.getDebtorId().equals(this.debtorId)){
                 return true;
             }
         }
@@ -48,12 +48,12 @@ public class PersonCompanySituationId implements Serializable{
         this.companyId = companyId;
     }
 
-    public Integer getPersonId() {
-        return personId;
+    public Integer getDebtorId() {
+        return debtorId;
     }
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    public void setDebtorId(Integer debtorId) {
+        this.debtorId = debtorId;
     }
     
 }

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.person;
+package controllers.debtor;
 
-import controllers.person.*;
+import controllers.debtor.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Person;
+import models.entities.Debtor;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "AddPerson", urlPatterns = {"/AddPerson"})
-public class AddPerson extends HttpServlet {
+@WebServlet(name = "AddDebtor", urlPatterns = {"/AddDebtor"})
+public class AddDebtor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,16 +33,16 @@ public class AddPerson extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String cpf =request.getParameter("identifier");
+            String identifier =request.getParameter("identifier");
             String name =request.getParameter("name");
             
-            Person personToAdd = new Person();
+            Debtor debtorToAdd = new Debtor();
             
-            personToAdd.setName(name);
-            personToAdd.setCpf(cpf);
-            personToAdd.add();
+            debtorToAdd.setName(name);
+            debtorToAdd.setIdentifier(identifier);
+            debtorToAdd.add();
             
-            response.sendRedirect("ListPersons");
+            response.sendRedirect("ListDebtors");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

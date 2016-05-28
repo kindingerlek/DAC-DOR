@@ -66,11 +66,11 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
                     <a href="addDebtor.jsp"><button type="button" class="btn btn-info navbar-btn">Adicionar</button></a>
-                    <form class="navbar-form navbar-right" role="search" action="ListPersons" method="POST">
+                    <form class="navbar-form navbar-right" role="search" action="ListDebtors" method="POST">
                         <div class="form-group">
                             <select name="type" class="form-control">
                                 <option value="name">Nome</option>
-                                <option value="cpf">Identificador</option>
+                                <option value="identifier">Identificador</option>
                             </select> 
                             <input name="pattern" type="text" class="form-control" placeholder="...">
                         </div>

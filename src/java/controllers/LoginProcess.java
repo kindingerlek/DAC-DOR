@@ -59,7 +59,7 @@ public class LoginProcess extends HttpServlet {
                 session.setAttribute("admin", admin);
                 
                 //Redirect to debtors
-                request.getRequestDispatcher("ListPersons").forward(request, response);
+                request.getRequestDispatcher("ListDebtors").forward(request, response);
             }else{
                 //Redirect to login
                 response.sendRedirect("index.jsp");

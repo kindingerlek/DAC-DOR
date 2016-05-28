@@ -15,27 +15,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import models.DAOs.PersonCompanySituationLogDAO;
+import models.DAOs.DebtorCompanySituationLogDAO;
 
 /**
  *
  * @author Alisson
  */
 @Entity
-@Table(name = "log_person_company")
-public class PersonCompanySituationLog implements Serializable {
+@Table(name = "log_debtor_company")
+public class DebtorCompanySituationLog implements Serializable {
 
     @Id
-    @Column(name = "log_person_company_id", columnDefinition = "serial")
-    private Integer personCompanySituationId;
+    @Column(name = "log_debtor_company_id", columnDefinition = "serial")
+    private Integer debtorCompanySituationId;
 
     @ManyToOne
     @JoinColumn(name = "COMPANY_ID", insertable = false, updatable = false)
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name = "PERSON_ID", insertable = false, updatable = false)
-    private Person person;
+    @JoinColumn(name = "DEBTOR_ID", insertable = false, updatable = false)
+    private Debtor debtor;
 
     @Column(name = "STATUS")
     private boolean indebt;
@@ -51,22 +51,22 @@ public class PersonCompanySituationLog implements Serializable {
         this.logDate = logDate;
     }
 
-    public String getPersonName() {
-        return this.getPerson().getName();
+    public String getDebtorName() {
+        return this.getDebtor().getName();
     }
 
     public String getCompanyName() {
         return this.getCompany().getName();
     }
 
-    //private List<PersonCompanySituationLog> getAll();
+    //private List<DebtorCompanySituationLog> getAll();
     //Getter and Setters
-    public Integer getPersonCompanySituationLogId() {
-        return personCompanySituationId;
+    public Integer getDebtorCompanySituationLogId() {
+        return debtorCompanySituationId;
     }
 
-    public void setPersonCompanySituationLogId(Integer personCompanySituationId) {
-        this.personCompanySituationId = personCompanySituationId;
+    public void setDebtorCompanySituationLogId(Integer debtorCompanySituationId) {
+        this.debtorCompanySituationId = debtorCompanySituationId;
     }
 
     public Company getCompany() {
@@ -77,12 +77,12 @@ public class PersonCompanySituationLog implements Serializable {
         this.company = company;
     }
 
-    public Person getPerson() {
-        return person;
+    public Debtor getDebtor() {
+        return debtor;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setDebtor(Debtor debtor) {
+        this.debtor = debtor;
     }
 
     public boolean isIndebt() {
@@ -93,12 +93,12 @@ public class PersonCompanySituationLog implements Serializable {
         this.indebt = indebt;
     }
 
-    public static List<PersonCompanySituationLog> getAll(Person person) {
+    public static List<DebtorCompanySituationLog> getAll(Debtor debtor) {
         System.out.println("entrei nessa merda");
-        return PersonCompanySituationLogDAO.readAll(person);
+        return DebtorCompanySituationLogDAO.readAll(debtor);
     }
 
-    public static List<PersonCompanySituationLog> getAll() {
-        return PersonCompanySituationLogDAO.readAll();
+    public static List<DebtorCompanySituationLog> getAll() {
+        return DebtorCompanySituationLogDAO.readAll();
     }
 }
