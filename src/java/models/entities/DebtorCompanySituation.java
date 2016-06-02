@@ -11,6 +11,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import models.DAOs.DebtorCompanySituationDAO;
 
 /**
@@ -19,6 +20,7 @@ import models.DAOs.DebtorCompanySituationDAO;
  */
 
 @Entity
+@Table(name = "debtor_company_situation")
 public class DebtorCompanySituation {
     @EmbeddedId
     private DebtorCompanySituationId debtorCompanySituationId;

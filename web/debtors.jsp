@@ -100,12 +100,12 @@
                     <tr>
                         <td><c:out value="${index}" /></td>
                         <td><c:out value="${debtor.name}" /></td>
-                        <td><c:out value="${debtor.cpf}" /></td>
+                        <td><c:out value="${debtor.identifier}" /></td>
                         <td><c:out value="${debtor.indebted}" /></td>
                         <td>
                             
-                            <c:url value="editDebtor.jsp" var="url">
-                                <c:param name="index" value="${index}"/>
+                            <c:url value="GetDebtor" var="url">
+                                <c:param name="debtorId" value="${debtor.id}"/>
                             </c:url>
                             <a href="${url}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                             </td>

@@ -71,7 +71,16 @@ public class Admin {
             return null;
         }
     }
-
+    
+    public Admin getAdmin(){
+       Admin admin = AdminDAO.read(this.getEmail());
+        if ( admin!=null) {
+            return admin;
+        } else {
+            return null;
+        }
+    }
+    
     public int getId() {
         return id;
     }
@@ -104,4 +113,5 @@ public class Admin {
         this.email = email;
     }
 
+    
 }

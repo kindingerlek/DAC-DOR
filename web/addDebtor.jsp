@@ -65,7 +65,7 @@
         </nav>
         <!-- Form -->
         <div class="form">
-            <form action="AddPerson" method="POST" role="form">
+            <form action="AddDebtor" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
                     <input type="text" class="form-control" placeholder="Nome" name="name"/>

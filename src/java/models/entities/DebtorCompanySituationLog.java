@@ -22,7 +22,7 @@ import models.DAOs.DebtorCompanySituationLogDAO;
  * @author Alisson
  */
 @Entity
-@Table(name = "log_debtor_company")
+@Table(name = "log_debtor_company_situation")
 public class DebtorCompanySituationLog implements Serializable {
 
     @Id

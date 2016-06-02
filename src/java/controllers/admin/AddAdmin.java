@@ -7,6 +7,9 @@ package controllers.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,19 +35,33 @@ public class AddAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            String email = request.getParameter("email");
-            String password =request.getParameter("password");
-            String name =request.getParameter("name");
-            
-            Admin adminToAdd = new Admin();
-            
-            adminToAdd.setEmail(email);
-            adminToAdd.setPassword(password);
-            adminToAdd.setName(name);    
-            adminToAdd.add();
-            
-            response.sendRedirect("crudAdmin.jsp");
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String passwordConfirmation = request.getParameter("passwordConfirmation");
+        String name = request.getParameter("name");
+        List<String> errorMessages = new ArrayList();
+
+        if (passwordConfirmation.equals(password)) {
+            Admin adminToVerifyInDb = new Admin();
+            adminToVerifyInDb.setEmail(email);
+            adminToVerifyInDb = adminToVerifyInDb.getAdmin();
+            if (adminToVerifyInDb == null) {
+                Admin adminToAdd = new Admin();
+                adminToAdd.setEmail(email);
+                adminToAdd.setPassword(password);
+                adminToAdd.setName(name);
+                adminToAdd.add();
+                response.sendRedirect("admins.jsp");
+            } else {
+                errorMessages.add("O email informado já está cadastrado.");
+            }
+        } else {
+            errorMessages.add("As senhas informadas não estão iguais.");
+        }
+        request.setAttribute("errorMessages", errorMessages);
+        RequestDispatcher rd = request.getRequestDispatcher("/addAdmin.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

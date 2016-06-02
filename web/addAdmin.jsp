@@ -65,7 +65,7 @@
         </nav>
         <!-- Form -->
         <div class="form">
-            <form action="LoginProcess" method="POST" role="form">
+            <form action="AddAdmin" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
                     <input type="text" class="form-control" placeholder="Nome" name="name"/>
@@ -83,9 +83,19 @@
                     <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
                 </div>
                 <div>
+                    <c:if test="${not empty errorMessages}">
+                        <div class="alert alert-danger" role="alert">
+                            <c:forEach var="errorMessage" items="${errorMessages}">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                <c:out value="${errorMessage}"/><p>
+                            </c:forEach>
+                        </div>
+                    </c:if>
                     <button type="submit" class="btn btn-info">Adicionar</button>
                     <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
+
             </form>
         </div>
     </body>

@@ -3,24 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controllers.debtor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import models.entities.Admin;
+import models.entities.Debtor;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "LoginProcess", urlPatterns = {"/LoginProcess"})
-public class LoginProcess extends HttpServlet {
+@WebServlet(name = "GetDebtor", urlPatterns = {"/GetDebtor"})
+public class GetDebtor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +35,24 @@ public class LoginProcess extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println((String)request.getParameter("email"));
-            out.println((String)request.getParameter("password"));
+        String identifier = request.getParameter("identifier");
+        Integer idDebtor = Integer.parseInt(request.getParameter("debtorId"));
+        
+        if (idDebtor != null) {
+            Debtor debtor = new Debtor();
+            debtor.setId(idDebtor);
+            debtor = debtor.getDebtor();
+            System.out.println(debtor.getName());
+            request.setAttribute("debtor",debtor);
             
-            //Get the request data
-            String password = (String)request.getParameter("password");
-            String email = (String)request.getParameter("email");
-            //Validate request data
-            if(!password.isEmpty()&& !email.isEmpty()){
-            
-            }
-            //Try found the user
-            Admin admin = new Admin();
-            admin.setEmail(email);
-            admin.setPassword(password);
-            admin = admin.auth();
-            
-            //Do something
-            if(admin != null && admin.getId()>0){
-                //Salvar user na sessão;
-                HttpSession session = request.getSession();
-                session.setAttribute("admin", admin);
-                
-                //Redirect to debtors
-                request.getRequestDispatcher("ListDebtors").forward(request, response);
-            }else{
-                //Redirect to login
-                response.sendRedirect("index.jsp");
+        } else if(identifier != null) {
+            List<Debtor> debtorList =  (List<Debtor>) Debtor.getAll("identifier", identifier);
+            if(!debtorList.isEmpty()){
+                request.setAttribute("debtor",debtorList.get(0));
             }
         }
+        
+        request.getRequestDispatcher("editDebtor.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

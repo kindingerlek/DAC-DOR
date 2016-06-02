@@ -36,7 +36,7 @@ public class Debtor implements Serializable {
     @Column(name = "IDENTIFIER")
     private String identifier;
     
-    @OneToMany(mappedBy = "debtor",fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "debtor", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
     private Collection<DebtorCompanySituation> situationCompanies = new LinkedHashSet<DebtorCompanySituation>();
     
     //Getters and Setters
@@ -58,6 +58,10 @@ public class Debtor implements Serializable {
         }else{
             DebtorDAO.update(this);
         }
+    }
+    
+    public Debtor getDebtor(){
+        return DebtorDAO.read(this);
     }
     
     

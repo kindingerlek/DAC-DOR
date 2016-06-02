@@ -4,8 +4,10 @@
     Author     : Alisson
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="debtor" scope="request" class="models.entities.Debtor" />
 
 <!DOCTYPE html>
 <html>
@@ -68,13 +70,17 @@
             <form action="LoginProcess" method="POST" role="form">
                 <div class="form-inline">
                     <label>Situação:</label>
-                    <span>Irregular</span>
+                    <c:if test="{debtor.indebt}">
+                        <span>Irregular</span>
+                    </c:if>
+                    <c:if test="{!debtor.indebt}">
+                        <span>Regular</span>
+                    </c:if>
                 </div>
-                <div class="form-group">
+                <div class="form-group">   
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name" value="${test.name}"/>
-                    <c:set var="test" scope="session" value="${debtors[param.index]}"/>
-                    <c:out value="${test.name}"/>
+                    <input type="text" class="form-control" placeholder="Nome" name="name" value="${fn:escapeXml(debtor.name)}"/> 
+                    
                 </div>
                 <div class="form-group">
                     <label>Identificador:</label>
@@ -92,7 +98,7 @@
                             </label>
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Identificador" name="identifier"/>
+                    <input type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}"  name="identifier"/>
                 </div>
                 <label>Instituição: </label>
                 <div class="form-group intitution-debtor">
@@ -115,54 +121,17 @@
                             </thead>
 
                             <tbody>
+                                <c:forEach items="${debtor.situationCompanies}" var="company">
                                 <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
+                                    <td><c:out value="${fn:escapeXml(company.id)}"/></td>
+                                    <td><c:out value="${fn:escapeXml(company.name)}"/></td>
                                     <td>
                                         <input type="radio" name="option" value="regular">Regular</input>
                                         <input type="radio" name="option" value="irregular">Irregular</input>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
+                                </c:forEach>
+                                
                             </tbody>
                         </table>
                     </div>

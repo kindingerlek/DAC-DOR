@@ -8,6 +8,7 @@ package models.DAOs;
 import java.util.ArrayList;
 import java.util.List;
 import models.entities.Debtor;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,7 +20,20 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class DebtorDAO {
 
-   
+    public static Debtor read(Debtor debtor) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            debtor = (Debtor) session.get(Debtor.class,debtor.getId());
+            debtor.getSituationCompanies().size();
+            
+            return debtor;
+        } catch (Exception e) {
+                throw e;
+        } finally {
+            session.close();
+        }  
+    }
 
     public static void update(Debtor debtor) {
         Transaction transaction = null;
@@ -66,8 +80,7 @@ public class DebtorDAO {
             session = getSessionFactory().openSession();
             list = session.createCriteria(Debtor.class).list();
         } catch (Exception e) {
-            System.out.println("readAll Debtor");
-            System.out.println(e.getMessage());
+          
         } finally {
             session.close();
         }
@@ -93,7 +106,8 @@ public class DebtorDAO {
         }
         return list;
     }
-    public static Debtor readDebtor(Debtor debtor){
+
+    public static Debtor readDebtor(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         Debtor debtorReturned = null;
@@ -103,17 +117,13 @@ public class DebtorDAO {
             query.setParameter("param", debtor.getIdentifier());
             debtorReturned = (Debtor) query.uniqueResult();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
+            
         } finally {
             session.close();
         }
-        return debtorReturned;  
+        return debtorReturned;
     }
 
-    
     public static void delete(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
