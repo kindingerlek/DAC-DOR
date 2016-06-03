@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controllers.debtor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import models.entities.Debtor;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "LogoutProcess", urlPatterns = {"/LogoutProcess"})
-public class LogoutProcess extends HttpServlet {
+@WebServlet(name = "GetDebtor", urlPatterns = {"/GetDebtor"})
+public class GetDebtor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,12 +35,24 @@ public class LogoutProcess extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         //Clean Session
-        HttpSession session = request.getSession();
-        session.invalidate();
-        //Redirect to Login
-        response.sendRedirect("index.jsp");
-    
+        String identifier = request.getParameter("identifier");
+        Integer idDebtor = Integer.parseInt(request.getParameter("debtorId"));
+        
+        if (idDebtor != null) {
+            Debtor debtor = new Debtor();
+            debtor.setId(idDebtor);
+            debtor = debtor.getDebtor();
+            System.out.println(debtor.getName());
+            request.setAttribute("debtor",debtor);
+            
+        } else if(identifier != null) {
+            List<Debtor> debtorList =  (List<Debtor>) Debtor.getAll("identifier", identifier);
+            if(!debtorList.isEmpty()){
+                request.setAttribute("debtor",debtorList.get(0));
+            }
+        }
+        
+        request.getRequestDispatcher("editDebtor.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

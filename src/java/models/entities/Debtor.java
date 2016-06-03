@@ -16,48 +16,52 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import models.DAOs.PersonDAO;
+import models.DAOs.DebtorDAO;
 
 /**
  *
  * @author Alisson
  */
 @Entity
-public class Person implements Serializable {
+public class Debtor implements Serializable {
     
     @Id
     @GeneratedValue                                                                                                                                                                                                                                                                            
-    @Column(name = "PERSON_ID")
+    @Column(name = "DEBTOR_ID")
     private int id;
     
     @Column(name = "NAME")
     private String name;
     
-    @Column(name = "CPF")
-    private String cpf;
+    @Column(name = "IDENTIFIER")
+    private String identifier;
     
-    @OneToMany(mappedBy = "person",fetch = FetchType.LAZY, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
-    private Collection<PersonCompanySituation> situationCompanies = new LinkedHashSet<PersonCompanySituation>();
+    @OneToMany(mappedBy = "debtor", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
+    private Collection<DebtorCompanySituation> situationCompanies = new LinkedHashSet<DebtorCompanySituation>();
     
     //Getters and Setters
     public void add(){
-        PersonDAO.create(this);
+        DebtorDAO.create(this);
     }
     
     public void update(){
-        PersonDAO.update(this);
+        DebtorDAO.update(this);
     }
     
-    public static Collection<Person> getAll(String type, String pattern){
-        return PersonDAO.readAll(type, pattern);
+    public static Collection<Debtor> getAll(String type, String pattern){
+        return DebtorDAO.readAll(type, pattern);
     }
    
     public void createOrReplace(){
-        if(PersonDAO.readPerson(this)!=null){
-            PersonDAO.create(this);
+        if(DebtorDAO.readDebtor(this)!=null){
+            DebtorDAO.create(this);
         }else{
-            PersonDAO.update(this);
+            DebtorDAO.update(this);
         }
+    }
+    
+    public Debtor getDebtor(){
+        return DebtorDAO.read(this);
     }
     
     
@@ -82,24 +86,24 @@ public class Person implements Serializable {
         this.name = name;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
-    public Collection<PersonCompanySituation> getSituationCompanies() {
+    public Collection<DebtorCompanySituation> getSituationCompanies() {
         return situationCompanies;
     }
 
-    public void setSituationCompanies(List<PersonCompanySituation> situationCompanies) {
+    public void setSituationCompanies(List<DebtorCompanySituation> situationCompanies) {
         this.situationCompanies = situationCompanies;
     }
 
-    public static List<Person> getAll() {
-        return PersonDAO.readAll();
+    public static List<Debtor> getAll() {
+        return DebtorDAO.readAll();
     }
 
 }

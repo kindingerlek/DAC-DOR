@@ -3,27 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.person;
+package controllers.debtor;
 
+import controllers.debtor.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.DAOs.PersonDAO;
-import models.entities.Person;
-import models.entities.PersonCompanySituation;
+import models.entities.Debtor;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "ShowPerson", urlPatterns = {"/ShowPerson"})
-public class ShowPerson extends HttpServlet {
+@WebServlet(name = "UpdateDebtor", urlPatterns = {"/UpdateDebtor"})
+public class UpdateDebtor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,17 +33,17 @@ public class ShowPerson extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-           Person person = new Person();
-           person.setCpf("09487904905");
-           person = PersonDAO.readPerson(person);
-           Collection<PersonCompanySituation> xx = person.getSituationCompanies();
-           for(PersonCompanySituation x :xx){
-                out.println(x.getCompany().getName());
-           }
-           out.println("lol");
-        }
+        Debtor debtorToUpdate = new Debtor();
+        int debtorId = Integer.parseInt((String) request.getParameter("idDebtor"));
+        String identifier = request.getParameter("identifier");
+        String name = request.getParameter("name");
+
+        debtorToUpdate.setId(debtorId);
+        debtorToUpdate.setIdentifier(identifier);
+        debtorToUpdate.setName(name);
+        debtorToUpdate.update();
+
+        response.sendRedirect("crudDebtor.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

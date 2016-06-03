@@ -11,7 +11,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import models.DAOs.PersonCompanySituationDAO;
+import javax.persistence.Table;
+import models.DAOs.DebtorCompanySituationDAO;
 
 /**
  *
@@ -19,31 +20,32 @@ import models.DAOs.PersonCompanySituationDAO;
  */
 
 @Entity
-public class PersonCompanySituation {
+@Table(name = "debtor_company_situation")
+public class DebtorCompanySituation {
     @EmbeddedId
-    private PersonCompanySituationId personCompanySituationId;
+    private DebtorCompanySituationId debtorCompanySituationId;
     
     @ManyToOne
     @JoinColumn(name="COMPANY_ID",insertable=false, updatable=false)
     private Company company;
     
     @ManyToOne
-    @JoinColumn(name="PERSON_ID",insertable=false, updatable=false)
-    private Person person;
+    @JoinColumn(name="DEBTOR_ID",insertable=false, updatable=false)
+    private Debtor debtor;
    
     @Column(name = "STATUS")
     private boolean indebt;
       
     
-    //private List<PersonCompanySituation> getAll();
+    //private List<DebtorCompanySituation> getAll();
     //Getter and Setters
 
-    public PersonCompanySituationId getPersonCompanySituationId() {
-        return personCompanySituationId;
+    public DebtorCompanySituationId getDebtorCompanySituationId() {
+        return debtorCompanySituationId;
     }
 
-    public void setPersonCompanySituationId(PersonCompanySituationId personCompanySituationId) {
-        this.personCompanySituationId = personCompanySituationId;
+    public void setDebtorCompanySituationId(DebtorCompanySituationId debtorCompanySituationId) {
+        this.debtorCompanySituationId = debtorCompanySituationId;
     }
 
     public Company getCompany() {
@@ -54,12 +56,12 @@ public class PersonCompanySituation {
         this.company = company;
     }
 
-    public Person getPerson() {
-        return person;
+    public Debtor getDebtor() {
+        return debtor;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setDebtor(Debtor debtor) {
+        this.debtor = debtor;
     }
 
     public boolean isIndebt() {
@@ -70,12 +72,12 @@ public class PersonCompanySituation {
         this.indebt = indebt;
     }
     
-    public static List<PersonCompanySituation> getAll(Person person) {
-        return PersonCompanySituationDAO.readAll(person);
+    public static List<DebtorCompanySituation> getAll(Debtor debtor) {
+        return DebtorCompanySituationDAO.readAll(debtor);
     }
 
-    public static List<PersonCompanySituation> getAll() {
-        return PersonCompanySituationDAO.readAll();
+    public static List<DebtorCompanySituation> getAll() {
+        return DebtorCompanySituationDAO.readAll();
     }
     
 }

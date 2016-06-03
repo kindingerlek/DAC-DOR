@@ -38,15 +38,15 @@ public class Company {
     @Column(name = "TOKEN")
     private String token;
     
-    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, targetEntity = PersonCompanySituation.class, cascade = CascadeType.ALL)
-    private Collection<PersonCompanySituation> PersonsSituation;
+    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
+    private Collection<DebtorCompanySituation> DebtorsSituation;
 
-    public Collection<PersonCompanySituation> getPersonsSituation() {
-        return PersonsSituation;
+    public Collection<DebtorCompanySituation> getDebtorsSituation() {
+        return DebtorsSituation;
     }
 
-    public void setPersonsSituation(Collection<PersonCompanySituation> PersonsSituation) {
-        this.PersonsSituation = PersonsSituation;
+    public void setDebtorsSituation(Collection<DebtorCompanySituation> DebtorsSituation) {
+        this.DebtorsSituation = DebtorsSituation;
     }
 
     public Company() {

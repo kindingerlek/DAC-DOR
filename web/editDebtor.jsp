@@ -4,8 +4,10 @@
     Author     : Alisson
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="debtor" scope="request" class="models.entities.Debtor" />
 
 <!DOCTYPE html>
 <html>
@@ -18,37 +20,7 @@
         <title>DOR</title>
     </head>
     <body>
-        <!-- Header -->
-        <div class="header">
-            <span class="title">DOR <small>- Devedores Originalmente Regulares</small></span>
-            <span class="log-out"><a href="LogoutProcess"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></span>
-            <span class="welcome">Bem vindo, Razer!</span>
-        </div>
-        <!-- Navbar -->
-        <nav class="navbar navbar-default menu">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Menu</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a href="debtors.jsp">Devedores</a></li>
-                        <li><a href="companies.jsp">Instituições</a></li>
-                        <li><a href="admins.jsp">Administradores</span></a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-        <!-- Section Header -->
+         <%@ include file="header.jsp" %>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -68,11 +40,17 @@
             <form action="LoginProcess" method="POST" role="form">
                 <div class="form-inline">
                     <label>Situação:</label>
-                    <span>Irregular</span>
+                    <c:if test="{debtor.indebt}">
+                        <span>Irregular</span>
+                    </c:if>
+                    <c:if test="{!debtor.indebt}">
+                        <span>Regular</span>
+                    </c:if>
                 </div>
-                <div class="form-group">
+                <div class="form-group">   
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" name="name" value="${fn:escapeXml(debtor.name)}"/> 
+                    
                 </div>
                 <div class="form-group">
                     <label>Identificador:</label>
@@ -90,7 +68,7 @@
                             </label>
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Identificador" name="identifier"/>
+                    <input type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}"  name="identifier"/>
                 </div>
                 <label>Instituição: </label>
                 <div class="form-group intitution-debtor">
@@ -113,54 +91,17 @@
                             </thead>
 
                             <tbody>
+                                <c:forEach items="${debtor.situationCompanies}" var="company">
                                 <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
+                                    <td><c:out value="${fn:escapeXml(company.id)}"/></td>
+                                    <td><c:out value="${fn:escapeXml(company.name)}"/></td>
                                     <td>
                                         <input type="radio" name="option" value="regular">Regular</input>
                                         <input type="radio" name="option" value="irregular">Irregular</input>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
+                                </c:forEach>
+                                
                             </tbody>
                         </table>
                     </div>

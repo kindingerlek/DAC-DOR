@@ -7,8 +7,8 @@ package models.DAOs;
 
 import java.util.ArrayList;
 import java.util.List;
-import models.entities.Person;
-import models.entities.PersonCompanySituation;
+import models.entities.Debtor;
+import models.entities.DebtorCompanySituation;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,11 +18,11 @@ import static utils.HibernateUtils.getSessionFactory;
  *
  * @author Alisson
  */
-public class PersonCompanySituationDAO {
+public class DebtorCompanySituationDAO {
 
    
 
-    public static void update(PersonCompanySituation personCompanySituation) {
+    public static void update(DebtorCompanySituation personCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -41,7 +41,7 @@ public class PersonCompanySituationDAO {
         }
     }
 
-    public static void create(PersonCompanySituation personCompanySituation) {
+    public static void create(DebtorCompanySituation personCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -60,14 +60,14 @@ public class PersonCompanySituationDAO {
         }
     }
 
-    public static List<PersonCompanySituation> readAll() {
+    public static List<DebtorCompanySituation> readAll() {
         Session session = null;
-        List<PersonCompanySituation> list = new ArrayList();
+        List<DebtorCompanySituation> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            list = session.createCriteria(PersonCompanySituation.class).list();
+            list = session.createCriteria(DebtorCompanySituation.class).list();
         } catch (Exception e) {
-            System.out.println("readAll PersonCompanySituation");
+            System.out.println("readAll DebtorCompanySituation");
             System.out.println(e.getMessage());
         } finally {
             session.close();
@@ -75,13 +75,13 @@ public class PersonCompanySituationDAO {
         return list;
     }
 
-    public static List<PersonCompanySituation> readAll(Person person) {
+    public static List<DebtorCompanySituation> readAll(Debtor person) {
         Transaction transaction = null;
         Session session = null;
-        List<PersonCompanySituation> list = new ArrayList();
+        List<DebtorCompanySituation> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from PersonCompanySituation where person_id = :param");
+            Query query = session.createQuery("from DebtorCompanySituation where person_id = :param");
             query.setParameter("param", person.getId());
             list = query.list();
         } catch (Exception e) {
@@ -96,10 +96,10 @@ public class PersonCompanySituationDAO {
     }
     
 
-    public static void readPersonCompanySituation() {
+    public static void readDebtorCompanySituation() {
     }
 
-    public static void delete(PersonCompanySituation personCompanySituation) {
+    public static void delete(DebtorCompanySituation personCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {

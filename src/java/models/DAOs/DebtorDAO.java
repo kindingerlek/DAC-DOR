@@ -7,7 +7,8 @@ package models.DAOs;
 
 import java.util.ArrayList;
 import java.util.List;
-import models.entities.Person;
+import models.entities.Debtor;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,17 +18,30 @@ import static utils.HibernateUtils.getSessionFactory;
  *
  * @author Alisson
  */
-public class PersonDAO {
+public class DebtorDAO {
 
-   
+    public static Debtor read(Debtor debtor) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            debtor = (Debtor) session.get(Debtor.class,debtor.getId());
+            debtor.getSituationCompanies().size();
+            
+            return debtor;
+        } catch (Exception e) {
+                throw e;
+        } finally {
+            session.close();
+        }  
+    }
 
-    public static void update(Person person) {
+    public static void update(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(person);
+            session.update(debtor);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -40,13 +54,13 @@ public class PersonDAO {
         }
     }
 
-    public static void create(Person person) {
+    public static void create(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(person);
+            session.save(debtor);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -59,28 +73,27 @@ public class PersonDAO {
         }
     }
 
-    public static List<Person> readAll() {
+    public static List<Debtor> readAll() {
         Session session = null;
-        List<Person> list = new ArrayList();
+        List<Debtor> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            list = session.createCriteria(Person.class).list();
+            list = session.createCriteria(Debtor.class).list();
         } catch (Exception e) {
-            System.out.println("readAll Person");
-            System.out.println(e.getMessage());
+          
         } finally {
             session.close();
         }
         return list;
     }
 
-    public static List<Person> readAll(String type, String param) {
+    public static List<Debtor> readAll(String type, String param) {
         Transaction transaction = null;
         Session session = null;
-        List<Person> list = new ArrayList();
+        List<Debtor> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from Person where " + type + " like :param");
+            Query query = session.createQuery("from Debtor where " + type + " like :param");
             query.setParameter("param", "%" + param + "%");
             list = query.list();
         } catch (Exception e) {
@@ -93,34 +106,31 @@ public class PersonDAO {
         }
         return list;
     }
-    public static Person readPerson(Person person){
+
+    public static Debtor readDebtor(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
-        Person personReturned = null;
+        Debtor debtorReturned = null;
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from Person where cpf= :param");
-            query.setParameter("param", person.getCpf());
-            personReturned = (Person) query.uniqueResult();
+            Query query = session.createQuery("from Debtor where cpf= :param");
+            query.setParameter("param", debtor.getIdentifier());
+            debtorReturned = (Debtor) query.uniqueResult();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-                throw e;
-            }
+            
         } finally {
             session.close();
         }
-        return personReturned;  
+        return debtorReturned;
     }
 
-    
-    public static void delete(Person person) {
+    public static void delete(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(person);
+            session.delete(debtor);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
