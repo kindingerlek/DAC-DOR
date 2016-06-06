@@ -8,6 +8,7 @@ package models.DAOs;
 import java.util.ArrayList;
 import java.util.List;
 import models.entities.Company;
+import models.entities.Company;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,6 +20,21 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class CompanyDAO {
 
+     public static Company read(Company company) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            company = (Company) session.get(Company.class,company.getId());
+            
+            
+            return company;
+        } catch (Exception e) {
+                throw e;
+        } finally {
+            session.close();
+        }  
+    }
+     
     public static boolean validateToken(Company company) {
         Transaction transaction = null;
         Session session = null;
@@ -42,7 +58,7 @@ public class CompanyDAO {
         return (companyReturned != null);
     }
 
-    public static void update(Company company) {
+    public static boolean update(Company company) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -56,9 +72,11 @@ public class CompanyDAO {
                 transaction.rollback();
                 throw e;
             }
+            return false;
         } finally {
             session.close();
         }
+        return true;
     }
 
     public static void create(Company company) {
