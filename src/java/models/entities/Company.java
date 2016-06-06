@@ -56,8 +56,8 @@ public class Company {
         CompanyDAO.create(this);
     }
 
-    public void update() {
-        CompanyDAO.update(this);
+    public boolean update() {
+        return CompanyDAO.update(this);
     }
 
     public void delete() {
@@ -67,7 +67,11 @@ public class Company {
     public static List<Company> getAll(String type, String param) {
         return CompanyDAO.readAll(type, param);
     }
-
+    
+    public  Company getCompany(){
+        return CompanyDAO.read(this);
+        
+    }
     public static List<Company> getAll() {
         return CompanyDAO.readAll();
     }
