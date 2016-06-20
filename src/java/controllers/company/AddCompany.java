@@ -41,7 +41,7 @@ public class AddCompany extends HttpServlet {
             companyToAdd.setToken(token);
             companyToAdd.add();
             
-            response.sendRedirect("crudCompany.jsp");
+            response.sendRedirect("ListCompanies");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

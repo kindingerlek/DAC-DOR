@@ -16,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 import models.DAOs.DebtorDAO;
 
 /**
@@ -28,7 +29,7 @@ public class Debtor implements Serializable {
     @Id
     @GeneratedValue                                                                                                                                                                                                                                                                            
     @Column(name = "DEBTOR_ID")
-    private int id;
+    private Integer id;
     
     @Column(name = "NAME")
     private String name;
@@ -36,7 +37,7 @@ public class Debtor implements Serializable {
     @Column(name = "IDENTIFIER")
     private String identifier;
     
-    @OneToMany(mappedBy = "debtor", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "debtor", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade ={ CascadeType.ALL})
     private Collection<DebtorCompanySituation> situationCompanies = new LinkedHashSet<DebtorCompanySituation>();
     
     //Getters and Setters
@@ -61,16 +62,23 @@ public class Debtor implements Serializable {
     }
     
     public Debtor getDebtor(){
+          if (this.id == null) {
+            return DebtorDAO.readDebtor(this);
+        } else {
         return DebtorDAO.read(this);
+          }
     }
     
     
-    //TODO THIOS METHOD HUEHUEHUEHUEHUE
+   public boolean getIndebted(){
+        return DebtorDAO.isIndebted(this);
+   }
+   
     public boolean isIndebted(){
-        return false;
+        return DebtorDAO.isIndebted(this);
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

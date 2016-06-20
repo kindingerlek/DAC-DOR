@@ -7,6 +7,7 @@ package models.DAOs;
 
 import java.util.ArrayList;
 import java.util.List;
+import models.entities.Company;
 import models.entities.Debtor;
 import models.entities.DebtorCompanySituation;
 import org.hibernate.Query;
@@ -20,15 +21,28 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class DebtorCompanySituationDAO {
 
-   
+   public static DebtorCompanySituation read(DebtorCompanySituation debSit) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            debSit = (DebtorCompanySituation) session.get(DebtorCompanySituation.class,debSit.getDebtorCompanySituationId());
+            
+            
+            return debSit;
+        } catch (Exception e) {
+                throw e;
+        } finally {
+            session.close();
+        }
+   }
 
-    public static void update(DebtorCompanySituation personCompanySituation) {
+    public static void update(DebtorCompanySituation debtorCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(personCompanySituation);
+            session.update(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -41,13 +55,13 @@ public class DebtorCompanySituationDAO {
         }
     }
 
-    public static void create(DebtorCompanySituation personCompanySituation) {
+    public static void create(DebtorCompanySituation debtorCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(personCompanySituation);
+            session.save(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -75,14 +89,14 @@ public class DebtorCompanySituationDAO {
         return list;
     }
 
-    public static List<DebtorCompanySituation> readAll(Debtor person) {
+    public static List<DebtorCompanySituation> readAll(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         List<DebtorCompanySituation> list = new ArrayList();
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from DebtorCompanySituation where person_id = :param");
-            query.setParameter("param", person.getId());
+            Query query = session.createQuery("from DebtorCompanySituation where debtor_id = :param");
+            query.setParameter("param", debtor.getId());
             list = query.list();
         } catch (Exception e) {
             if (transaction != null) {
@@ -99,13 +113,13 @@ public class DebtorCompanySituationDAO {
     public static void readDebtorCompanySituation() {
     }
 
-    public static void delete(DebtorCompanySituation personCompanySituation) {
+    public static void delete(DebtorCompanySituation debtorCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(personCompanySituation);
+            session.delete(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
@@ -116,5 +130,9 @@ public class DebtorCompanySituationDAO {
         } finally {
             session.close();
         }
+    }
+
+    public static DebtorCompanySituation read() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

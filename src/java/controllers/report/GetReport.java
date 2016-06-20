@@ -52,8 +52,8 @@ public class GetReport extends HttpServlet {
                     outputStream = response.getOutputStream();
                     JasperExportManager.exportReportToPdfStream(pdfToPrint, outputStream);
                 } catch (Exception e) {
-                    request.setAttribute("message", "Erro ao gerar Pdf: " + e.getMessage());
-                    request.getRequestDispatcher("error.jsp").forward(request, response);
+                    request.setAttribute("errorMessage", "Erro ao gerar Pdf: " + e.getMessage());
+                    request.getRequestDispatcher("errorReport.jsp").forward(request, response);
 
                 }
             } else if (listToMakeReport.get(0).getClass() == DebtorCompanySituation.class) {
@@ -65,14 +65,14 @@ public class GetReport extends HttpServlet {
                     outputStream = response.getOutputStream();
                     JasperExportManager.exportReportToPdfStream(pdfToPrint, outputStream);
                 } catch (Exception e) {
-                    request.setAttribute("message", "Erro ao gerar Pdf: " + e.getMessage());
-                    request.getRequestDispatcher("error.jsp").forward(request, response);
+                    request.setAttribute("errorMessage", "Erro ao gerar Pdf: " + e.getMessage());
+                    request.getRequestDispatcher("errorReport.jsp").forward(request, response);
 
                 }
             }
         }
-        request.setAttribute("message", "Erro ao gerar relatório, nenhum item para ser processado.");
-        request.getRequestDispatcher("error.jsp").forward(request, response);
+        request.setAttribute("errorMessage", "Erro ao gerar relatório, nenhum item para ser processado.");
+        request.getRequestDispatcher("errorReport.jsp").forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

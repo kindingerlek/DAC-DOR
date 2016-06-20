@@ -33,7 +33,8 @@ public class UpdateCompany extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Company companyToUpdate = new Company();
-        int companyId = Integer.parseInt((String) request.getParameter("idCompany"));
+     
+        int companyId = Integer.parseInt((String) request.getParameter("companyId"));
         String token = request.getParameter("token");
         String name = request.getParameter("name");
 
@@ -42,7 +43,7 @@ public class UpdateCompany extends HttpServlet {
         companyToUpdate.setName(name);
         companyToUpdate.update();
 
-        response.sendRedirect("crudCompany.jsp");
+        response.sendRedirect("ListCompanies");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

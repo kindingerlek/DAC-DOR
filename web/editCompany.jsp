@@ -7,12 +7,12 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="company" scope="request" class="models.entities.Company" />
 
-<jsp:useBean id="admin" scope="request" class="models.entities.Admin" />
-
-<c:url value="UpdateAdmin" var="url">
-    <c:param name="adminId" value="${admin.id}"/>
+<c:url value="UpdateCompany" var="url">
+    <c:param name="companyId" value="${company.id}"/>
 </c:url>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,7 +35,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Editar Administrador</a>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>  Editar nstituição</a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
@@ -43,24 +43,19 @@
         <div class="form">
             <form action="${url}" method="POST" role="form">
                 <div class="form-group">
+
+
                     <label>Nome:</label>
-                    <input type="text" class="form-control" value="${fn:escapeXml(admin.name)}" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" value="${fn:escapeXml(company.name)}" name="name"/>
                 </div>
                 <div class="form-group">
-                    <label>Email:</label>
-                    <input type="email" class="form-control" value="${fn:escapeXml(admin.email)}"placeholder="Email" name="email"/>
-                </div>
-                <div class="form-group">
-                    <label>Senha Antiga:</label>
-                    <input type="password" class="form-control" placeholder="Senha Antiga" name="oldPassword"/>
-                </div>
-                <div class="form-group">
-                    <label>Nova Senha:</label>
-                    <input type="password" class="form-control" placeholder="Nova Senha" name="newPassword"/>
-                </div>
-                <div class="form-group">
-                    <label>Confirmar Senha:</label>
-                    <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <label>Token:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Token." value="${fn:escapeXml(company.token)}" name="token" aria-describedby="basic-addon1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning" type="button">Gerar Token</button>
+                        </span>
+                    </div>
                 </div>
                 <div>
                     <c:if test="${not empty errorMessages}">
@@ -73,7 +68,7 @@
                         </div>
                     </c:if>
                     <button type="submit" class="btn btn-info">Salvar</button>
-                    <a href="ListAdmins"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
             </form>
         </div>

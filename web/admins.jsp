@@ -38,13 +38,13 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
                     <a href="addAdmin.jsp"><button type="button" class="btn btn-info navbar-btn">Adicionar</button></a>
-                    <form class="navbar-form navbar-right" role="search">
+                    <form class="navbar-form navbar-right" method="POST" action="ListAdmins"role="search">
                         <div class="form-group">
-                            <select class="form-control">
+                            <select name="type" class="form-control">
                                 <option value="name">Nome</option>
                                 <option value="email">Email</option>
                             </select> 
-                            <input type="text" class="form-control" placeholder="...">
+                            <input type="text" class="form-control" name="pattern" placeholder="...">
                         </div>
                         <button type="submit" class="btn btn-info">Procurar</button>
                     </form>
@@ -64,51 +64,30 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Carlos</td>
-                    <td>cagrispan@gmail.com</td>
-                    <td>
-                        <a href="editAdmin.jsp"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Carlos</td>
-                    <td>cagrispan@gmail.com</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Carlos</td>
-                    <td>cagrispan@gmail.com</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Carlos</td>
-                    <td>cagrispan@gmail.com</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Carlos</td>
-                    <td>cagrispan@gmail.com</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
+               <c:set var="index" value="${1}" scope="page"/>
+                <c:set var="admins" scope="session" value="${adminsList}"/>
+                <c:forEach items="${adminsList}" var="admin">
+
+                    <tr>
+                        <td><c:out value="${index}" /></td>
+                        <td><c:out value="${admin.name}" /></td>
+                        <td><c:out value="${admin.email}" /></td>
+                        <td>
+                            
+                            <c:url value="GetAdmin" var="url">
+                                <c:param name="idAdmin" value="${admin.id}"/>
+                            </c:url>
+                            <a href="${url}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                        <c:url value="DeleteAdmin" var="url">
+                                <c:param name="IdAdmin" value="${admin.id}"/>
+                            </c:url>
+                            <a href="${url}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                
+                        </td>
+                        </tr>
+                        <c:set var="index" value="${index+1}" scope="page"/>
+                </c:forEach>
+            </tbody>
             </tbody>
         </table>
     </body>

@@ -7,6 +7,9 @@ package controllers.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,20 +36,39 @@ public class UpdateAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int adminId = Integer.parseInt((String) request.getParameter("idAdmin"));
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
+        int adminId = Integer.parseInt((String) request.getParameter("adminId"));
+        String email = (String) request.getParameter("email");
+        String newPassword = (String) request.getParameter("newPassword");
+        String oldPassword = (String) request.getParameter("oldPassword");
+        String passwordConfirmation = (String) request.getParameter("passwordConfirmation");
+        String name = (String) request.getParameter("name");
+        List<String> errorMessages = new ArrayList();
 
         Admin adminToUpdate = new Admin();
 
         adminToUpdate.setId(adminId);
+        adminToUpdate = adminToUpdate.getAdmin();
+        System.out.println(adminToUpdate.getPassword());
         adminToUpdate.setEmail(email);
-        adminToUpdate.setPassword(password);
         adminToUpdate.setName(name);
-        adminToUpdate.update();
+        if (!newPassword.isEmpty()) {
+            if (!adminToUpdate.getPassword().equals(oldPassword)) {
+                errorMessages.add("A senha antiga está incorreta.");
+            } else if (passwordConfirmation.equals(newPassword)) {
+                adminToUpdate.setPassword(newPassword);
+            } else {
+                errorMessages.add("As senhas informadas não estão iguais.");
+            }
+        }
 
-        response.sendRedirect("crudAdmin.jsp");
+        if (!errorMessages.isEmpty()) {
+            request.setAttribute("errorMessages", errorMessages);
+            RequestDispatcher rd = request.getRequestDispatcher("GetAdmin?idAdmin=" + adminId);
+            rd.include(request, response);
+        } else {
+            adminToUpdate.update();
+            response.sendRedirect("ListAdmins");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

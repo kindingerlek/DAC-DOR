@@ -5,9 +5,24 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="debtor" scope="request" class="models.entities.Debtor" />
+
+<c:url value="UpdateDebtor" var="url">
+    <c:param name="debtorId" value="${debtor.id}"/>
+</c:url>
+
+<c:url value="ShowReport" var="DebtorLogReport">
+    <c:param name="type" value="logDebtor"/>
+    <c:param name="debtorId" value="${debtor.id}"/>
+</c:url>
+
+<c:url value="ShowReport" var="DebtorSituationReport">
+    <c:param name="type" value="debtorSituation"/>
+    <c:param name="debtorId" value="${debtor.id}"/>
+</c:url>
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +35,7 @@
         <title>DOR</title>
     </head>
     <body>
-         <%@ include file="header.jsp" %>
+        <%@ include file="header.jsp" %>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,20 +52,20 @@
         </nav>
         <!-- Form -->
         <div class="form">
-            <form action="LoginProcess" method="POST" role="form">
+            <form  action="${url}" method="POST"  modelAttribute = "debtor" role="form">
                 <div class="form-inline">
                     <label>Situação:</label>
-                    <c:if test="{debtor.indebt}">
-                        <span>Irregular</span>
+                    <c:if test="${debtor.indebted}">
+                        <span class="label label-danger">Irregular</span>
                     </c:if>
-                    <c:if test="{!debtor.indebt}">
-                        <span>Regular</span>
+                    <c:if test="${!debtor.indebted}">
+                        <span class="label label-success">Regular</span>
                     </c:if>
                 </div>
                 <div class="form-group">   
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name" value="${fn:escapeXml(debtor.name)}"/> 
-                    
+                    <input name="debtor.name" type="text" class="form-control" placeholder="Nome" value="${fn:escapeXml(debtor.name)}"/> 
+
                 </div>
                 <div class="form-group">
                     <label>Identificador:</label>
@@ -68,18 +83,14 @@
                             </label>
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}"  name="identifier"/>
+                    <input name="debtor.identifier" type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}"  />
                 </div>
                 <label>Instituição: </label>
                 <div class="form-group intitution-debtor">
-                    <div class="form-inline add-company-combo">
-                        <button type="submit" class="btn btn-warning btn-debtor">Gerar Relatório</button>
-                        <select class="form-control">
-                            <option value="name">VSF</option>
-                            <option value="email">DOR</option>
-                        </select>
-                        <button type="submit" class="btn btn-info btn-debtor">Adicionar</button>
-                    </div>
+                        <a href="${DebtorSituationReport}"><button class="btn btn-warning btn-debtor">Gerar Relatório</button></a>                     
+                        <hr>
+
+                    
                     <div class="debtor-table">
                         <table class="table table-hover">
                             <thead>
@@ -91,24 +102,29 @@
                             </thead>
 
                             <tbody>
+                                <c:set var="index" value="${1}"/>
                                 <c:forEach items="${debtor.situationCompanies}" var="company">
-                                <tr>
-                                    <td><c:out value="${fn:escapeXml(company.id)}"/></td>
-                                    <td><c:out value="${fn:escapeXml(company.name)}"/></td>
-                                    <td>
-                                        <input type="radio" name="option" value="regular">Regular</input>
-                                        <input type="radio" name="option" value="irregular">Irregular</input>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><c:out value="${index}"/></td>
+                                        <td><c:out value="${fn:escapeXml(company.company.name)}"/></td>
+                                        <td>
+                                            <fieldset path="company.situation" id="option">
+                                                <input type="radio" value="false" name="debtor.situationCompanies[${index}].indebt" ${!company.indebt? 'checked' : ''} >Regular</input>
+                                                <input type="radio" value="true" name="debtor.situationCompanies[${index}].indebt" ${company.indebt? 'checked' : ''} >Irregular</input>
+                                            </fieldset>
+                                        </td>
+                                    </tr>
+                                    <c:set var="index" value="${index+1}" scope="page"/>
                                 </c:forEach>
-                                
+
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <label>Histórico: </label>
                 <div class="form-group intitution-debtor">
-                    <button type="submit" class="btn btn-warning btn-debtor">Gerar Relatório</button>
+                    <a href="${DebtorLogReport}"><button class="btn btn-warning btn-debtor">Gerar Relatório</button></a>                     
+
                     <hr>
                     <div class="debtor-table">
                         <table class="table table-hover">
@@ -122,61 +138,32 @@
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>VSF</td>
-                                    <td>Irregular</td>
-                                    <td>10/10/10<td>
-                                </tr>
+                                <c:forEach items="${debtorCompanySituationLogs}" var="log">
+                                    <tr>
+                                        <td><c:out value="${index}"/></td>
+                                        <td><c:out value="${fn:escapeXml(log.company.name)}"/></td>
+                                        <td>
+                                            <c:if test="${log.indebt}">
+                                                <span class="label label-danger">Irregular</span>
+                                            </c:if>
+                                            <c:if test="${!log.indebt}">
+                                                <span class="label label-success">Regular</span>
+                                            </c:if>
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate value="${log.logDate}" pattern="dd/MM/YYYY HH:mm"/>
+                                        </td>
+                                    </tr>
+                                    <c:set var="index" value="${index+1}" scope="page"/>
+                                </c:forEach>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-info">Salvar</button>
-                    <a href="debtors.jsp"><button type="button" class="btn btn-danger" id="botao-do-capeta">Cancelar</button></a>
+                    <a href="ListDebtors"><button type="button" class="btn btn-danger" id="botao-do-capeta">Cancelar</button></a>
                 </div>
             </form>
         </div>

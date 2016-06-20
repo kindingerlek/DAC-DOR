@@ -3,29 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.report;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Debtor;
-import models.entities.DebtorCompanySituation;
-import models.entities.DebtorCompanySituationLog;
-import org.hibernate.Session;
-import static utils.HibernateUtils.getSessionFactory;
-import utils.report.DebtorCompanySituationLogREL;
+import javax.servlet.http.HttpSession;
+import models.entities.Admin;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "ShowReport", urlPatterns = {"/ShowReport"})
-public class ShowReport extends HttpServlet {
+@WebServlet(name = "LoginProcess", urlPatterns = {"/LoginProcess"})
+public class LoginProcess extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,37 +34,36 @@ public class ShowReport extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        //type = [logAll, logDebtor, debtorSituation]
-        Integer debtorId = Integer.parseInt((String) request.getParameter("debtorId"));
-        String type = (String) request.getParameter("type");
-
-        Debtor debtor = new Debtor();
-        debtor.setId(debtorId);
-        List<DebtorCompanySituationLog> log = null;
-        List<DebtorCompanySituation> debtorSituation = null;
-
-        try {
-            if ("logAll".equals(type)) {
-                System.out.println(type);
-                System.out.println(debtorId);
-                log = DebtorCompanySituationLog.getAll();
-                request.setAttribute("DebtorCompanySituationList", log);
-            } else if ("logDebtor".equals(type)) {
-                System.out.println(type);
-                System.out.println(debtorId);
-                log = DebtorCompanySituationLog.getAll(debtor);
-                request.setAttribute("DebtorCompanySituationList", log);
-            } else if ("debtorSituation".equals(type)) {
-                System.out.println(type);
-                System.out.println(debtorId);
-                debtorSituation = DebtorCompanySituation.getAll(debtor);
-                request.setAttribute("DebtorCompanySituationList", debtorSituation);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println((String)request.getParameter("email"));
+            out.println((String)request.getParameter("password"));
+            
+            //Get the request data
+            String password = (String)request.getParameter("password");
+            String email = (String)request.getParameter("email");
+            //Validate request data
+            if(!password.isEmpty()&& !email.isEmpty()){
+            
             }
-            request.getRequestDispatcher("GetReport").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("message", "Erro ao consultar o banco: " + e.getMessage());
-            request.getRequestDispatcher("errorReport.jsp").include(request, response);
+            //Try found the user
+            Admin admin = new Admin();
+            admin.setEmail(email);
+            admin.setPassword(password);
+            admin = admin.auth();
+            
+            //Do something
+            if(admin != null && admin.getId()>0){
+                //Salvar user na sessão;
+                HttpSession session = request.getSession();
+                session.setAttribute("admin", admin);
+                
+                //Redirect to debtors
+                request.getRequestDispatcher("ListDebtors").forward(request, response);
+            }else{
+                //Redirect to login
+                response.sendRedirect("index.jsp");
+            }
         }
     }
 

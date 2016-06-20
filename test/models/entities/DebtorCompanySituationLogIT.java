@@ -173,4 +173,22 @@ public class DebtorCompanySituationLogIT {
             fail("this should be get a filled list");
         }
     }
+    
+    @Test
+    public void testReadActualSituation() {
+        System.out.println("getAll");
+        Debtor debtor = new Debtor();
+        debtor = debtor.getAll().get(1);
+        System.out.println(debtor.getId()+" readed");
+        
+        List<DebtorCompanySituationLog> result = DebtorCompanySituationLog.getActualSituation(debtor);
+        if(result.isEmpty()){
+            fail("this should be get a filled list");
+        }
+        for(DebtorCompanySituationLog pcsl: result){
+            assertEquals(pcsl.getDebtor().getId(),debtor.getId());
+            System.out.println(pcsl.getDebtor().getId()+" readed");
+        }
+        
+    }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
 <!-- 2016-05-26T19:02:40 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PersonSituationReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DebtorSituationReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
 	<property name="template.engine" value="tabular_template"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Table">
@@ -42,7 +42,7 @@
 	</style>
 	<subDataset name="tableDataset" uuid="6f0f98b7-a728-4cc0-b944-b82921008864"/>
 	<field name="companyName" class="java.lang.String"/>
-	<field name="personName" class="java.lang.String"/>
+	<field name="debtorName" class="java.lang.String"/>
 	<field name="indebt" class="java.lang.Boolean"/>
 	<field name="logDate" class="java.util.Date"/>
 	<title>
@@ -141,7 +141,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{personName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{debtorName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="141" y="0" width="138" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="13b687b5-77a0-4112-be00-b6b19e52841e"/>

@@ -33,14 +33,14 @@ public class DeleteAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-            int adminId = Integer.parseInt((String)request.getParameter("idAdmin"));
+            int adminId = Integer.parseInt((String)request.getParameter("IdAdmin"));
             
             Admin adminToRemove = new Admin();
             
             adminToRemove.setId(adminId);
             adminToRemove.delete();
             
-            response.sendRedirect("crudAdmin.jsp");
+            response.sendRedirect("ListAdmins");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -52,7 +52,7 @@ public class AddAdmin extends HttpServlet {
                 adminToAdd.setPassword(password);
                 adminToAdd.setName(name);
                 adminToAdd.add();
-                response.sendRedirect("admins.jsp");
+                response.sendRedirect("ListAdmins");
             } else {
                 errorMessages.add("O email informado já está cadastrado.");
             }
@@ -61,7 +61,7 @@ public class AddAdmin extends HttpServlet {
         }
         request.setAttribute("errorMessages", errorMessages);
         RequestDispatcher rd = request.getRequestDispatcher("/addAdmin.jsp");
-        rd.forward(request, response);
+        rd.include(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

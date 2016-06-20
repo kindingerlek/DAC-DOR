@@ -37,12 +37,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
-                    <a href="company.jsp"><button type="button" class="btn btn-info navbar-btn">Adicionar</button></a>
-                    <form class="navbar-form navbar-right" role="search">
-                        
+                    <a href="addCompany.jsp"><button type="button" class="btn btn-info navbar-btn">Adicionar</button></a>
+                    <form class="navbar-form navbar-right" role="search" action="ListCompanies?type=name" method="POST">
+
                         <span>Nome:</span>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="...">
+                            <input type="text" name="pattern" class="form-control" placeholder="...">
                         </div>
                         <button type="submit" class="btn btn-info">Procurar</button>
                     </form>
@@ -62,51 +62,22 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>VSF</td>
-                    <td>01234567890</td>
-                    <td>
-                        <a href="company.jsp"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>VSF</td>
-                    <td>01234567890</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>VSF</td>
-                    <td>01234567890</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>VSF</td>
-                    <td>01234567890</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>VSF</td>
-                    <td>01234567890</td>
-                    <td>
-                        <a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        <a href="#"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
+                <c:set var="index" value="${1}" scope="page"/>
+       
+                <c:forEach items="${companiesList}" var="company">
+                    <tr>
+                        <td><c:out value="${index}" /></td>
+                        <td><c:out value="${company.name}" /></td>
+                        <td><c:out value="${company.token}" /></td>                     
+                        <td>
+                            <c:url value="GetCompany" var="url">
+                                <c:param name="companyId" value="${company.id}"/>
+                            </c:url>
+                            <a href="${url}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <c:set var="index" value="${index+1}" scope="page"/>
+                </c:forEach>
             </tbody>
         </table>
     </body>
