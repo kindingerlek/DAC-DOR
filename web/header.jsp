@@ -30,8 +30,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="ListDebtors">Devedores</a></li>
-                <li><a href="companies.jsp">Instituições</a></li>
-                <li><a href="admins.jsp">Administradores</span></a></li>
+                <li><a href="ListCompanies">Instituições</a></li>
+                <li><a href="ListAdmins">Administradores</span></a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

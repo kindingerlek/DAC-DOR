@@ -7,7 +7,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,13 +29,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>   Instituição</a>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>Adicionar Instituição</a>
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
         <!-- Form -->
         <div class="form">
-            <form action="LoginProcess" method="POST" role="form">
+            <form action="AddCompany" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
                     <input type="text" class="form-control" placeholder="Nome" name="name"/>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-info">Salvar</button>
+                    <button type="submit" class="btn btn-info">Adicionar</button>
                     <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
             </form>

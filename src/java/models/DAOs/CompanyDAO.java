@@ -35,14 +35,13 @@ public class CompanyDAO {
         }  
     }
      
-    public static boolean validateToken(Company company) {
+    public static Company readByToken(Company company) {
         Transaction transaction = null;
         Session session = null;
         Company companyReturned = null;
         try {
             session = getSessionFactory().openSession();
-            String token = company.getToken();
-            company.setToken(token);
+      
             Query query = session.createQuery("from Company where token = :token");
             query.setParameter("token", company.getToken());
             
@@ -55,7 +54,7 @@ public class CompanyDAO {
         } finally {
             session.close();
         }
-        return (companyReturned != null);
+        return companyReturned;
     }
 
     public static boolean update(Company company) {
@@ -150,5 +149,9 @@ public class CompanyDAO {
         } finally {
             session.close();
         }
+    }
+
+    public static Company getByToken(Company aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

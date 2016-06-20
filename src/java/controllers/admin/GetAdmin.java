@@ -3,29 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.report;
+package controllers.admin;
 
+import controllers.admin .*;
+import controllers.admin .*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.entities.Debtor;
-import models.entities.DebtorCompanySituation;
-import models.entities.DebtorCompanySituationLog;
-import org.hibernate.Session;
-import static utils.HibernateUtils.getSessionFactory;
-import utils.report.DebtorCompanySituationLogREL;
+import models.entities.Admin;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "ShowReport", urlPatterns = {"/ShowReport"})
-public class ShowReport extends HttpServlet {
+@WebServlet(name = "GetAdmin", urlPatterns = {"/GetAdmin"})
+public class GetAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,38 +37,24 @@ public class ShowReport extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        //type = [logAll, logDebtor, debtorSituation]
-        Integer debtorId = Integer.parseInt((String) request.getParameter("debtorId"));
-        String type = (String) request.getParameter("type");
-
-        Debtor debtor = new Debtor();
-        debtor.setId(debtorId);
-        List<DebtorCompanySituationLog> log = null;
-        List<DebtorCompanySituation> debtorSituation = null;
-
-        try {
-            if ("logAll".equals(type)) {
-                System.out.println(type);
-                System.out.println(debtorId);
-                log = DebtorCompanySituationLog.getAll();
-                request.setAttribute("DebtorCompanySituationList", log);
-            } else if ("logDebtor".equals(type)) {
-                System.out.println(type);
-                System.out.println(debtorId);
-                log = DebtorCompanySituationLog.getAll(debtor);
-                request.setAttribute("DebtorCompanySituationList", log);
-            } else if ("debtorSituation".equals(type)) {
-                System.out.println(type);
-                System.out.println(debtorId);
-                debtorSituation = DebtorCompanySituation.getAll(debtor);
-                request.setAttribute("DebtorCompanySituationList", debtorSituation);
+        String identifier = request.getParameter("email");
+        Integer idAdmin = Integer.parseInt(request.getParameter("idAdmin"));
+        
+        if (idAdmin != null) {
+            Admin admin  = new Admin();
+            admin.setId(idAdmin);
+            admin  = admin.getAdmin();
+            System.out.println(admin.getName());
+            request.setAttribute("admin",admin );
+            
+        } else if(identifier != null) {
+            List<Admin> adminList =  (List<Admin>) Admin.getAll("email", identifier);
+            if(!adminList.isEmpty()){
+                request.setAttribute("admin ",adminList.get(0));
             }
-            request.getRequestDispatcher("GetReport").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("message", "Erro ao consultar o banco: " + e.getMessage());
-            request.getRequestDispatcher("errorReport.jsp").include(request, response);
         }
+        
+        request.getRequestDispatcher("editAdmin.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

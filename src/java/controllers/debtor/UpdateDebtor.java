@@ -8,12 +8,16 @@ package controllers.debtor;
 import controllers.debtor.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.entities.Debtor;
+import models.entities.DebtorCompanySituation;
 
 /**
  *
@@ -34,16 +38,35 @@ public class UpdateDebtor extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Debtor debtorToUpdate = new Debtor();
-        int debtorId = Integer.parseInt((String) request.getParameter("idDebtor"));
-        String identifier = request.getParameter("identifier");
-        String name = request.getParameter("name");
+        String name = (String) request.getParameter("debtor.name");
+        Integer id = Integer.parseInt((String) request.getParameter("debtorId"));
+        String identifier = (String) request.getParameter("debtor.identifier");
 
-        debtorToUpdate.setId(debtorId);
-        debtorToUpdate.setIdentifier(identifier);
+        debtorToUpdate.setId(id);
         debtorToUpdate.setName(name);
-        debtorToUpdate.update();
+        debtorToUpdate.setIdentifier(identifier);
 
-        response.sendRedirect("crudDebtor.jsp");
+        //Verify companies situations
+        Integer index = 0;
+        Debtor oldDebtor;
+        oldDebtor = debtorToUpdate.getDebtor();
+        List<DebtorCompanySituation> updatedDebtorCompanySituation = new ArrayList();
+        for (DebtorCompanySituation debComSit : oldDebtor.getSituationCompanies()) {
+            index++;
+            String indebted = (String) request.getParameter("debtor.situationCompanies[" + index + "].indebt");
+            if ("true".equals(indebted)) {
+                debComSit.setIndebt(true);
+            } else {
+                debComSit.setIndebt(false);
+            }
+            updatedDebtorCompanySituation.add(debComSit);
+        }
+        
+        debtorToUpdate.setSituationCompanies(updatedDebtorCompanySituation);
+
+        
+        debtorToUpdate.update();
+        response.sendRedirect("ListDebtors");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

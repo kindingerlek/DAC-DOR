@@ -30,15 +30,15 @@ public class Company {
     @Id
     @GeneratedValue
     @Column(name = "COMPANY_ID")
-    private int id;
+    private Integer id;
 
     @Column(name = "NAME")
     private String name;
 
     @Column(name = "TOKEN")
     private String token;
-    
-    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = CascadeType.ALL)
     private Collection<DebtorCompanySituation> DebtorsSituation;
 
     public Collection<DebtorCompanySituation> getDebtorsSituation() {
@@ -67,21 +67,20 @@ public class Company {
     public static List<Company> getAll(String type, String param) {
         return CompanyDAO.readAll(type, param);
     }
-    
-    public  Company getCompany(){
-        return CompanyDAO.read(this);
-        
+
+    public Company getCompany() {
+        if (this.id == null) {
+            return CompanyDAO.readByToken(this);
+        } else {
+            return CompanyDAO.read(this);
+        }
     }
+
     public static List<Company> getAll() {
         return CompanyDAO.readAll();
     }
 
-    public boolean validateToken() {
-        
-        return CompanyDAO.validateToken(this);
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -105,4 +104,15 @@ public class Company {
         this.token = token;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass().equals(Company.class)) {
+            Company objTest = (Company) obj;
+            if (objTest.getId() == this.getId()) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

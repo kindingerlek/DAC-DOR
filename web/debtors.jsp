@@ -19,7 +19,7 @@
     </head>
     <body>
         <!-- Header -->
-         <%@ include file="header.jsp" %>
+        <%@ include file="header.jsp" %>
         <!-- Section Header -->
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -73,16 +73,21 @@
                         <td><c:out value="${index}" /></td>
                         <td><c:out value="${debtor.name}" /></td>
                         <td><c:out value="${debtor.identifier}" /></td>
-                        <td><c:out value="${debtor.indebted}" /></td>
+                        <td> <c:if test="${debtor.indebted}">
+                                <span class="label label-danger">Irregular</span>
+                            </c:if>
+                            <c:if test="${!debtor.indebted}">
+                                <span class="label label-success">Regular</span>
+                            </c:if></td>
                         <td>
-                            
+
                             <c:url value="GetDebtor" var="url">
                                 <c:param name="debtorId" value="${debtor.id}"/>
                             </c:url>
                             <a href="${url}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                            </td>
-                        </tr>
-                        <c:set var="index" value="${index+1}" scope="page"/>
+                        </td>
+                    </tr>
+                    <c:set var="index" value="${index+1}" scope="page"/>
                 </c:forEach>
             </tbody>
         </table>

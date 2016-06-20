@@ -8,6 +8,7 @@ package models.DAOs;
 import java.util.ArrayList;
 import java.util.List;
 import models.entities.Debtor;
+import models.entities.DebtorCompanySituation;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,7 +27,7 @@ public class DebtorDAO {
             session = getSessionFactory().openSession();
             debtor = (Debtor) session.get(Debtor.class,debtor.getId());
             debtor.getSituationCompanies().size();
-            
+            System.out.println(debtor.getSituationCompanies().size());
             return debtor;
         } catch (Exception e) {
                 throw e;
@@ -35,6 +36,26 @@ public class DebtorDAO {
         }  
     }
 
+    public static boolean isIndebted(Debtor debtor) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            debtor = (Debtor) session.get(Debtor.class,debtor.getId());
+            debtor.getSituationCompanies().size();
+            System.out.println(debtor.getSituationCompanies().size());
+            for(DebtorCompanySituation debComSit:debtor.getSituationCompanies()){
+                if(debComSit.isIndebt()){
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+                throw e;
+        } finally {
+            session.close();
+        }  
+        return false;
+    }
+    
     public static void update(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
@@ -113,9 +134,11 @@ public class DebtorDAO {
         Debtor debtorReturned = null;
         try {
             session = getSessionFactory().openSession();
-            Query query = session.createQuery("from Debtor where cpf= :param");
+            Query query = session.createQuery("from Debtor where identifier= :param");
             query.setParameter("param", debtor.getIdentifier());
             debtorReturned = (Debtor) query.uniqueResult();
+            debtorReturned.getSituationCompanies().size();
+            System.out.println(debtorReturned.getSituationCompanies().size());
         } catch (Exception e) {
             
         } finally {

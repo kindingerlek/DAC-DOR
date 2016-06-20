@@ -88,14 +88,19 @@ public class DebtorCompanySituationLog implements Serializable {
     public boolean isIndebt() {
         return indebt;
     }
+    
+    
 
     public void setIndebt(boolean indebt) {
         this.indebt = indebt;
     }
 
     public static List<DebtorCompanySituationLog> getAll(Debtor debtor) {
-        System.out.println("entrei nessa merda");
         return DebtorCompanySituationLogDAO.readAll(debtor);
+    }
+    
+    public static List<DebtorCompanySituationLog> getActualSituation(Debtor debtor) {
+        return DebtorCompanySituationLogDAO.readActualSituation(debtor);
     }
 
     public static List<DebtorCompanySituationLog> getAll() {

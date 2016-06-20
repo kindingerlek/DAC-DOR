@@ -30,6 +30,22 @@ public class AdminDAO {
         return admin;
     }
     
+     public static Admin read(Admin admin) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            admin = (Admin) session.get(Admin.class,admin.getId());
+            
+            
+            return admin;
+        } catch (Exception e) {
+                throw e;
+        } finally {
+            session.close();
+        }     
+     }
+     
+     
     public static void update(Admin admin){
         Session session = getSessionFactory().openSession();
         session.beginTransaction();

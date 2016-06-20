@@ -57,21 +57,6 @@ public class CompanyTest {
         assertTrue("Expect result to be equal a List of Company", Company.getAll() instanceof List);
         // TODO review the generated test code and remove the default call to fail.
     }
-
-    /**
-     * Test of validateToken method, of class Company.
-     */
-    @Test
-    public void testValidateToken() {
-        System.out.println("validateToken");
-        Company instance = new Company();
-        instance.setToken("testTokenNotUseThisName");
-        boolean expResult = true;
-        boolean result = instance.validateToken();
-        assertEquals("Should return true if exist a company with the token 'testTokenNotUseThisName' in DB", expResult, result);
-
-    }
-
     
     /**
      * Test of update method, of class Company.
@@ -122,7 +107,7 @@ public class CompanyTest {
     @Test
     public void testSetId() {
         System.out.println("setId");
-        int id = 0;
+        Integer id = 0;
         Company instance = new Company();
         instance.setId(id);
         assertEquals(instance.getId(),id);

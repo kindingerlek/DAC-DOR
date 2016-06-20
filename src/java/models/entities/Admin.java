@@ -73,7 +73,7 @@ public class Admin {
     }
     
     public Admin getAdmin(){
-       Admin admin = AdminDAO.read(this.getEmail());
+       Admin admin = AdminDAO.read(this);
         if ( admin!=null) {
             return admin;
         } else {
