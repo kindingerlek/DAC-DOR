@@ -106,6 +106,10 @@ public class DebtorCompanySituation implements Serializable {
     public static DebtorCompanySituation get() {
         return DebtorCompanySituationDAO.read();
     }
+    
+    public boolean saveOrUpdate(){
+        return DebtorCompanySituationDAO.saveOrUpdate(this);
+    }
 
     @Override
     public boolean equals(Object obj) {

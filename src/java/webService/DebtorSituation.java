@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import models.entities.Company;
 import models.entities.DebtorCompanySituation;
-import models.entities.DebtorCompanySituation;
 import models.entities.Debtor;
 import models.entities.DebtorCompanySituationId;
 
@@ -67,7 +66,32 @@ public class DebtorSituation {
      */
     @PUT
     @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public void putJson(DebtorCompanySituation content) {
-        System.out.println(content.getDebtor());
+    public Response putJson(DebtorCompanySituationWeb debtorCompanySituation) {
+        String token = debtorCompanySituation.getCompanyToken();
+        String identifier = debtorCompanySituation.getDebtorIdentifier();
+        Company company = new Company();
+        company.setToken(token);
+        company = company.getCompany();
+        if (company == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for token: " + token).build();
+        }
+        Debtor debtor = new Debtor();
+        debtor.setIdentifier(identifier);
+        debtor = debtor.getDebtor();
+
+        if (debtor == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for identifier: " + identifier).build();
+        }
+
+        DebtorCompanySituation debtorCompanySituationToUpdate;
+        debtorCompanySituationToUpdate = new DebtorCompanySituation(company, debtor);
+        debtorCompanySituationToUpdate.setIndebt(debtorCompanySituation.isIndebt());
+        if (!debtorCompanySituationToUpdate.saveOrUpdate()) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Sever Error, can't update that resource.").build();
+        }
+
+        return Response.status(Response.Status.NO_CONTENT).build();
+        //return Response.ok(, MediaType.APPLICATION_JSON).build();
+
     }
 }
