@@ -3,23 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controllers.report;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import models.entities.Debtor;
+import models.entities.DebtorCompanySituation;
+import models.entities.DebtorCompanySituationLog;
+import org.hibernate.Session;
+import static utils.HibernateUtils.getSessionFactory;
+import utils.report.DebtorCompanySituationLogREL;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "LogoutProcess", urlPatterns = {"/LogoutProcess"})
-public class LogoutProcess extends HttpServlet {
+@WebServlet(name = "ShowReport", urlPatterns = {"/ShowReport"})
+public class ShowReport extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,12 +39,38 @@ public class LogoutProcess extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         //Clean Session
-        HttpSession session = request.getSession();
-        session.invalidate();
-        //Redirect to Login
-        response.sendRedirect("index.jsp");
-    
+
+        //type = [logAll, logDebtor, debtorSituation]
+        Integer debtorId = Integer.parseInt((String) request.getParameter("debtorId"));
+        String type = (String) request.getParameter("type");
+
+        Debtor debtor = new Debtor();
+        debtor.setId(debtorId);
+        List<DebtorCompanySituationLog> log = null;
+        List<DebtorCompanySituation> debtorSituation = null;
+
+        try {
+            if ("logAll".equals(type)) {
+                System.out.println(type);
+                System.out.println(debtorId);
+                log = DebtorCompanySituationLog.getAll();
+                request.setAttribute("DebtorCompanySituationList", log);
+            } else if ("logDebtor".equals(type)) {
+                System.out.println(type);
+                System.out.println(debtorId);
+                log = DebtorCompanySituationLog.getAll(debtor);
+                request.setAttribute("DebtorCompanySituationList", log);
+            } else if ("debtorSituation".equals(type)) {
+                System.out.println(type);
+                System.out.println(debtorId);
+                debtorSituation = DebtorCompanySituation.getAll(debtor);
+                request.setAttribute("DebtorCompanySituationList", debtorSituation);
+            }
+            request.getRequestDispatcher("GetReport").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("message", "Erro ao consultar o banco: " + e.getMessage());
+            request.getRequestDispatcher("errorReport.jsp").include(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

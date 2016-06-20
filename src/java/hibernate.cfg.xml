@@ -11,5 +11,10 @@
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5434/dor</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="models.entities.Admin"/>
+    <mapping class="models.entities.Company"/>
+    <mapping class="models.entities.Debtor"/>
+    <mapping class="models.entities.DebtorCompanySituation"/>
+    <mapping class="models.entities.DebtorCompanySituationId"/>
+    <mapping class="models.entities.DebtorCompanySituationLog"/>
   </session-factory>
 </hibernate-configuration>
