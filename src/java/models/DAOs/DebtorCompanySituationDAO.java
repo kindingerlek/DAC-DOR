@@ -54,6 +54,29 @@ public class DebtorCompanySituationDAO {
             session.close();
         }
     }
+    
+    public static boolean saveOrUpdate(DebtorCompanySituation debtorCompanySituation) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            session.beginTransaction();
+            System.out.println(debtorCompanySituation.getDebtorCompanySituationId().getCompanyId());
+            System.out.println(debtorCompanySituation.getDebtorCompanySituationId().getDebtorId());
+            session.update(debtorCompanySituation);
+            transaction = session.getTransaction();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+               return false; 
+               
+            }
+        } finally {
+            session.close();
+        }
+        return true;
+    }
 
     public static void create(DebtorCompanySituation debtorCompanySituation) {
         Transaction transaction = null;
