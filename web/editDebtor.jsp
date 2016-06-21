@@ -35,6 +35,7 @@
         <title>DOR</title>
     </head>
     <body>
+
         <%@ include file="header.jsp" %>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -48,10 +49,14 @@
                     </button>
                     <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Editar Devedor</a>
                 </div>
+
             </div><!-- /.container-fluid -->
         </nav>
+        <%@ include file="errorMessages.jsp" %>
+        <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
+
             <form  action="${url}" method="POST"  modelAttribute = "debtor" role="form">
                 <div class="form-inline">
                     <label>Situação:</label>
@@ -87,10 +92,8 @@
                 </div>
                 <label>Instituição: </label>
                 <div class="form-group intitution-debtor">
-                        <a href="${DebtorSituationReport}"><button class="btn btn-warning btn-debtor">Gerar Relatório</button></a>                     
-                        <hr>
-
-                    
+                    <a href="${DebtorSituationReport}" target="blank" class="btn btn-warning btn-debtor">Gerar Relatório</a>                        
+                    <hr>
                     <div class="debtor-table">
                         <table class="table table-hover">
                             <thead>
@@ -123,7 +126,7 @@
                 </div>
                 <label>Histórico: </label>
                 <div class="form-group intitution-debtor">
-                    <a href="${DebtorLogReport}"><button class="btn btn-warning btn-debtor">Gerar Relatório</button></a>                     
+                    <a href="${DebtorLogReport}" target="blank" class="btn btn-warning btn-debtor">Gerar Relatório</a>                     
 
                     <hr>
                     <div class="debtor-table">
@@ -162,6 +165,8 @@
                     </div>
                 </div>
                 <div>
+
+
                     <button type="submit" class="btn btn-info">Salvar</button>
                     <a href="ListDebtors"><button type="button" class="btn btn-danger" id="botao-do-capeta">Cancelar</button></a>
                 </div>

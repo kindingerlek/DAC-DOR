@@ -19,7 +19,7 @@
     </head>
     <body>
         <!-- Header -->
-         <%@ include file="header.jsp" %>
+        <%@ include file="header.jsp" %>
         <!-- Section Header -->
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -52,6 +52,7 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <%@ include file="messageLabel.jsp" %>
         <!-- Table -->
         <table class="table table-hover my-table">
             <thead>
@@ -64,7 +65,7 @@
             </thead>
 
             <tbody>
-               <c:set var="index" value="${1}" scope="page"/>
+                <c:set var="index" value="${1}" scope="page"/>
                 <c:set var="admins" scope="session" value="${adminsList}"/>
                 <c:forEach items="${adminsList}" var="admin">
 
@@ -73,22 +74,22 @@
                         <td><c:out value="${admin.name}" /></td>
                         <td><c:out value="${admin.email}" /></td>
                         <td>
-                            
+
                             <c:url value="GetAdmin" var="url">
                                 <c:param name="idAdmin" value="${admin.id}"/>
                             </c:url>
                             <a href="${url}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                        <c:url value="DeleteAdmin" var="url">
-                                <c:param name="IdAdmin" value="${admin.id}"/>
-                            </c:url>
+                                <c:url value="DeleteAdmin" var="url">
+                                    <c:param name="IdAdmin" value="${admin.id}"/>
+                                </c:url>
                             <a href="${url}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                
+
                         </td>
-                        </tr>
-                        <c:set var="index" value="${index+1}" scope="page"/>
+                    </tr>
+                    <c:set var="index" value="${index+1}" scope="page"/>
                 </c:forEach>
             </tbody>
-            </tbody>
-        </table>
-    </body>
+        </tbody>
+    </table>
+</body>
 </html>

@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 import models.entities.Company;
 import models.entities.DebtorCompanySituation;
 import models.entities.Debtor;
-import models.entities.DebtorCompanySituationId;
 
 /**
  * REST Web Service

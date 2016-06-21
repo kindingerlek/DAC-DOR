@@ -7,12 +7,17 @@ package controllers.company;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.entities.Company;
+import utils.MessageLabel;
 
 /**
  *
@@ -33,17 +38,41 @@ public class UpdateCompany extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Company companyToUpdate = new Company();
-     
+        List<String> errorMessages = new ArrayList();
+        HttpSession session = request.getSession();
+
         int companyId = Integer.parseInt((String) request.getParameter("companyId"));
         String token = request.getParameter("token");
         String name = request.getParameter("name");
+        String urlToSend = "GetCompany?companyId=" + companyId;
 
         companyToUpdate.setId(companyId);
         companyToUpdate.setToken(token);
         companyToUpdate.setName(name);
-        companyToUpdate.update();
 
-        response.sendRedirect("ListCompanies");
+        Company oldCompany = companyToUpdate.getCompany();
+        if (!oldCompany.getToken().equals(token)) {
+            if (companyToUpdate.getCompanyByToken() != null) {
+                errorMessages.add("Esse token já está cadastrado para outra instituição.");
+            }
+        }
+
+        if (!errorMessages.isEmpty()) {
+
+            session.setAttribute("errorMessages", errorMessages);
+            response.sendRedirect(urlToSend);
+        } else {
+
+            MessageLabel message = new MessageLabel();
+
+            if (companyToUpdate.update()) {
+                message.setMessageType(true, "", "A instituição foi atualizada com sucesso!");
+            } else {
+                message.setMessageType(false, "", "Ocorreu um erro ao atualizar a instituição, verifique os campos e tente novamente.");
+            }
+            session.setAttribute("message", message);
+            response.sendRedirect(urlToSend);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

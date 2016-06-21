@@ -39,16 +39,16 @@ public class Admin {
     public Admin() {
     }
 
-    public void add() {
+    public boolean add() {
         if (!(AdminDAO.read(this.getEmail()) == null)) {
-            AdminDAO.update(this);
+            return AdminDAO.update(this);
         } else {
-            AdminDAO.create(this);
+            return AdminDAO.create(this);
         }
     }
 
-    public void update() {
-        AdminDAO.update(this);
+    public boolean update() {
+        return AdminDAO.update(this);
     }
 
     public void delete() {

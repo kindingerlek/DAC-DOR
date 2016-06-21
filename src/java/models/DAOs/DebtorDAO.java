@@ -56,7 +56,7 @@ public class DebtorDAO {
         return false;
     }
     
-    public static void update(Debtor debtor) {
+    public static boolean update(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -68,14 +68,15 @@ public class DebtorDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
+                return false;
             }
         } finally {
             session.close();
         }
+        return true;
     }
 
-    public static void create(Debtor debtor) {
+    public static boolean create(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -87,11 +88,12 @@ public class DebtorDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
+                return false;
             }
         } finally {
             session.close();
         }
+        return true;
     }
 
     public static List<Debtor> readAll() {
