@@ -18,6 +18,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import models.entities.Company;
 import models.entities.DebtorCompanySituation;
+
+import models.entities.DebtorCompanySituation;
+
 import models.entities.Debtor;
 import models.entities.DebtorCompanySituationId;
 
@@ -66,6 +69,7 @@ public class DebtorSituation {
      */
     @PUT
     @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
+
     public Response putJson(DebtorCompanySituationWeb debtorCompanySituation) {
         String token = debtorCompanySituation.getCompanyToken();
         String identifier = debtorCompanySituation.getDebtorIdentifier();
@@ -92,6 +96,5 @@ public class DebtorSituation {
 
         return Response.status(Response.Status.NO_CONTENT).build();
         //return Response.ok(, MediaType.APPLICATION_JSON).build();
-
     }
 }

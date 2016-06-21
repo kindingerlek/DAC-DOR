@@ -58,12 +58,12 @@ public class CompanyDAO {
     }
 
     public static boolean validateToken(Company company) {
+
         Transaction transaction = null;
         Session session = null;
         Company companyReturned = null;
         try {
             session = getSessionFactory().openSession();
-
             Query query = session.createQuery("from Company where token = :token");
             query.setParameter("token", company.getToken());
 
@@ -76,8 +76,13 @@ public class CompanyDAO {
         } finally {
             session.close();
         }
+
         return true;
+
     }
+
+     
+    
 
     public static boolean update(Company company) {
         Transaction transaction = null;

@@ -68,7 +68,6 @@ public class Company {
         return CompanyDAO.readAll(type, param);
     }
 
-
     public Company getCompany() {
         if (this.id == null) {
             return CompanyDAO.readByToken(this);
@@ -81,8 +80,12 @@ public class Company {
          return CompanyDAO.readByToken(this);   
     }
     
+
+
+
     public static List<Company> getAll() {
         return CompanyDAO.readAll();
+
 
     }
 
