@@ -75,6 +75,9 @@ public class Company {
             return CompanyDAO.read(this);
         }
     }
+    public Company getCompanyByToken() {
+            return CompanyDAO.readByToken(this);
+    }
 
     
     public Company getCompanyByToken() {
