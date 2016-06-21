@@ -11,13 +11,17 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import models.entities.Company;
 import models.entities.Debtor;
 import models.entities.DebtorCompanySituation;
+import utils.MessageLabel;
 
 /**
  *
@@ -38,35 +42,58 @@ public class UpdateDebtor extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Debtor debtorToUpdate = new Debtor();
+        List<String> errorMessages = new ArrayList();
+        HttpSession session = request.getSession();
+
         String name = (String) request.getParameter("debtor.name");
         Integer id = Integer.parseInt((String) request.getParameter("debtorId"));
         String identifier = (String) request.getParameter("debtor.identifier");
 
+        String urlToSend = "GetDebtor?debtorId=" + id;
         debtorToUpdate.setId(id);
         debtorToUpdate.setName(name);
         debtorToUpdate.setIdentifier(identifier);
 
-        //Verify companies situations
-        Integer index = 0;
-        Debtor oldDebtor;
-        oldDebtor = debtorToUpdate.getDebtor();
-        List<DebtorCompanySituation> updatedDebtorCompanySituation = new ArrayList();
-        for (DebtorCompanySituation debComSit : oldDebtor.getSituationCompanies()) {
-            index++;
-            String indebted = (String) request.getParameter("debtor.situationCompanies[" + index + "].indebt");
-            if ("true".equals(indebted)) {
-                debComSit.setIndebt(true);
-            } else {
-                debComSit.setIndebt(false);
+        Debtor oldDebtor = debtorToUpdate.getDebtor();
+        if (!oldDebtor.getIdentifier().equals(identifier)) {
+            if (debtorToUpdate.getDebtorByIdentifier() != null) {
+                errorMessages.add("Esse identificardor já está cadastrado para outra instituição.");
             }
-            updatedDebtorCompanySituation.add(debComSit);
         }
-        
-        debtorToUpdate.setSituationCompanies(updatedDebtorCompanySituation);
 
-        
-        debtorToUpdate.update();
-        response.sendRedirect("ListDebtors");
+        if (!errorMessages.isEmpty()) {
+            session.setAttribute("errorMessages", errorMessages);
+            response.sendRedirect(urlToSend);
+        } else {
+
+            //Verify companies situations
+            Integer index = 0;
+            List<DebtorCompanySituation> updatedDebtorCompanySituation = new ArrayList();
+            for (DebtorCompanySituation debComSit : oldDebtor.getSituationCompanies()) {
+                index++;
+                String indebted = (String) request.getParameter("debtor.situationCompanies[" + index + "].indebt");
+                if ("true".equals(indebted)) {
+                    debComSit.setIndebt(true);
+                } else {
+                    debComSit.setIndebt(false);
+                }
+                updatedDebtorCompanySituation.add(debComSit);
+            }
+
+            debtorToUpdate.setSituationCompanies(updatedDebtorCompanySituation);
+
+            
+            MessageLabel message = new MessageLabel();
+
+            if (debtorToUpdate.update()) {
+                message.setMessageType(true, "", "O devedor foi atualizado com sucesso!");
+            } else {
+                message.setMessageType(false, "", "Ocorreu um erro ao atualizar o devedor, verifique os campos e tente novamente.");
+            }
+            session.setAttribute("message", message);
+            response.sendRedirect(urlToSend);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -80,9 +80,6 @@ public class Company {
          return CompanyDAO.readByToken(this);   
     }
     
-
-
-
     public static List<Company> getAll() {
         return CompanyDAO.readAll();
 
