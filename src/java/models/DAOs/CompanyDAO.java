@@ -20,31 +20,31 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class CompanyDAO {
 
-     public static Company read(Company company) {
+    public static Company read(Company company) {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            company = (Company) session.get(Company.class,company.getId());
-            
-            
+            company = (Company) session.get(Company.class, company.getId());
+
             return company;
         } catch (Exception e) {
-                throw e;
+            throw e;
         } finally {
             session.close();
-        }  
+        }
     }
-     
+
+
     public static Company readByToken(Company company) {
         Transaction transaction = null;
         Session session = null;
         Company companyReturned = null;
         try {
             session = getSessionFactory().openSession();
-      
+
             Query query = session.createQuery("from Company where token = :token");
             query.setParameter("token", company.getToken());
-            
+
             companyReturned = (Company) query.uniqueResult();
         } catch (Exception e) {
             if (transaction != null) {
@@ -55,6 +55,28 @@ public class CompanyDAO {
             session.close();
         }
         return companyReturned;
+    }
+
+    public static boolean validateToken(Company company) {
+        Transaction transaction = null;
+        Session session = null;
+        Company companyReturned = null;
+        try {
+            session = getSessionFactory().openSession();
+
+            Query query = session.createQuery("from Company where token = :token");
+            query.setParameter("token", company.getToken());
+
+            companyReturned = (Company) query.uniqueResult();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+                return false;
+            }
+        } finally {
+            session.close();
+        }
+        return true;
     }
 
     public static boolean update(Company company) {
@@ -131,7 +153,7 @@ public class CompanyDAO {
         }
         return list;
     }
-        
+
     public static void delete(Company company) {
         Transaction transaction = null;
         Session session = null;
