@@ -39,7 +39,6 @@
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
-       <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
             <form action="${url}" method="POST" role="form">
@@ -59,7 +58,15 @@
                     </div>
                 </div>
                 <div>
-                     <%@ include file="errorMessages.jsp" %>
+                    <c:if test="${not empty errorMessages}">
+                        <div class="alert alert-danger" role="alert">
+                            <c:forEach var="errorMessage" items="${errorMessages}">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                <c:out value="${errorMessage}"/><p>
+                            </c:forEach>
+                        </div>
+                    </c:if>
                     <button type="submit" class="btn btn-info">Salvar</button>
                     <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>

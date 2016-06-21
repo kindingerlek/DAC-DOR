@@ -75,14 +75,9 @@ public class Company {
             return CompanyDAO.read(this);
         }
     }
-    public Company getCompanyByToken() {
-            return CompanyDAO.readByToken(this);
-    }
 
     public static List<Company> getAll() {
         return CompanyDAO.readAll();
-
-
     }
 
     public Integer getId() {

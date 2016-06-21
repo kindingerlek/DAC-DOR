@@ -15,9 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import models.entities.Admin;
-import utils.MessageLabel;
 
 /**
  *
@@ -37,23 +35,22 @@ public class UpdateAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        List<String> errorMessages = new ArrayList();
-        Admin adminToUpdate = new Admin();
-
+        response.setContentType("text/html;charset=UTF-8");
         int adminId = Integer.parseInt((String) request.getParameter("adminId"));
         String email = (String) request.getParameter("email");
         String newPassword = (String) request.getParameter("newPassword");
         String oldPassword = (String) request.getParameter("oldPassword");
         String passwordConfirmation = (String) request.getParameter("passwordConfirmation");
         String name = (String) request.getParameter("name");
-        String urlToSend = "GetAdmin?idAdmin=" + adminId;
+        List<String> errorMessages = new ArrayList();
+
+        Admin adminToUpdate = new Admin();
 
         adminToUpdate.setId(adminId);
         adminToUpdate = adminToUpdate.getAdmin();
+        System.out.println(adminToUpdate.getPassword());
         adminToUpdate.setEmail(email);
         adminToUpdate.setName(name);
-        
         if (!newPassword.isEmpty()) {
             if (!adminToUpdate.getPassword().equals(oldPassword)) {
                 errorMessages.add("A senha antiga está incorreta.");
@@ -65,17 +62,12 @@ public class UpdateAdmin extends HttpServlet {
         }
 
         if (!errorMessages.isEmpty()) {
-            session.setAttribute("errorMessages", errorMessages);
-            response.sendRedirect(urlToSend);
+            request.setAttribute("errorMessages", errorMessages);
+            RequestDispatcher rd = request.getRequestDispatcher("GetAdmin?idAdmin=" + adminId);
+            rd.include(request, response);
         } else {
-            MessageLabel message = new MessageLabel();
-            if (adminToUpdate.update()) {
-                message.setMessageType(true, "", "O Administrador foi atualizado com sucesso!");
-            } else {
-                message.setMessageType(false, "", "Ocorreu um erro ao atualizar o administrador, verifique os campos e tente novamente.");
-            }
-            session.setAttribute("message", message);
-            response.sendRedirect(urlToSend);
+            adminToUpdate.update();
+            response.sendRedirect("ListAdmins");
         }
     }
 

@@ -18,6 +18,7 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class AdminDAO {
 
+
     public static Admin read(String email) {
         Session session = getSessionFactory().openSession();
         Admin admin = new Admin();
@@ -28,68 +29,56 @@ public class AdminDAO {
         session.close();
         return admin;
     }
-
-    public static Admin read(Admin admin) {
+    
+     public static Admin read(Admin admin) {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            admin = (Admin) session.get(Admin.class, admin.getId());
-
+            admin = (Admin) session.get(Admin.class,admin.getId());
+            
+            
             return admin;
         } catch (Exception e) {
-            throw e;
+                throw e;
         } finally {
             session.close();
-        }
+        }     
+     }
+     
+     
+    public static void update(Admin admin){
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(admin);
+        session.getTransaction().commit();
+        session.close();
     }
-
-    public static boolean update(Admin admin) {
-        Session session = null;
-        try {
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(admin);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            return false;
-        } finally {
-            session.close();
-        }
-        return true;
+    
+    public static void create(Admin admin) {
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(admin);
+        session.getTransaction().commit();
+        session.close();
     }
-
-    public static boolean create(Admin admin) {
-        Session session = null;
-        try {
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(admin);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            return false;
-        } finally {
-            session.close();
-        }
-        return true;
-    }
-
-    public static List<Admin> readAll() {
+    
+    public static List<Admin> readAll(){
         Session session = getSessionFactory().openSession();
         List<Admin> list = session.createCriteria(Admin.class).list();
         session.close();
         return list;
     }
-
+    
     public static List<Admin> readAll(String type, String param) {
         Session session = getSessionFactory().openSession();
-        Query query = session.createQuery("from Admin where " + type + " like :param");
-        query.setParameter("param", "%" + param + "%");
+        Query query = session.createQuery("from Admin where "+type+" like :param");
+        query.setParameter("param", "%"+param+"%");
         List<Admin> list = query.list();
         session.close();
         return list;
     }
-
-    public static void delete(Admin admin) {
+    
+    public static void delete(Admin admin){
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
         session.delete(admin);
