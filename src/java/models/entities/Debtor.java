@@ -25,59 +25,62 @@ import models.DAOs.DebtorDAO;
  */
 @Entity
 public class Debtor implements Serializable {
-    
+
     @Id
-    @GeneratedValue                                                                                                                                                                                                                                                                            
+    @GeneratedValue
     @Column(name = "DEBTOR_ID")
     private Integer id;
-    
+
     @Column(name = "NAME")
     private String name;
-    
+
     @Column(name = "IDENTIFIER")
     private String identifier;
-    
-    @OneToMany(mappedBy = "debtor", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade ={ CascadeType.ALL})
+
+    @OneToMany(mappedBy = "debtor", fetch = FetchType.LAZY, targetEntity = DebtorCompanySituation.class, cascade = {CascadeType.ALL})
     private Collection<DebtorCompanySituation> situationCompanies = new LinkedHashSet<DebtorCompanySituation>();
-    
+
     //Getters and Setters
-    public void add(){
-        DebtorDAO.create(this);
+    public boolean add() {
+        return DebtorDAO.create(this);
     }
-    
-    public void update(){
-        DebtorDAO.update(this);
+
+    public boolean update() {
+        return DebtorDAO.update(this);
     }
-    
-    public static Collection<Debtor> getAll(String type, String pattern){
+
+    public static Collection<Debtor> getAll(String type, String pattern) {
         return DebtorDAO.readAll(type, pattern);
     }
-   
-    public void createOrReplace(){
-        if(DebtorDAO.readDebtor(this)!=null){
+
+    public void createOrReplace() {
+        if (DebtorDAO.readDebtor(this) != null) {
             DebtorDAO.create(this);
-        }else{
+        } else {
             DebtorDAO.update(this);
         }
     }
-    
-    public Debtor getDebtor(){
-          if (this.id == null) {
+
+    public Debtor getDebtor() {
+        if (this.id == null) {
             return DebtorDAO.readDebtor(this);
         } else {
-        return DebtorDAO.read(this);
-          }
+            return DebtorDAO.read(this);
+        }
     }
-    
-    
-   public boolean getIndebted(){
-        return DebtorDAO.isIndebted(this);
-   }
-   
-    public boolean isIndebted(){
+
+    public Debtor getDebtorByIdentifier() {
+        return DebtorDAO.readDebtor(this);
+    }
+
+    public boolean getIndebted() {
         return DebtorDAO.isIndebted(this);
     }
-    
+
+    public boolean isIndebted() {
+        return DebtorDAO.isIndebted(this);
+    }
+
     public Integer getId() {
         return id;
     }
