@@ -57,7 +57,7 @@ public class UpdateDebtor extends HttpServlet {
         Debtor oldDebtor = debtorToUpdate.getDebtor();
         if (!oldDebtor.getIdentifier().equals(identifier)) {
             if (debtorToUpdate.getDebtorByIdentifier() != null) {
-                errorMessages.add("Esse identificardor já está cadastrado para outra instituição.");
+                errorMessages.add("Esse identificardor já está cadastrado para outro devedor.");
             }
         }
 

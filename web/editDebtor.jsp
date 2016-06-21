@@ -52,9 +52,11 @@
 
             </div><!-- /.container-fluid -->
         </nav>
+        <%@ include file="errorMessages.jsp" %>
         <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
+
             <form  action="${url}" method="POST"  modelAttribute = "debtor" role="form">
                 <div class="form-inline">
                     <label>Situação:</label>
@@ -163,7 +165,7 @@
                     </div>
                 </div>
                 <div>
-                    <%@ include file="errorMessages.jsp" %>
+
 
                     <button type="submit" class="btn btn-info">Salvar</button>
                     <a href="ListDebtors"><button type="button" class="btn btn-danger" id="botao-do-capeta">Cancelar</button></a>
