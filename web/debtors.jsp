@@ -52,6 +52,7 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <%@ include file="messageLabel.jsp" %>
         <!-- Table -->
         <table class="table table-hover my-table">
             <thead>
