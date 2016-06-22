@@ -8,12 +8,17 @@ package controllers.debtor;
 import controllers.debtor.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.entities.Debtor;
+import utils.MessageLabel;
+import utils.Validate;
 
 /**
  *
@@ -33,19 +38,53 @@ public class AddDebtor extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String identifier =request.getParameter("identifier");
-            String name =request.getParameter("name");
-            
-            Debtor debtorToAdd = new Debtor();
-            
-            debtorToAdd.setName(name);
-            debtorToAdd.setIdentifier(identifier);
-            debtorToAdd.add();
-            
-            response.sendRedirect("ListDebtors");
-    }
+        List<String> errorMessages = new ArrayList();
+        HttpSession session = request.getSession();
 
+        String identifier = request.getParameter("identifier");
+        String name = request.getParameter("name");
+
+        Debtor debtorToAdd = new Debtor();
+
+        debtorToAdd.setName(name);
+        debtorToAdd.setIdentifier(identifier);
+
+        //Validação
+        if (name.isEmpty()) {
+            errorMessages.add("Insira um nome para o devedor.");
+        }
+        if (!(Validate.isCNPJ(identifier) || Validate.isCPF(identifier))) {
+            errorMessages.add("Esse identificardor é inválido. Insira um CPF/CNPJ válido.");
+        }
+        Debtor debtorToVerify = debtorToAdd.getDebtorByIdentifier();
+        
+        if (debtorToVerify != null) {
+            System.out.println(debtorToVerify.getId());
+            System.out.println(debtorToVerify.getIdentifier());
+            errorMessages.add("Esse identificardor já está cadastrado para outro devedor.");
+        }
+        
+        if (!errorMessages.isEmpty()) {
+            session.setAttribute("errorMessages", errorMessages);
+            response.sendRedirect("addDebtor.jsp");
+        } else {
+            //Mensagem pós ação
+            MessageLabel message = new MessageLabel();
+
+            if (debtorToAdd.add()) {
+                message.setMessageType(true, "", "O devedor foi adicionado com sucesso!");
+                session.setAttribute("message", message);
+                response.sendRedirect("ListDebtors");
+            } else {
+                message.setMessageType(false, "", "Ocorreu um erro ao adicionar o devedor, verifique os campos e tente novamente.");
+                session.setAttribute("message", message);
+                response.sendRedirect("addDebtor.jsp");
+            }
+
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
