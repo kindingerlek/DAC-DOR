@@ -9,15 +9,14 @@
 <html>
     <head>
         <title> DOR - Devedores Originalmente Regulares </title>
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-
-        <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        
         <script type="text/javascript" src="assets/jquery-2.2.4.min.js"></script>
-
+        <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div >
@@ -42,11 +41,11 @@
                     <div class="error"></div>
                     <spam><a>Esqueci minha senha.</a></spam>
                     <span><button class="btn btn-default login-button submit-button" type="submit">Entrar</button></span>
-                    
+
                 </div>
-                
+
             </form>
-   <script type="text/javascript" src="js/validation.js"></script>
+            <script type="text/javascript" src="js/validation.js"></script>
 
     </body>
 </html>
