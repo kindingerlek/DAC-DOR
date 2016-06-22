@@ -8,14 +8,17 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> DOR - Devedores Originalmente Regulares </title>
         <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-
+        <script src="bootstrap-3.3.6-dist/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        <title> DOR - Devedores Originalmente Regulares </title>
     </head>
     <body>
         <div >
+            <%@ include file="messageLabel.jsp" %>
             <div class="login-title">
                 <h1>DOR</h1>
                 <h4>Devedores Originalmente Regulares</h4>
@@ -30,12 +33,14 @@
                     <div class="input-group login-input">
                         <span class="login-span input-group-addon">Senha</span>
                         <input type="password" class="form-control" placeholder="Digite sua senha." name="password" aria-describedby="basic-addon1">
+
                     </div>
+                    <%@ include file="errorMessages.jsp" %>
                     <spam><a>Esqueci minha senha.</a></spam>
                     <span><button class="btn btn-default login-button" type="submit">Entrar</button></span>
 
                 </div>
             </form>
-        
+
     </body>
 </html>

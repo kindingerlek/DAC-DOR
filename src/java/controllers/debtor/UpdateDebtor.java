@@ -22,6 +22,7 @@ import models.entities.Company;
 import models.entities.Debtor;
 import models.entities.DebtorCompanySituation;
 import utils.MessageLabel;
+import utils.Validate;
 
 /**
  *
@@ -53,8 +54,15 @@ public class UpdateDebtor extends HttpServlet {
         debtorToUpdate.setId(id);
         debtorToUpdate.setName(name);
         debtorToUpdate.setIdentifier(identifier);
-
         Debtor oldDebtor = debtorToUpdate.getDebtor();
+
+        //Validação
+        if (name.isEmpty()) {
+            errorMessages.add("Insira um nome para o devedor.");
+        }
+        if (!(Validate.isCNPJ(identifier) || Validate.isCPF(identifier))) {
+            errorMessages.add("Esse identificardor é inválido. Insira um CPF/CNPJ válido.");
+        }
         if (!oldDebtor.getIdentifier().equals(identifier)) {
             if (debtorToUpdate.getDebtorByIdentifier() != null) {
                 errorMessages.add("Esse identificardor já está cadastrado para outro devedor.");
@@ -82,7 +90,7 @@ public class UpdateDebtor extends HttpServlet {
 
             debtorToUpdate.setSituationCompanies(updatedDebtorCompanySituation);
 
-            
+            //Mensagem pós ação
             MessageLabel message = new MessageLabel();
 
             if (debtorToUpdate.update()) {

@@ -10,7 +10,7 @@
 <div class="header">
     <span class="title">DOR <small>- Devedores Originalmente Regulares</small></span>
     <span class="log-out"><a href="LogoutProcess"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></span>
-    <span class="welcome">Bem vindo, Razer!</span>
+    <span class="welcome">Bem vindo, ${admin.name}</span>
 </div>
 <!-- Navbar -->
 <nav class="navbar navbar-default menu">

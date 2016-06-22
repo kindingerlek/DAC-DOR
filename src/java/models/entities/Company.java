@@ -52,8 +52,8 @@ public class Company {
     public Company() {
     }
 
-    public void add() {
-        CompanyDAO.create(this);
+    public boolean add() {
+        return CompanyDAO.create(this);
     }
 
     public boolean update() {

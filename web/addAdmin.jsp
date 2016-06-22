@@ -18,7 +18,9 @@
         <title>DOR</title>
     </head>
     <body>
-    
+        <%@ include file="header.jsp" %>
+
+
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -33,6 +35,7 @@
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
+        <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
             <form action="AddAdmin" method="POST" role="form">
@@ -53,15 +56,7 @@
                     <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
                 </div>
                 <div>
-                    <c:if test="${not empty errorMessages}">
-                        <div class="alert alert-danger" role="alert">
-                            <c:forEach var="errorMessage" items="${errorMessages}">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <span class="sr-only">Error:</span>
-                                <c:out value="${errorMessage}"/><p>
-                            </c:forEach>
-                        </div>
-                    </c:if>
+                    <%@ include file="errorMessages.jsp" %>
                     <button type="submit" class="btn btn-info">Adicionar</button>
                     <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>

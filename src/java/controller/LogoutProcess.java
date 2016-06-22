@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utils.MessageLabel;
 
 /**
  *
@@ -33,12 +34,17 @@ public class LogoutProcess extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         //Clean Session
+        //Clean Session
         HttpSession session = request.getSession();
         session.invalidate();
         //Redirect to Login
+        MessageLabel message = new MessageLabel();
+        message.setMessageType(true, "", "Logout relizado com Sucesso.");
+        HttpSession newSession = request.getSession();
+        newSession.setAttribute("message", message);
+        //Redirect to login
         response.sendRedirect("index.jsp");
-    
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
