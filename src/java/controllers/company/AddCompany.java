@@ -7,12 +7,16 @@ package controllers.company;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.entities.Company;
+import utils.MessageLabel;
 
 /**
  *
@@ -32,16 +36,51 @@ public class AddCompany extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String token =request.getParameter("token");
-            String name =request.getParameter("name");
-            
-            Company companyToAdd = new Company();
-            
-            companyToAdd.setName(name);
-            companyToAdd.setToken(token);
-            companyToAdd.add();
-            
-            response.sendRedirect("ListCompanies");
+        List<String> errorMessages = new ArrayList();
+        HttpSession session = request.getSession();
+
+        String token = request.getParameter("token");
+        String name = request.getParameter("name");
+
+        Company companyToAdd = new Company();
+
+        companyToAdd.setName(name);
+
+        companyToAdd.setToken(token);
+
+        //Validação
+        Company oldCompany = companyToAdd.getCompanyByToken();
+
+        if (token.isEmpty()) {
+            errorMessages.add("Insira um token para a instituição.");
+        }
+
+        if (name.isEmpty()) {
+            errorMessages.add("Insira um nome para a instituição");
+        }
+
+        if (oldCompany != null) {
+            errorMessages.add("Esse token já está cadastrado para outra instituição.");
+        }
+
+        if (!errorMessages.isEmpty()) {
+            session.setAttribute("errorMessages", errorMessages);
+            response.sendRedirect("addCompany.jsp");
+        } else {
+
+            //Mensagem pós ação
+            MessageLabel message = new MessageLabel();
+            if (companyToAdd.add()) {
+                message.setMessageType(true, "", "A instituição foi adicionada com sucesso!");
+                session.setAttribute("message", message);
+                response.sendRedirect("ListCompanies");
+            } else {
+                message.setMessageType(false, "", "Ocorreu um erro ao adicionar a instituição, verifique os campos e tente novamente.");
+                session.setAttribute("message", message);
+                response.sendRedirect("addCompany.jsp");
+            }
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -50,6 +50,7 @@
                     </div>
                 </div>
                 <div>
+                    <%@ include file="errorMessages.jsp" %>
                     <button type="submit" class="btn btn-info">Adicionar</button>
                     <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>

@@ -59,6 +59,7 @@
                     <input type="text" class="form-control" placeholder="Identificador" name="identifier"/>
                 </div>
                 <div>
+                    <%@ include file="errorMessages.jsp" %>
                     <button type="submit" class="btn btn-info">Adicionar</button>
                     <a href="debtors.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
