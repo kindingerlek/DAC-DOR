@@ -1,8 +1,13 @@
 
 //triggers
-$('#email').on('blur', testEmail);
+$('.email').on('blur', testEmail);
 $('#identifier').on('blur', testDebtorType);
 $('input:radio[name=identifierType]').change(testDebtorType);
+$('#confirmPassword').on('blur', testPassword);
+$('#password').on('blur', testPassword);
+$('#generateToken').on('click',function(){
+        $('#token').val(generateToken());
+    });
 
 //functions
 function putError(error) {
@@ -17,7 +22,7 @@ function clearError() {
 }
 
 function testEmail() {
-    var email = $('#email').val();
+    var email = $('.email').val();
     if (!/@/i.test(email)) {
         return putError("Email inválido.");
     } else {
@@ -163,4 +168,16 @@ function validateCpf(cpf) {
     if (mod !== parseInt(cpf.substring(10, 11)))
         return false;
     return true;
+}
+
+function generateToken(){
+    
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 10; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+    
 }

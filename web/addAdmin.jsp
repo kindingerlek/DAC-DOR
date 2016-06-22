@@ -11,10 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="bootstrap-3.3.6-dist/jquery-2.2.4.min.js"></script>
-        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        <script src="assets/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
         <title>DOR</title>
     </head>
     <body>
@@ -45,23 +45,25 @@
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="email" class="form-control" placeholder="Email" name="email"/>
+                    <input type="email" class="form-control email" placeholder="Email" name="email"/>
                 </div>
                 <div class="form-group">
                     <label>Senha:</label>
-                    <input type="password" class="form-control" placeholder="Senha" name="password"/>
+                    <input id="password" type="password" class="form-control" placeholder="Senha" name="password"/>
                 </div>
                 <div class="form-group">
                     <label>Confirmar Senha:</label>
-                    <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
                 </div>
                 <div>
                     <%@ include file="errorMessages.jsp" %>
-                    <button type="submit" class="btn btn-info">Adicionar</button>
-                    <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <div class="error"></div>
+                    <button type="submit" class="btn btn-info submit-button">Adicionar</button>
+                    <a href="ListAdmins"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
 
             </form>
         </div>
+        <script type="text/javascript" src="js/validation.js"></script>
     </body>
 </html>
