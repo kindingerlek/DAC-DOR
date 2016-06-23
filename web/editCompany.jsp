@@ -17,10 +17,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="bootstrap-3.3.6-dist/jquery-2.2.4.min.js"></script>
-        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        
+        <script src="assets/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        
         <title>DOR</title>
     </head>
     <body>
@@ -39,7 +42,7 @@
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
-       <%@ include file="messageLabel.jsp" %>
+        <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
             <form action="${url}" method="POST" role="form">
@@ -52,17 +55,18 @@
                 <div class="form-group">
                     <label>Token:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Token." value="${fn:escapeXml(company.token)}" name="token" aria-describedby="basic-addon1">
+                        <input id="token" type="text" class="form-control" placeholder="Token." value="${fn:escapeXml(company.token)}" name="token" aria-describedby="basic-addon1">
                         <span class="input-group-btn">
-                            <button class="btn btn-warning" type="button">Gerar Token</button>
+                            <button id="generateToken" class="btn btn-warning" type="button">Gerar Token</button>
                         </span>
                     </div>
                 </div>
                 <div>
-                     <%@ include file="errorMessages.jsp" %>
+                    <%@ include file="errorMessages.jsp" %>
                     <button type="submit" class="btn btn-info">Salvar</button>
-                    <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <a href="ListCompanies"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
+                <script type="text/javascript" src="js/validation.js"></script>
             </form>
         </div>
     </body>
