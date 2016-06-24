@@ -50,12 +50,12 @@
 
 
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" value="${fn:escapeXml(company.name)}" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" value="${fn:escapeXml(company.name)}" name="name" required/>
                 </div>
                 <div class="form-group">
                     <label>Token:</label>
                     <div class="input-group">
-                        <input id="token" type="text" class="form-control" placeholder="Token." value="${fn:escapeXml(company.token)}" name="token" aria-describedby="basic-addon1">
+                        <input id="token" type="text" class="form-control" placeholder="Token." value="${fn:escapeXml(company.token)}" name="token" aria-describedby="basic-addon1" required>
                         <span class="input-group-btn">
                             <button id="generateToken" class="btn btn-warning" type="button">Gerar Token</button>
                         </span>

@@ -44,19 +44,19 @@
             <form action="AddAdmin" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" name="name" required/>
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="email" class="form-control email" placeholder="Email" name="email"/>
+                    <input type="email" class="form-control email" placeholder="Email" name="email" required/>
                 </div>
                 <div class="form-group">
                     <label>Senha:</label>
-                    <input id="password" type="password" class="form-control" placeholder="Senha" name="password"/>
+                    <input id="password" type="password" class="form-control" placeholder="Senha" name="password" required/>
                 </div>
                 <div class="form-group">
                     <label>Confirmar Senha:</label>
-                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation" required/>
                 </div>
                 <div>
                     <%@ include file="errorMessages.jsp" %>

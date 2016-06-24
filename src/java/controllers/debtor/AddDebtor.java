@@ -43,6 +43,8 @@ public class AddDebtor extends HttpServlet {
 
         String identifier = request.getParameter("identifier");
         String name = request.getParameter("name");
+        
+        identifier = identifier.replaceAll("[.-]", "");
 
         Debtor debtorToAdd = new Debtor();
 

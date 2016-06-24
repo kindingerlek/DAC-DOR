@@ -72,7 +72,7 @@
                 </div>
                 <div class="form-group">   
                     <label>Nome:</label>
-                    <input name="debtor.name" type="text" class="form-control" placeholder="Nome" value="${fn:escapeXml(debtor.name)}"/> 
+                    <input name="debtor.name" type="text" class="form-control" placeholder="Nome" value="${fn:escapeXml(debtor.name)}" required/> 
 
                 </div>
                 <div class="form-group">

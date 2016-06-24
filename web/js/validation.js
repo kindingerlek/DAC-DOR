@@ -5,14 +5,14 @@ $('#identifier').on('blur', testDebtorType);
 $('input:radio[name=identifierType]').change(testDebtorType);
 $('#confirmPassword').on('blur', testPassword);
 $('#password').on('blur', testPassword);
-$('#generateToken').on('click',function(){
-        $('#token').val(generateToken());
-    });
+$('#generateToken').on('click', function () {
+    $('#token').val(generateToken());
+});
 
 //functions
 function putError(error) {
     $('.submit-button').attr('disabled', 'disabled');
-    $('.error').html('<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>  '+error+'</div>');
+    $('.error').html('<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>  ' + error + '</div>');
     return null;
 }
 
@@ -30,7 +30,7 @@ function testEmail() {
     }
 }
 
-function testDebtorType(){
+function testDebtorType() {
     var type;
     $('input:radio[name=identifierType]').each(function () {
         if ($(this).is(':checked'))
@@ -45,24 +45,30 @@ function testDebtorType(){
 
 function testCnpj() {
     var cnpj = $('#identifier').val().replace(/[.-]/g, '');
-    if (!isNumeric(cnpj)) {
-        return putError("CNPJ com caracteres inválidos.");
-    } else if (!validateCnpj(cnpj)) {
-        return putError("CNPJ inválido");
-    } else {
-        clearError();
+    if (cnpj !== "") {
+        if (!isNumeric(cnpj)) {
+            return putError("CNPJ com caracteres inválidos.");
+        } else if (!validateCnpj(cnpj)) {
+            return putError("CNPJ inválido");
+        } else {
+            clearError();
+        }
     }
+    clearError();
 }
 
 function testCpf() {
     var cpf = $('#identifier').val().replace(/[.-]/g, '');
-    if (!isNumeric(cpf)) {
-        return putError("CPF com caracteres inválidos.");
-    } else if (!validateCpf(cpf)) {
-        return putError("CPF inválido");
-    } else {
-        clearError();
+    if (cpf !== "") {
+        if (!isNumeric(cpf)) {
+            return putError("CPF com caracteres inválidos.");
+        } else if (!validateCpf(cpf)) {
+            return putError("CPF inválido");
+        } else {
+            clearError();
+        }
     }
+    clearError();
 }
 
 function testPassword() {
@@ -170,14 +176,14 @@ function validateCpf(cpf) {
     return true;
 }
 
-function generateToken(){
-    
+function generateToken() {
+
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for( var i=0; i < 10; i++ )
+    for (var i = 0; i < 10; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
-    
+
 }

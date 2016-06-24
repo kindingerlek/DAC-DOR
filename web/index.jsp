@@ -30,11 +30,11 @@
                 <div class="form-group login-form">
                     <div class="input-group login-input">
                         <span class="login-span input-group-addon">Email</span>
-                        <input type="text" class="form-control email" placeholder="Digite seu email." name="email" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control email" placeholder="Digite seu email." name="email" aria-describedby="basic-addon1" required>
                     </div>
                     <div class="input-group login-input">
                         <span class="login-span input-group-addon">Senha</span>
-                        <input type="password" class="form-control" placeholder="Digite sua senha." name="password" aria-describedby="basic-addon1">
+                        <input type="password" class="form-control" placeholder="Digite sua senha." name="password" aria-describedby="basic-addon1" required>
 
                     </div>
                     <%@ include file="errorMessages.jsp" %>

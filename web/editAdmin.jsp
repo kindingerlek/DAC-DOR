@@ -48,15 +48,15 @@
             <form action="${url}" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
-                    <input type="text" class="form-control" value="${fn:escapeXml(admin.name)}" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" value="${fn:escapeXml(admin.name)}" placeholder="Nome" name="name" required/>
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="email" class="form-control email" value="${fn:escapeXml(admin.email)}"placeholder="Email" name="email"/>
+                    <input type="email" class="form-control email" value="${fn:escapeXml(admin.email)}"placeholder="Email" name="email" required/>
                 </div>
                 <div class="form-group">
                     <label>Senha Antiga:</label>
-                    <input type="password" class="form-control" placeholder="Senha Antiga" name="oldPassword"/>
+                    <input type="password" class="form-control" placeholder="Senha Antiga" name="oldPassword" required/>
                 </div>
                 <div class="form-group">
                     <label>Nova Senha:</label>
