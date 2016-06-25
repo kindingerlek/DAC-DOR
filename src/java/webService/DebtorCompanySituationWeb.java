@@ -12,9 +12,18 @@ import java.io.Serializable;
  * @author Alisson
  */
 public class DebtorCompanySituationWeb implements Serializable{
+    private String debtorName;
     private String debtorIdentifier;
     private String companyToken;
     private boolean indebt;
+
+    public String getDebtorName() {
+        return debtorName;
+    }
+
+    public void setDebtorName(String debtorName) {
+        this.debtorName = debtorName;
+    }
 
     public String getDebtorIdentifier() {
         return debtorIdentifier;
