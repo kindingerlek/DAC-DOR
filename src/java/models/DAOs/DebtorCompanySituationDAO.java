@@ -61,12 +61,11 @@ public class DebtorCompanySituationDAO {
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
-            System.out.println(debtorCompanySituation.getDebtorCompanySituationId().getCompanyId());
-            System.out.println(debtorCompanySituation.getDebtorCompanySituationId().getDebtorId());
-            session.update(debtorCompanySituation);
+            session.saveOrUpdate(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
+            System.out.println("SaveUpdateDebtorSituationError:"+e.getMessage());
             if (transaction != null) {
                 transaction.rollback();
                return false; 
