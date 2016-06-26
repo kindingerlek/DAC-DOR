@@ -17,13 +17,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        
+
         <script src="assets/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="assets/jquery.md5.js"></script>
+
         <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-        
+
         <title>DOR</title>
     </head>
     <body>
@@ -45,7 +47,7 @@
         <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
-            <form action="${url}" method="POST" role="form">
+            <form action="${url}" method="POST" id="updateAdminForm" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
                     <input type="text" class="form-control" value="${fn:escapeXml(admin.name)}" placeholder="Nome" name="name" required/>
@@ -56,15 +58,21 @@
                 </div>
                 <div class="form-group">
                     <label>Senha Antiga:</label>
-                    <input type="password" class="form-control" placeholder="Senha Antiga" name="oldPassword" required/>
+                    <input type="password" id="oldPassword" class="form-control" placeholder="Senha Antiga"  required/>
+                    <input type="password" id="oldPasswordToSend" class="passwordToSend form-control" placeholder="Digite sua senha." name="oldPassword" aria-describedby="basic-addon1" />
+
                 </div>
                 <div class="form-group">
                     <label>Nova Senha:</label>
-                    <input id="password" type="password" class="form-control" placeholder="Nova Senha" name="newPassword"/>
+                    <input id="password" type="password" class="form-control" placeholder="Nova Senha" />
+                    <input type="password" id="newPasswordToSend" name="newPassword" class="passwordToSend form-control" placeholder="Digite sua senha." name="newPassword" aria-describedby="basic-addon1" />
+
                 </div>
                 <div class="form-group">
                     <label>Confirmar Senha:</label>
-                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha" />
+                    <input type="password" id="confirmationPasswordToSend" class="passwordToSend form-control" placeholder="Digite sua senha." name="confirmPassword" aria-describedby="basic-addon1" />
+
                 </div>
                 <div>
                     <%@ include file="errorMessages.jsp" %>
