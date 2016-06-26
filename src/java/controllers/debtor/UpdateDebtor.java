@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -76,15 +77,20 @@ public class UpdateDebtor extends HttpServlet {
 
             //Verify companies situations
             Integer index = 0;
+            boolean status = false;
             List<DebtorCompanySituation> updatedDebtorCompanySituation = new ArrayList();
             for (DebtorCompanySituation debComSit : oldDebtor.getSituationCompanies()) {
                 index++;
                 String indebted = (String) request.getParameter("debtor.situationCompanies[" + index + "].indebt");
                 if ("true".equals(indebted)) {
-                    debComSit.setIndebt(true);
+                    status = true;
                 } else {
-                    debComSit.setIndebt(false);
+                    status = false;
                 }
+                if(status!=debComSit.isIndebt()){
+                    debComSit.setSituationDate(new Date());
+                }
+                debComSit.setIndebt(status);
                 updatedDebtorCompanySituation.add(debComSit);
             }
 

@@ -6,6 +6,7 @@
 package models.DAOs;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import models.entities.Company;
 import models.entities.Debtor;
@@ -21,20 +22,18 @@ import static utils.HibernateUtils.getSessionFactory;
  */
 public class DebtorCompanySituationDAO {
 
-   public static DebtorCompanySituation read(DebtorCompanySituation debSit) {
+    public static DebtorCompanySituation read(DebtorCompanySituation debSit) {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            debSit = (DebtorCompanySituation) session.get(DebtorCompanySituation.class,debSit.getDebtorCompanySituationId());
-            
-            
+            debSit = (DebtorCompanySituation) session.get(DebtorCompanySituation.class, debSit.getDebtorCompanySituationId());
             return debSit;
         } catch (Exception e) {
-                throw e;
+            throw e;
         } finally {
             session.close();
         }
-   }
+    }
 
     public static void update(DebtorCompanySituation debtorCompanySituation) {
         Transaction transaction = null;
@@ -42,6 +41,7 @@ public class DebtorCompanySituationDAO {
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
+            debtorCompanySituation.setSituationDate(new Date());
             session.update(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
@@ -54,22 +54,23 @@ public class DebtorCompanySituationDAO {
             session.close();
         }
     }
-    
+
     public static boolean saveOrUpdate(DebtorCompanySituation debtorCompanySituation) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
+            debtorCompanySituation.setSituationDate(new Date());
             session.saveOrUpdate(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
         } catch (Exception e) {
-            System.out.println("SaveUpdateDebtorSituationError:"+e.getMessage());
+            System.out.println("SaveUpdateDebtorSituationError:" + e.getMessage());
             if (transaction != null) {
                 transaction.rollback();
-               return false; 
-               
+                return false;
+
             }
         } finally {
             session.close();
@@ -83,6 +84,7 @@ public class DebtorCompanySituationDAO {
         try {
             session = getSessionFactory().openSession();
             session.beginTransaction();
+            debtorCompanySituation.setSituationDate(new Date());
             session.save(debtorCompanySituation);
             transaction = session.getTransaction();
             transaction.commit();
@@ -130,7 +132,6 @@ public class DebtorCompanySituationDAO {
         }
         return list;
     }
-    
 
     public static void readDebtorCompanySituation() {
     }
