@@ -105,7 +105,7 @@ public class CompanyDAO {
         return true;
     }
 
-    public static void create(Company company) {
+    public static boolean create(Company company) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -117,11 +117,12 @@ public class CompanyDAO {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw e;
+                return false;
             }
         } finally {
             session.close();
         }
+        return true;
     }
 
     public static List<Company> readAll() {

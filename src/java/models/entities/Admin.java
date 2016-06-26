@@ -5,6 +5,7 @@
  */
 package models.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import models.DAOs.AdminDAO;
  */
 @Entity
 @Table(name = "admin")
-public class Admin {
+public class Admin implements Serializable {
 
     @Id
     @GeneratedValue
@@ -51,8 +52,8 @@ public class Admin {
         return AdminDAO.update(this);
     }
 
-    public void delete() {
-        AdminDAO.delete(this);
+    public boolean delete() {
+        return AdminDAO.delete(this);
     }
 
     public static List<Admin> getAll(String type, String param) {
@@ -65,22 +66,34 @@ public class Admin {
 
     public Admin auth() {
         Admin admin = AdminDAO.read(this.getEmail());
-        if ( admin!=null && admin.getPassword().equals(this.getPassword())) {
+        if (null != admin) {
+            System.out.println(admin.getId());
+            System.out.println(admin.getEmail());
+
+            if (admin.getId() == -1) {
+                return admin;
+            }
+            if (admin.getPassword().equals(this.getPassword())) {
+                return admin;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public Admin getAdmin() {
+        Admin admin = AdminDAO.read(this);
+        if (admin != null) {
             return admin;
         } else {
             return null;
         }
     }
-    
-    public Admin getAdmin(){
-       Admin admin = AdminDAO.read(this);
-        if ( admin!=null) {
-            return admin;
-        } else {
-            return null;
-        }
+     public Admin getAdminByEmail() {
+       return AdminDAO.read(this.getEmail()); 
     }
-    
+
     public int getId() {
         return id;
     }
@@ -113,5 +126,4 @@ public class Admin {
         this.email = email;
     }
 
-    
 }

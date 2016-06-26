@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ import models.entities.Company;
 import models.entities.Debtor;
 import models.entities.DebtorCompanySituation;
 import utils.MessageLabel;
+import utils.Validate;
 
 /**
  *
@@ -53,8 +55,15 @@ public class UpdateDebtor extends HttpServlet {
         debtorToUpdate.setId(id);
         debtorToUpdate.setName(name);
         debtorToUpdate.setIdentifier(identifier);
-
         Debtor oldDebtor = debtorToUpdate.getDebtor();
+
+        //Validação
+        if (name.isEmpty()) {
+            errorMessages.add("Insira um nome para o devedor.");
+        }
+        if (!(Validate.isCNPJ(identifier) || Validate.isCPF(identifier))) {
+            errorMessages.add("Esse identificardor é inválido. Insira um CPF/CNPJ válido.");
+        }
         if (!oldDebtor.getIdentifier().equals(identifier)) {
             if (debtorToUpdate.getDebtorByIdentifier() != null) {
                 errorMessages.add("Esse identificardor já está cadastrado para outro devedor.");
@@ -68,21 +77,26 @@ public class UpdateDebtor extends HttpServlet {
 
             //Verify companies situations
             Integer index = 0;
+            boolean status = false;
             List<DebtorCompanySituation> updatedDebtorCompanySituation = new ArrayList();
             for (DebtorCompanySituation debComSit : oldDebtor.getSituationCompanies()) {
                 index++;
                 String indebted = (String) request.getParameter("debtor.situationCompanies[" + index + "].indebt");
                 if ("true".equals(indebted)) {
-                    debComSit.setIndebt(true);
+                    status = true;
                 } else {
-                    debComSit.setIndebt(false);
+                    status = false;
                 }
+                if(status!=debComSit.isIndebt()){
+                    debComSit.setSituationDate(new Date());
+                }
+                debComSit.setIndebt(status);
                 updatedDebtorCompanySituation.add(debComSit);
             }
 
             debtorToUpdate.setSituationCompanies(updatedDebtorCompanySituation);
 
-            
+            //Mensagem pós ação
             MessageLabel message = new MessageLabel();
 
             if (debtorToUpdate.update()) {

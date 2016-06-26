@@ -25,37 +25,37 @@ public class DebtorDAO {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            debtor = (Debtor) session.get(Debtor.class,debtor.getId());
+            debtor = (Debtor) session.get(Debtor.class, debtor.getId());
             debtor.getSituationCompanies().size();
             System.out.println(debtor.getSituationCompanies().size());
             return debtor;
         } catch (Exception e) {
-                throw e;
+            throw e;
         } finally {
             session.close();
-        }  
+        }
     }
 
     public static boolean isIndebted(Debtor debtor) {
         Session session = null;
         try {
             session = getSessionFactory().openSession();
-            debtor = (Debtor) session.get(Debtor.class,debtor.getId());
+            debtor = (Debtor) session.get(Debtor.class, debtor.getId());
             debtor.getSituationCompanies().size();
             System.out.println(debtor.getSituationCompanies().size());
-            for(DebtorCompanySituation debComSit:debtor.getSituationCompanies()){
-                if(debComSit.isIndebt()){
+            for (DebtorCompanySituation debComSit : debtor.getSituationCompanies()) {
+                if (debComSit.isIndebt()) {
                     return true;
                 }
             }
         } catch (Exception e) {
-                throw e;
+            throw e;
         } finally {
             session.close();
-        }  
+        }
         return false;
     }
-    
+
     public static boolean update(Debtor debtor) {
         Transaction transaction = null;
         Session session = null;
@@ -103,7 +103,7 @@ public class DebtorDAO {
             session = getSessionFactory().openSession();
             list = session.createCriteria(Debtor.class).list();
         } catch (Exception e) {
-          
+
         } finally {
             session.close();
         }
@@ -131,7 +131,6 @@ public class DebtorDAO {
     }
 
     public static Debtor readDebtor(Debtor debtor) {
-        Transaction transaction = null;
         Session session = null;
         Debtor debtorReturned = null;
         try {
@@ -142,9 +141,11 @@ public class DebtorDAO {
             debtorReturned.getSituationCompanies().size();
             System.out.println(debtorReturned.getSituationCompanies().size());
         } catch (Exception e) {
-            
+            System.out.println("readDebtorError:"+e.getMessage());
         } finally {
-            session.close();
+            if (null != session) {
+                session.close();
+            }
         }
         return debtorReturned;
     }

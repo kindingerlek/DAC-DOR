@@ -53,7 +53,15 @@ public class UpdateAdmin extends HttpServlet {
         adminToUpdate = adminToUpdate.getAdmin();
         adminToUpdate.setEmail(email);
         adminToUpdate.setName(name);
+
+        //Validação
         
+        if (name.isEmpty()) {
+            errorMessages.add("Insira um nome para o administrador.");
+        }
+        if (email.isEmpty()) {
+            errorMessages.add("Insira um email para o administrador.");
+        }
         if (!newPassword.isEmpty()) {
             if (!adminToUpdate.getPassword().equals(oldPassword)) {
                 errorMessages.add("A senha antiga está incorreta.");
@@ -63,11 +71,24 @@ public class UpdateAdmin extends HttpServlet {
                 errorMessages.add("As senhas informadas não estão iguais.");
             }
         }
-
+        
+        Admin adminToVerifyInDb = new Admin();
+        adminToVerifyInDb.setEmail(email);
+        adminToVerifyInDb = adminToVerifyInDb.getAdminByEmail();
+        if (adminToVerifyInDb != null) {
+            if (adminToVerifyInDb.getId() == -1) {
+                errorMessages.add("Houve um problema ao verificar se email já está em uso, por favor volte em alguns instantes.");
+            } else {
+                errorMessages.add("O email informado já está cadastrado.");
+            }
+        }
+        
         if (!errorMessages.isEmpty()) {
             session.setAttribute("errorMessages", errorMessages);
             response.sendRedirect(urlToSend);
         } else {
+           
+            //Mensagens pos ação
             MessageLabel message = new MessageLabel();
             if (adminToUpdate.update()) {
                 message.setMessageType(true, "", "O Administrador foi atualizado com sucesso!");

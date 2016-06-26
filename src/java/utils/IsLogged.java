@@ -35,8 +35,21 @@ import models.entities.Admin;
     "/debtors.jsp",
     "/editDeptor.jsp",
     "/companies.jsp",
-    "/company.jsp"
-   }, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+    "/editCompany.jsp",
+    "/addCompany.jsp",
+    "/AddAdmin",
+    "/AddCompany",
+    "/AddDebtor",
+    "/GetAdmin",
+    "/GetCompany",
+    "/GetDebtor",
+    "/ListAdmins",
+    "/ListCompanies",
+    "/ListDebtors",
+    "/UpdateDebtor",
+    "/UpdateAdmin",
+    "/UpdateCompany"
+}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 
 public class IsLogged implements Filter {
 
@@ -125,13 +138,16 @@ public class IsLogged implements Filter {
         Throwable problem = null;
         try {
             HttpServletRequest req = (HttpServletRequest) request;
+            HttpServletResponse resp = (HttpServletResponse) response;
             HttpSession session = req.getSession();
             Admin admin = (Admin) session.getAttribute("admin");
 
             if (admin == null) {
-                req.setAttribute("errorMessage", "O administrador deve estar logado para realizar essa ação!");
-                RequestDispatcher rd = req.getRequestDispatcher("/errorReport.jsp");
-                rd.forward(request, response);
+                MessageLabel message = new MessageLabel();
+                message.setMessageType(false, "", "Um administrador deve estar logado para realizar essa ação.");
+                session.setAttribute("message", message);
+                //Redirect to login
+                resp.sendRedirect("index.jsp");
                 return;
             }
 
