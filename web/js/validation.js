@@ -1,6 +1,9 @@
 
 //triggers
 $('.email').on('blur', testEmail);
+ $("#formLogin").submit(md5Login);
+ $("#updateAdminForm").submit(md5UpdateAdmin);
+ $("#formAddAdmin").submit(md5AddAdmin);
 $('#identifier').on('blur', testDebtorType);
 $('input:radio[name=identifierType]').change(testDebtorType);
 $('#confirmPassword').on('blur', testPassword);
@@ -186,4 +189,42 @@ function generateToken() {
 
     return text;
 
+}
+
+function md5Login(){
+    var loginPasswordToSend = $("#loginPasswordToSend");
+    var loginPassword = $("#loginPassword");
+    console.log(loginPassword.val());
+    loginPasswordToSend.val($.md5(loginPassword.val()));   
+}
+function md5UpdateAdmin(){
+    var oldPasswordToSend = $("#oldPasswordToSend");
+    var newPasswordToSend = $("#newPasswordToSend");
+    var confirmationPasswordToSend = $("#confirmationPasswordToSend");
+    
+    var newPassword = $("#password");
+    var oldPassword = $("#oldPassword");
+    var confirmPassword = $("#confirmPassword");
+    console.log(newPassword.val());
+    console.log(oldPassword.val());
+    console.log(confirmPassword.val());
+    
+    
+    oldPasswordToSend.val($.md5(oldPassword.val()));   
+    newPasswordToSend.val($.md5(newPassword.val()));   
+    confirmationPasswordToSend.val($.md5(confirmPassword.val()));   
+}
+
+function md5AddAdmin(){
+    
+    var newPasswordToSend = $("#passwordToSend");
+    var confirmationPasswordToSend = $("#confirmationPasswordToSend");
+    
+  
+    var newPassword = $("#password");
+    var confirmPassword = $("#confirmPassword");
+   
+    
+    newPasswordToSend.val($.md5(newPassword.val()));   
+    confirmationPasswordToSend.val($.md5(confirmPassword.val()));   
 }

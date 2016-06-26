@@ -127,3 +127,6 @@ body{
 #botao-do-capeta{
     margin-bottom: 20pt;
 }
+.passwordToSend{
+    display: none;
+}

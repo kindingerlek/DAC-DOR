@@ -11,13 +11,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        
+
         <script src="assets/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="assets/jquery.md5.js"></script>
         <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-        
+
         <title>DOR</title>
     </head>
     <body>
@@ -41,7 +42,7 @@
         <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
-            <form action="AddAdmin" method="POST" role="form">
+            <form id="formAddAdmin"action="AddAdmin" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
                     <input type="text" class="form-control" placeholder="Nome" name="name" required/>
@@ -52,11 +53,15 @@
                 </div>
                 <div class="form-group">
                     <label>Senha:</label>
-                    <input id="password" type="password" class="form-control" placeholder="Senha" name="password" required/>
+                    <input id="password" type="password" class="form-control" placeholder="Senha"  required/>
+                    <input type="password" id="passwordToSend" class="passwordToSend form-control" placeholder="Digite sua senha." name="password"aria-describedby="basic-addon1" />
+
                 </div>
                 <div class="form-group">
                     <label>Confirmar Senha:</label>
-                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation" required/>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha"  required/>
+                    <input type="password" id="confirmationPasswordToSend" class="passwordToSend form-control" placeholder="Digite sua senha." name="passwordConfirmation" aria-describedby="basic-addon1" />
+
                 </div>
                 <div>
                     <%@ include file="errorMessages.jsp" %>

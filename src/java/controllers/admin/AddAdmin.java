@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.entities.Admin;
 import utils.MessageLabel;
+import utils.Validate;
 
 /**
  *
@@ -52,7 +53,7 @@ public class AddAdmin extends HttpServlet {
         if (email.isEmpty()) {
             errorMessages.add("Insira um email para o administrador.");
         }
-        if (password.isEmpty()) {
+        if (password.equals("d41d8cd98f00b204e9800998ecf8427e")||passwordConfirmation.equals("d41d8cd98f00b204e9800998ecf8427e")) {
             errorMessages.add("Insira uma senha.");
         }
         if (!passwordConfirmation.equals(password)) {

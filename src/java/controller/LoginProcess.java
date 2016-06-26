@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.entities.Admin;
 import utils.MessageLabel;
+import utils.Validate;
 
 /**
  *
@@ -41,6 +42,7 @@ public class LoginProcess extends HttpServlet {
         //Get the request data
         String password = (String) request.getParameter("password");
         String email = (String) request.getParameter("email");
+        System.out.println(password);
         //Validate request data
         if (password.isEmpty() || email.isEmpty()) {
             errorMessages.add("Preencha todos os campos.");

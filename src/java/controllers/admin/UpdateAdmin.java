@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.entities.Admin;
 import utils.MessageLabel;
+import utils.Validate;
 
 /**
  *
@@ -45,49 +46,50 @@ public class UpdateAdmin extends HttpServlet {
         String email = (String) request.getParameter("email");
         String newPassword = (String) request.getParameter("newPassword");
         String oldPassword = (String) request.getParameter("oldPassword");
-        String passwordConfirmation = (String) request.getParameter("passwordConfirmation");
+        String passwordConfirmation = (String) request.getParameter("confirmPassword");
         String name = (String) request.getParameter("name");
         String urlToSend = "GetAdmin?idAdmin=" + adminId;
-
         adminToUpdate.setId(adminId);
         adminToUpdate = adminToUpdate.getAdmin();
-        adminToUpdate.setEmail(email);
         adminToUpdate.setName(name);
 
         //Validação
-        
         if (name.isEmpty()) {
             errorMessages.add("Insira um nome para o administrador.");
         }
         if (email.isEmpty()) {
             errorMessages.add("Insira um email para o administrador.");
         }
+
         if (!newPassword.isEmpty()) {
             if (!adminToUpdate.getPassword().equals(oldPassword)) {
                 errorMessages.add("A senha antiga está incorreta.");
-            } else if (passwordConfirmation.equals(newPassword)) {
-                adminToUpdate.setPassword(newPassword);
-            } else {
-                errorMessages.add("As senhas informadas não estão iguais.");
+            } else if (!newPassword.equals("d41d8cd98f00b204e9800998ecf8427e")) {
+                if (passwordConfirmation.equals(newPassword)) {
+                    adminToUpdate.setPassword(newPassword);
+                } else {
+                    errorMessages.add("As senhas informadas não estão iguais.");
+                }
             }
         }
-        
+
         Admin adminToVerifyInDb = new Admin();
         adminToVerifyInDb.setEmail(email);
+
         adminToVerifyInDb = adminToVerifyInDb.getAdminByEmail();
-        if (adminToVerifyInDb != null) {
+        if (adminToVerifyInDb != null && !email.equals(adminToUpdate.getEmail())) {
             if (adminToVerifyInDb.getId() == -1) {
                 errorMessages.add("Houve um problema ao verificar se email já está em uso, por favor volte em alguns instantes.");
             } else {
                 errorMessages.add("O email informado já está cadastrado.");
             }
         }
-        
+
         if (!errorMessages.isEmpty()) {
             session.setAttribute("errorMessages", errorMessages);
             response.sendRedirect(urlToSend);
         } else {
-           
+
             //Mensagens pos ação
             MessageLabel message = new MessageLabel();
             if (adminToUpdate.update()) {

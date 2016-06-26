@@ -77,7 +77,7 @@
                 </div>
                 <div class="form-group">
                     <label>Identificador:</label>
-                    <input name="debtor.identifier" type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}"  disabled/>
+                    <input name="debtor.identifier" type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}" />
                 </div>
                 <label>Instituição: </label>
                 <div class="form-group intitution-debtor">
