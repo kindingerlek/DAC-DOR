@@ -8,6 +8,7 @@ package controllers.debtor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -74,6 +75,7 @@ public class GetDebtor extends HttpServlet {
             newDebComSit.setIndebt(false);
             if(!debtor.getSituationCompanies().contains(newDebComSit)){
                 debtor.getSituationCompanies().add(newDebComSit);
+                newDebComSit.setSituationDate(new Date());
                 changed = true;
             }            
         }

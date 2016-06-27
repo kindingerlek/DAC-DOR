@@ -19,13 +19,14 @@ import javax.ws.rs.core.Response;
 import models.entities.Company;
 import models.entities.DebtorCompanySituation;
 import models.entities.Debtor;
+import utils.Validate;
 
 /**
  * REST Web Service
  *
  * @author Alisson
  */
-@Path("debtorSituation")
+@Path("debtorSituations")
 public class DebtorSituation {
 
     @Context
@@ -44,7 +45,8 @@ public class DebtorSituation {
      * @return an instance of models.entities.DebtorCompanySituation
      */
     @GET
-    public Response getJson(@QueryParam("debtorIdentifier") String debtorIdentifier) {
+    @Path("{debtorIdentifier}")
+    public Response getJson(@PathParam("debtorIdentifier") String debtorIdentifier) {
         Debtor debtor = new Debtor();
         debtor.setIdentifier(debtorIdentifier);
         debtor = debtor.getDebtor();
@@ -64,10 +66,12 @@ public class DebtorSituation {
      * @param content representation for the resource
      */
     @PUT
+    @Path("{debtorIdentifier}")
     @Consumes(javax.ws.rs.core.MediaType.APPLICATION_JSON)
-    public Response putJson(DebtorCompanySituationWeb debtorCompanySituation) {
+    public Response putJson(@PathParam("debtorIdentifier") String debtorIdentifier, DebtorCompanySituationWeb debtorCompanySituation) {
+
         String token = debtorCompanySituation.getCompanyToken();
-        String identifier = debtorCompanySituation.getDebtorIdentifier();
+        String identifier = debtorIdentifier;
         Company company = new Company();
         company.setToken(token);
         company = company.getCompany();
@@ -76,10 +80,27 @@ public class DebtorSituation {
         }
         Debtor debtor = new Debtor();
         debtor.setIdentifier(identifier);
-        debtor = debtor.getDebtor();
+        debtor = debtor.getDebtorByIdentifier();
 
         if (debtor == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for identifier: " + identifier).build();
+            if (Validate.isCNPJ(identifier) || Validate.isCPF(identifier)) {
+                System.out.println("valid" + identifier);
+                //Add a new debtor in the system
+                Debtor debtorToAdd = new Debtor();
+                debtorToAdd.setIdentifier(identifier);
+                debtorToAdd.setName(debtorCompanySituation.getDebtorName());
+                if (debtorToAdd.add()) {
+                    debtor = debtorToAdd.getDebtorByIdentifier();
+                    DebtorCompanySituation debtorCompanySituationToAdd = new DebtorCompanySituation(company, debtor);
+                    debtorCompanySituationToAdd.setIndebt(debtorCompanySituation.isIndebt());
+                    debtorCompanySituationToAdd.saveOrUpdate();
+                } else {
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Can't add a debtor with this identifier: " + identifier).build();
+                }
+
+            } else {
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("this is a invalid identifier: " + identifier).build();
+            }
         }
 
         DebtorCompanySituation debtorCompanySituationToUpdate;

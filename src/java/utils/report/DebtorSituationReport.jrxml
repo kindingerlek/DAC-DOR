@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2016-06-17T15:28:50 -->
+<!-- 2016-06-26T18:16:27 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DebtorSituationReport" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
 	<property name="template.engine" value="tabular_template"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
@@ -44,6 +44,7 @@
 	<field name="companyName" class="java.lang.String"/>
 	<field name="debtorName" class="java.lang.String"/>
 	<field name="indebt" class="java.lang.Boolean"/>
+	<field name="period" class="java.lang.String"/>
 	<title>
 		<band height="72">
 			<frame>
@@ -60,7 +61,7 @@
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Relatório de situação de Clientes]]></text>
+					<text><![CDATA[Relatório de situação de Cliente]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -69,10 +70,10 @@
 		<band height="45"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="38" splitType="Prevent">
+		<band height="43" splitType="Prevent">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="185" height="38" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="d5314a94-3042-478b-8bad-ae8e8a8403dd"/>
+				<reportElement mode="Opaque" x="0" y="0" width="141" height="43" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="d5314a94-3042-478b-8bad-ae8e8a8403dd"/>
 				<box>
 					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -85,7 +86,7 @@
 				<text><![CDATA[Nome Cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="185" y="0" width="185" height="38" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="9f16d8b5-3473-4e0c-b493-8d838b445e32"/>
+				<reportElement mode="Opaque" x="141" y="0" width="138" height="43" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="9f16d8b5-3473-4e0c-b493-8d838b445e32"/>
 				<box>
 					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -98,7 +99,7 @@
 				<text><![CDATA[Nome Companhia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="370" y="0" width="185" height="38" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="a73854e4-6a74-4f02-b1a9-da70eea239c8"/>
+				<reportElement mode="Opaque" x="279" y="0" width="138" height="43" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="a73854e4-6a74-4f02-b1a9-da70eea239c8"/>
 				<box>
 					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -110,14 +111,27 @@
 				</textElement>
 				<text><![CDATA[Situação]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="417" y="0" width="138" height="43" forecolor="#000000" backcolor="rgba(91, 192, 222, 0.5647059)" uuid="dd3fb245-ab82-46f5-ba7a-c65ca68a3cc8"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo de Situação]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="d891e180-6115-4b0f-9f62-9addc5954216"/>
+				<reportElement mode="Opaque" x="0" y="0" width="141" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="d891e180-6115-4b0f-9f62-9addc5954216"/>
 				<box>
 					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -130,7 +144,7 @@
 				<textFieldExpression><![CDATA[$F{debtorName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="13b687b5-77a0-4112-be00-b6b19e52841e"/>
+				<reportElement mode="Opaque" x="141" y="0" width="138" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="13b687b5-77a0-4112-be00-b6b19e52841e"/>
 				<box>
 					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
 					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -143,7 +157,7 @@
 				<textFieldExpression><![CDATA[$F{companyName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="e41078ba-3c79-4141-b3f6-74f3dd76610b">
+				<reportElement mode="Opaque" x="279" y="0" width="138" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="e41078ba-3c79-4141-b3f6-74f3dd76610b">
 					<printWhenExpression><![CDATA[$F{indebt} == true]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -158,7 +172,7 @@
 				<text><![CDATA[Em Débito]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="c14d888c-d9c6-4942-8c62-b9ea0681cf4f">
+				<reportElement positionType="Float" mode="Opaque" x="279" y="0" width="138" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="c14d888c-d9c6-4942-8c62-b9ea0681cf4f">
 					<printWhenExpression><![CDATA[$F{indebt} == false]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -172,6 +186,19 @@
 				</textElement>
 				<text><![CDATA[Regular]]></text>
 			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="417" y="0" width="138" height="20" forecolor="#000000" backcolor="#C8ECF7" uuid="dc086067-6029-41cd-a1c9-9c41121dafc5"/>
+				<box>
+					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<leftPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="2.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{period}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
