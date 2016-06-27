@@ -28,13 +28,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        
+
         <script src="assets/jquery-2.2.4.min.js"></script>
         <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-        
+        <script type="text/javascript" src="js/maskValidation.js"></script>
+        <script type="text/javascript" src="assets/jquery.mask.min.js"></script>
+
         <title>DOR</title>
     </head>
     <body>
@@ -77,7 +79,8 @@
                 </div>
                 <div class="form-group">
                     <label>Identificador:</label>
-                    <input name="debtor.identifier" type="text" class="form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}" />
+                    <label class="identifier-to-show" data-mask="999.999.999-99">${debtor.identifier}</label>
+                    <input name="debtor.identifier" type="text" class="passwordToSend form-control" placeholder="Identificador" value="${fn:escapeXml(debtor.identifier)}" />
                 </div>
                 <label>Instituição: </label>
                 <div class="form-group intitution-debtor">
