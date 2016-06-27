@@ -50,7 +50,14 @@ public class UpdateCompany extends HttpServlet {
         companyToUpdate.setToken(token);
         companyToUpdate.setName(name);
 
+        //Validação
         Company oldCompany = companyToUpdate.getCompany();
+        if (token.isEmpty()) {
+            errorMessages.add("Insira um token para a instituição.");
+        }
+        if (name.isEmpty()) {
+            errorMessages.add("Insira um nome para a instituição");
+        }
         if (!oldCompany.getToken().equals(token)) {
             if (companyToUpdate.getCompanyByToken() != null) {
                 errorMessages.add("Esse token já está cadastrado para outra instituição.");
@@ -62,9 +69,9 @@ public class UpdateCompany extends HttpServlet {
             session.setAttribute("errorMessages", errorMessages);
             response.sendRedirect(urlToSend);
         } else {
-
+            
+            //Mensagem pós ação
             MessageLabel message = new MessageLabel();
-
             if (companyToUpdate.update()) {
                 message.setMessageType(true, "", "A instituição foi atualizada com sucesso!");
             } else {

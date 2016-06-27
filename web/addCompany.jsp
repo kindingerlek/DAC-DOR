@@ -11,14 +11,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="bootstrap-3.3.6-dist/jquery-2.2.4.min.js"></script>
-        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        
+        <script src="assets/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+        
         <title>DOR</title>
     </head>
     <body>
-         <%@ include file="header.jsp" %>
+        <%@ include file="header.jsp" %>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -38,22 +41,24 @@
             <form action="AddCompany" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" name="name" required/>
                 </div>
                 <div class="form-group">
                     <label>Token:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Token." name="token" aria-describedby="basic-addon1">
+                        <input id="token" type="text" class="form-control" placeholder="Token" name="token" aria-describedby="basic-addon1" required>
                         <span class="input-group-btn">
-                            <button class="btn btn-warning" type="button">Gerar Token</button>
+                            <button id="generateToken" class="btn btn-warning" type="button">Gerar Token</button>
                         </span>
                     </div>
                 </div>
                 <div>
+                    <%@ include file="errorMessages.jsp" %>
                     <button type="submit" class="btn btn-info">Adicionar</button>
-                    <a href="companies.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <a href="ListCompanies"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
             </form>
         </div>
+        <script type="text/javascript" src="js/validation.js"></script>
     </body>
 </html>

@@ -6,6 +6,7 @@
 package utils.report;
 
 import java.util.List;
+import models.entities.DebtorCompanySituation;
 import models.entities.DebtorCompanySituationLog;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -38,7 +39,7 @@ public class DebtorCompanySituationLogREL {
         return print;
     }
     
-    public JasperPrint getSituationReport(List<DebtorCompanySituationLog> clients) throws Exception {
+    public JasperPrint getSituationReport(List<DebtorCompanySituation> clients) throws Exception {
         JasperReport report = JasperCompileManager.compileReport(this.getPathToReportPackage() + "DebtorSituationReport.jrxml");
         JasperPrint print = JasperFillManager.fillReport(report, null, new JRBeanCollectionDataSource(clients));
         return print;

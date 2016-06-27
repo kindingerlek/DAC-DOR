@@ -8,6 +8,7 @@ package models.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -48,20 +49,39 @@ public class DebtorCompanySituation implements Serializable {
     @Column(name = "STATUS")
     private boolean indebt;
 
+    @Column(name = "SITUATION_DATE")
+    private Date situationDate;
+
     //private List<DebtorCompanySituation> getAll();
     //Getter and Setters
     public DebtorCompanySituationId getDebtorCompanySituationId() {
         return debtorCompanySituationId;
     }
-    
-     public String getDebtorName() {
+
+    public Date getSituationDate() {
+        return situationDate;
+    }
+
+    public void setSituationDate(Date situationDate) {
+        this.situationDate = situationDate;
+    }
+
+    public String getDebtorName() {
         return this.getDebtor().getName();
+    }
+    
+    public String getPeriod() {
+        Date endDate = new Date();
+        Date startDate = this.getSituationDate();
+        long duration = endDate.getTime() - startDate.getTime();
+        long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
+        return (Math.abs(diffInDays)) + " Dia(s)";
     }
 
     public String getCompanyName() {
         return this.getCompany().getName();
     }
-    
+
     public Date getLogDate() {
         return new Date();
     }
@@ -98,16 +118,15 @@ public class DebtorCompanySituation implements Serializable {
         return DebtorCompanySituationDAO.readAll(debtor);
     }
 
-    
     public static List<DebtorCompanySituation> getAll() {
         return DebtorCompanySituationDAO.readAll();
     }
-    
+
     public static DebtorCompanySituation get() {
         return DebtorCompanySituationDAO.read();
     }
-    
-    public boolean saveOrUpdate(){
+
+    public boolean saveOrUpdate() {
         return DebtorCompanySituationDAO.saveOrUpdate(this);
     }
 

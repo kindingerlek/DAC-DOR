@@ -11,14 +11,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6-dist/css/bootstrap.min.css">
+
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-3.3.6-dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="main.css">
-        <script src="bootstrap-3.3.6-dist/jquery-2.2.4.min.js"></script>
-        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+
+        <script src="assets/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="assets/jquery.md5.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+
         <title>DOR</title>
     </head>
     <body>
-    
+        <%@ include file="header.jsp" %>
+
+
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -33,40 +39,39 @@
                 </div>
             </div><!-- /.container-fluid -->
         </nav>
+        <%@ include file="messageLabel.jsp" %>
         <!-- Form -->
         <div class="form">
-            <form action="AddAdmin" method="POST" role="form">
+            <form id="formAddAdmin"action="AddAdmin" method="POST" role="form">
                 <div class="form-group">
                     <label>Nome:</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="name"/>
+                    <input type="text" class="form-control" placeholder="Nome" name="name" required/>
                 </div>
                 <div class="form-group">
                     <label>Email:</label>
-                    <input type="email" class="form-control" placeholder="Email" name="email"/>
+                    <input type="email" class="form-control email" placeholder="Email" name="email" required/>
                 </div>
                 <div class="form-group">
                     <label>Senha:</label>
-                    <input type="password" class="form-control" placeholder="Senha" name="password"/>
+                    <input id="password" type="password" class="form-control" placeholder="Senha"  required/>
+                    <input type="password" id="passwordToSend" class="passwordToSend form-control" placeholder="Digite sua senha." name="password"aria-describedby="basic-addon1" />
+
                 </div>
                 <div class="form-group">
                     <label>Confirmar Senha:</label>
-                    <input type="password" class="form-control" placeholder="Confirmar senha" name="passwordConfirmation"/>
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Confirmar senha"  required/>
+                    <input type="password" id="confirmationPasswordToSend" class="passwordToSend form-control" placeholder="Digite sua senha." name="passwordConfirmation" aria-describedby="basic-addon1" />
+
                 </div>
                 <div>
-                    <c:if test="${not empty errorMessages}">
-                        <div class="alert alert-danger" role="alert">
-                            <c:forEach var="errorMessage" items="${errorMessages}">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <span class="sr-only">Error:</span>
-                                <c:out value="${errorMessage}"/><p>
-                            </c:forEach>
-                        </div>
-                    </c:if>
-                    <button type="submit" class="btn btn-info">Adicionar</button>
-                    <a href="admins.jsp"><button type="button" class="btn btn-danger">Cancelar</button></a>
+                    <%@ include file="errorMessages.jsp" %>
+                    <div class="error"></div>
+                    <button type="submit" class="btn btn-info submit-button">Adicionar</button>
+                    <a href="ListAdmins"><button type="button" class="btn btn-danger">Cancelar</button></a>
                 </div>
 
             </form>
         </div>
+        <script type="text/javascript" src="js/validation.js"></script>
     </body>
 </html>

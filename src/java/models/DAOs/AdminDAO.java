@@ -19,13 +19,23 @@ import static utils.HibernateUtils.getSessionFactory;
 public class AdminDAO {
 
     public static Admin read(String email) {
-        Session session = getSessionFactory().openSession();
+        Session session = null;
         Admin admin = new Admin();
         admin.setEmail(email);
-        Query query = session.createQuery("from Admin where email = :email");
-        query.setParameter("email", admin.getEmail());
-        admin = (Admin) query.uniqueResult();
-        session.close();
+        try {
+            session = getSessionFactory().openSession();
+            Query query = session.createQuery("from Admin where email = :email");
+            query.setParameter("email", admin.getEmail());
+            admin = (Admin) query.uniqueResult();
+        } catch (Exception ex) {
+            admin.setId(-1);
+            System.out.println(ex.getMessage());
+            return admin;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
         return admin;
     }
 
@@ -89,11 +99,22 @@ public class AdminDAO {
         return list;
     }
 
-    public static void delete(Admin admin) {
-        Session session = getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(admin);
-        session.getTransaction().commit();
-        session.close();
+    public static boolean delete(Admin admin) {
+        Session session = null;
+        try {
+            session = getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(admin);
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            System.out.println("Admin Delete Error");
+            System.out.println(ex.getMessage());
+            return false;
+        } finally {
+            if (null !=session) {
+                session.close();
+            }
+        }
+        return true;
     }
 }

@@ -7,18 +7,22 @@ package controllers.admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import models.entities.Admin;
+import utils.MessageLabel;
 
 /**
  *
  * @author Alisson
  */
-@WebServlet(name = "DeleteAdmin",urlPatterns = {"/DeleteAdmin"})
+@WebServlet(name = "DeleteAdmin", urlPatterns = {"/DeleteAdmin"})
 public class DeleteAdmin extends HttpServlet {
 
     /**
@@ -32,15 +36,23 @@ public class DeleteAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-            int adminId = Integer.parseInt((String)request.getParameter("IdAdmin"));
-            
-            Admin adminToRemove = new Admin();
-            
-            adminToRemove.setId(adminId);
-            adminToRemove.delete();
-            
-            response.sendRedirect("ListAdmins");
+        List<String> errorMessages = new ArrayList();
+        HttpSession session = request.getSession();
+        int adminId = Integer.parseInt((String) request.getParameter("IdAdmin"));
+
+        Admin adminToRemove = new Admin();
+
+        adminToRemove.setId(adminId);
+        MessageLabel message = new MessageLabel();
+        if (adminToRemove.delete()) {
+            message.setMessageType(true, "", "O Administrador foi excluido com sucesso!");
+            session.setAttribute("message", message);
+
+        } else {
+            message.setMessageType(false, "", "Houve um erro ao tentar excluir o administrador.");
+            session.setAttribute("message", message);
+        }
+        response.sendRedirect("ListAdmins");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
